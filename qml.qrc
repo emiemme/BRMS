@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>HomeForm.ui.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>Home.qml</file>
+        <file>CellButton.qml</file>
+        <file>CellButtonForm.ui.qml</file>
+        <file>Icons/sun-umbrella.png</file>
+        <file>TicketForm.qml</file>
+        <file>TicketFormForm.ui.qml</file>
+        <file>MainView.qml</file>
+        <file>MainViewForm.ui.qml</file>
+        <file>ToolBarLeft.qml</file>
+        <file>ToolBarLeftForm.ui.qml</file>
+        <file>ToolbarInfoCell.qml</file>
+        <file>ToolbarInfoCellForm.ui.qml</file>
+        <file>GeneralButton.qml</file>
+        <file>GeneralButtonForm.ui.qml</file>
+    </qresource>
+</RCC>
