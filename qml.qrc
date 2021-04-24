@@ -17,5 +17,7 @@
         <file>ToolbarInfoCellForm.ui.qml</file>
         <file>GeneralButton.qml</file>
         <file>GeneralButtonForm.ui.qml</file>
+        <file>InfoCell.qml</file>
+        <file>InfoCellForm.ui.qml</file>
     </qresource>
 </RCC>

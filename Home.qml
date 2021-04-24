@@ -63,14 +63,18 @@ HomeForm {
     function updateCell(currentCell, clientName, status) {
         var rightList = [1, 11, 27, 37, 53, 63, 79, 89, 105, 115, 131, 135, 145, 149, 159, 163]
         var leftList = [12, 26, 38, 52, 64, 78, 90, 104, 116, 130, 136, 144, 150, 158, 164, 172, 173, 183]
-        var rightListIndex = 0;
+        var rightListIndex = 0
         var indexListModel = 0
+
         for(var rightRow = 0; rightRow < rightList.length; rightRow+=2) {
             indexListModel = 0
+
             for(var colRIndex = rightList[rightRow]; colRIndex< rightList[rightRow+1]+1; colRIndex++){
                 if(stackView.children[rightListIndex].model.get(indexListModel).cellNumber == currentCell) {
                     stackView.children[rightListIndex].model.get(indexListModel).clientName = clientName
                     stackView.children[rightListIndex].model.get(indexListModel).statusColor = status
+                    stackView.children[rightListIndex].model.get(indexListModel).statusCell = false
+
                     break
                 }
                 indexListModel++
@@ -85,6 +89,7 @@ HomeForm {
                 if(stackView.children[leftListIndex].model.get(indexListModel).cellNumber == currentCell) {
                     stackView.children[leftListIndex].model.get(indexListModel).clientName = clientName
                     stackView.children[leftListIndex].model.get(indexListModel).statusColor = status
+                    stackView.children[leftListIndex].model.get(indexListModel).statusCell = false
                     break
                 }
                 indexListModel++
@@ -106,7 +111,7 @@ HomeForm {
         for(var rightRow = 0; rightRow < rightList.length; rightRow+=2) {
             indexListModel = 0
             for(var colRIndex = rightList[rightRow]; colRIndex< rightList[rightRow+1]+1; colRIndex++){
-                stackView.children[rightListIndex].model.append({cellNumber: colRIndex, clientName: "Nomelungo", statusColor: "#d85409"} )
+                stackView.children[rightListIndex].model.append({cellNumber: colRIndex, clientName: "Nomelungo", statusColor: "#d85409",newCellStatus: true} )
                 //console.log(stackView.children[rightListIndex].model.get(indexListModel).cellNumber)
                 indexListModel ++
             }
@@ -116,7 +121,7 @@ HomeForm {
         var leftListIndex = rightListIndex+2;
         for(var leftRow = 0; leftRow < leftList.length; leftRow+=2) {
             for(var colLIndex = leftList[leftRow]; colLIndex< leftList[leftRow+1]+1; colLIndex++){
-                stackView.children[leftListIndex].model.append({cellNumber: colLIndex, clientName: "Nomelungo", statusColor: "#d85409"} )
+                stackView.children[leftListIndex].model.append({cellNumber: colLIndex, clientName: "Nomelungo", statusColor: "#d85409",newCellStatus: true} )
                 //stackView.children[leftListIndex].model.labelClientName.text = "ciao"
             }
             leftListIndex++
