@@ -17,7 +17,8 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
 
-    qmlRegisterType<Application>("backend.Gestionale", 1, 0, "Backend");
+    //qmlRegisterType<Application>("backend.Gestionale", 1, 0, "Backend");
+    //qmlRegisterType<booking>("Booking", 1, 0, "booking");
 
     Application *appl = new Application();
     engine.rootContext()->setContextProperty("Backend",appl);

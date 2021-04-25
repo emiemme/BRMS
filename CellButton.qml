@@ -18,7 +18,8 @@ CellButtonForm {
                     homeTicketForm.textFieldName.text = cellButton.labelClientName.text
                 } else {
                     console.log("cell "+ labelNumber.text  +" Clicked but not Empty")
-
+                    infoCell.visible = true
+                    infoCell.displayInfo(labelNumber.text)
                 }
             }
         }

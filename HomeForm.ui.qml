@@ -6,6 +6,7 @@ Page {
     id: item1
     width: 1200
     height: 1080
+    property alias infoCell: infoCell
     property alias rowRight1: rowRight1
     property alias homeTicketForm: homeTicketForm
     property alias cellButtonListRight1: cellButtonListRight1
@@ -513,6 +514,13 @@ Page {
                 anchors.verticalCenterOffset: -280
                 anchors.horizontalCenterOffset: 0
                 anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            InfoCell {
+                id: infoCell
+                x: 286
+                y: 8
+                visible: false
             }
         }
     }

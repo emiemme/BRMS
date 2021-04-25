@@ -20,6 +20,45 @@
     </message>
 </context>
 <context>
+    <name>InfoCellForm.ui</name>
+    <message>
+        <source>Label</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ombrellone Numero:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nome Cliente:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lettini</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sdraio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cabina</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Arrivo:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Partenza</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lista Prenotazioni</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TicketFormForm.ui</name>
     <message>
         <source>Daily</source>

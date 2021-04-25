@@ -5,6 +5,19 @@ import Qt.labs.qmlmodels 1.0
 Item {
     width: 600
     height: 600
+    property alias tableModelInfo: tableModelInfo
+    property alias tableItems: tableItems
+    property alias labelUmbrella: labelUmbrella
+    property alias labelDepartureDate: labelDepartureDate
+    property alias labelArriveDate: labelArriveDate
+    property alias labelNCabina: labelNCabina
+    property alias labelNSdraio: labelNSdraio
+    property alias labelNLettini: labelNLettini
+    property alias labelNameSurname: labelNameSurname
+    property alias addInfoButton: addInfoButton
+    property alias closeinfoButton: closeinfoButton
+    property alias removeInfoButton: removeInfoButton
+    property alias modifyInfoButton: modifyInfoButton
 
     Rectangle {
         id: backgroundRect
@@ -25,7 +38,8 @@ Item {
                 anchors.right: parent.right
                 anchors.top: labelBookingList.bottom
                 anchors.bottom: rectDivider1.top
-                delegate: DelegateChooser {
+                delegate:
+                    DelegateChooser {
                     DelegateChoice {
                         CheckBox {
                             onToggled: model.display = checked
@@ -42,30 +56,63 @@ Item {
                     }
 
                     DelegateChoice {
-                        SpinBox {
-                            onValueModified: model.display = value
+                        Label {
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
                         }
                         column: 2
                     }
+                    DelegateChoice {
+                        Label {
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        column: 3
+                    }
+                    DelegateChoice {
+                        Label {
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        column: 4
+                    }
+                    DelegateChoice {
+                        Label {
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        column: 5
+                    }
                 }
                 anchors.leftMargin: 15
+
                 model: TableModel {
-                    id: tableModelTicket
+                    id: tableModelInfo
                     TableModelColumn {
                         display: "checked"
                     }
 
                     TableModelColumn {
-                        display: "currentText"
+                        display: "name_surname"
                     }
 
                     TableModelColumn {
-                        display: "amount"
+                        display: "arrive_date"
+                    }
+                    TableModelColumn {
+                        display: "departure_date"
+                    }
+                    TableModelColumn {
+                        display: "lettini"
+                    }
+                    TableModelColumn {
+                        display: "sdraio"
                     }
                 }
                 anchors.rightMargin: 15
                 anchors.topMargin: 5
                 anchors.bottomMargin: 15
+                implicitWidth: 30
                 rowSpacing: 1
                 columnSpacing: 1
             }
@@ -187,13 +234,11 @@ Item {
                 height: 30
                 text: qsTr("Nome Cliente:")
                 anchors.left: parent.left
-                anchors.right: textFieldName.left
                 anchors.top: parent.top
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignVCenter
                 anchors.topMargin: 50
                 anchors.leftMargin: 15
-                anchors.rightMargin: 22
             }
 
             Label {

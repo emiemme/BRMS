@@ -48,6 +48,14 @@ bool Application::insertNewBooking(int ticketNumber, int omb_num, QString client
     return db->insertBooking(newBooking);
 }
 
+bool Application::selectOmbBookings(QString ombNumb)
+{
+    bool fRes = false;
+    qml_booking_list =  db->selectOmbBooking(ombNumb.toInt());
+    return fRes;
+
+}
+
 int Application::getTicketCount()
 {
     return ticketCount;
