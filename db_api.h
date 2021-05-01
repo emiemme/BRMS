@@ -42,9 +42,20 @@ Q_DECLARE_METATYPE(booking)
 
 struct ombStatus
 {
-    int         omb_num;
-    QString     status;
+    Q_GADGET
+public:
+        Q_PROPERTY(int b_omb_num MEMBER omb_num)
+        Q_PROPERTY(QString b_client_name MEMBER client_name)
+        Q_PROPERTY(QString b_status MEMBER status)
+        Q_PROPERTY(QString b_color MEMBER color)
+
+        int         omb_num;
+        QString     client_name;
+        QString     status;
+        QString     color;
 };
+Q_DECLARE_METATYPE(ombStatus)
+
 
 class DB_api : public QObject
 {
@@ -62,6 +73,7 @@ public slots:
     bool replaceBooking(struct booking replaceBooking);
     bool deleteBooking(struct booking deleteBooking);
     bool setTicketCount(int ticket_number);
+    bool updateAllStatusBooking(QDateTime currentDate);
 
 
     QList <booking> selectOmbBooking(int omb_num);

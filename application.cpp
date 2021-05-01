@@ -12,17 +12,22 @@ Application::Application(QObject *parent) : QObject(parent)
 
 //    qDebug()<<db->selectOmbBooking(1).at(0).ticketNumber;
 //    qDebug()<<db->selectOmbBooking(1).at(1).ticketNumber;
-
 }
 
 
-QList <QString> Application::selectAllStatus(int total_omb, QString currentDate)
+bool Application::selectAllStatus(int total_omb, QString currentDate)
 {
-     QList <ombStatus> tmpList;
-     tmpList = db->selectAllOmbStatus(total_omb,QDateTime::fromString(currentDate, "yyyy-MM-ddThh:mm"));
-     if(!tmpList.isEmpty()){
-         qDebug()<<tmpList.at(0).omb_num<<" Status:" << tmpList.at(0).status;
+     bool fRes = false;
+     qml_ombStatus_list = db->selectAllOmbStatus(total_omb,QDateTime::fromString(currentDate, "yyyy-MM-ddThh:mm"));
+     for(int i=0;i < qml_ombStatus_list.count(); i++) {
+        qDebug()<<qml_ombStatus_list.at(i).omb_num<<"-->"<<qml_ombStatus_list.at(i).status<<"-->"<<qml_ombStatus_list.at(i).color<<"-->"<<qml_ombStatus_list.at(i).client_name;
      }
+     return fRes;
+}
+
+bool Application::updateStatusGrid()
+{
+
 }
 
 

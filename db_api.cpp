@@ -234,18 +234,27 @@ QList <ombStatus>  DB_api::selectAllOmbStatus (int total_omb, QDateTime currentD
 {
     QList <ombStatus> selectList;
     struct ombStatus _ombStatus;
+    QString color;
     QSqlQuery query(sqlDB);
     QString _currentDateString = currentDate.toString("yyyy-MM-ddThh:mm");
     if( total_omb != 0 && currentDate.isValid() ) {
 
         for (int _omb_num = 0; _omb_num < total_omb; _omb_num++ ) {
-            QString currentQuery = "SELECT Status FROM Omb_" + QString::number(_omb_num+1) + "  WHERE Data_Partenza >= '" + _currentDateString + "' ORDER BY Data_Arrivo" ;
+            QString currentQuery = "SELECT Status, Client_Name FROM Omb_" + QString::number(_omb_num+1) + "  WHERE Data_Partenza <= '" + _currentDateString + " AND "
+                                   "Data_Arrivo >= "+ _currentDateString + " ' ORDER BY Data_Arrivo" ;
             if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
                 while (query.next()) {
-                    _ombStatus.omb_num =_omb_num;
+                    _ombStatus.omb_num =_omb_num + 1;
                     _ombStatus.status = query.value(0).toString();
-
-
+                    _ombStatus.client_name =  query.value(1).toString();
+                    if(_ombStatus.status == "Arrived") {
+                        color = "#FF0000";
+                    } else if (_ombStatus.status == "Not Arrived") {
+                        color = "#FFFF00";
+                    } else {
+                        color = "#00FF00";
+                    }
+                    _ombStatus.color = color;
                 }
                 selectList.append(_ombStatus);
             }else {
@@ -257,6 +266,25 @@ QList <ombStatus>  DB_api::selectAllOmbStatus (int total_omb, QDateTime currentD
         qDebug()<<"Wrong total_omb Number or datetime";
     }
  return selectList ;
+}
+
+
+bool DB_api::updateAllStatusBooking(QDateTime currentDate)
+{
+    bool fRes = false;
+    QSqlQuery query(sqlDB);
+    QString _currentDateString = currentDate.toString("yyyy-MM-ddThh:mm");
+    QString currentQuery = "SELECT Status FROM Omb_2 WHERE Data_Partenza >= '" + _currentDateString + "' ORDER BY Data_Arrivo" ;
+    if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
+        while (query.next()) {
+
+        }
+    } else {
+        qDebug("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
+               query.lastError().text().toLatin1().data());
+    }
+
+    return fRes;
 }
 
 

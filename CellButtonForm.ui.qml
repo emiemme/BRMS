@@ -4,6 +4,7 @@ import QtQuick.Controls 2.15
 Item {
     width: 120
     height: 30
+    property alias separatorRect: separatorRect
     property alias cellStatusRectColor: separatorRect.color
     property alias labelClientName: labelClientName
     property alias backgroundRect: backgroundRect
