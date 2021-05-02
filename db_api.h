@@ -73,7 +73,7 @@ public slots:
     bool replaceBooking(struct booking replaceBooking);
     bool deleteBooking(struct booking deleteBooking);
     bool setTicketCount(int ticket_number);
-    bool updateAllStatusBooking(QDateTime currentDate);
+    bool updateAllStatusBooking(int total_omb, QDateTime currentDate);
 
 
     QList <booking> selectOmbBooking(int omb_num);

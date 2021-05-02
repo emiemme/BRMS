@@ -26,7 +26,7 @@ public:
     Q_INVOKABLE void    setTicketCount();
     Q_INVOKABLE int     getTicketCount();
     Q_INVOKABLE bool    selectOmbBookings(QString ombNumb);
-    Q_INVOKABLE bool    updateStatusGrid();
+    Q_INVOKABLE bool    updateStatusGrid(int total_omb, QDateTime dateTime);
 
 
     // Expose booking to qml

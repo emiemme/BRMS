@@ -25,9 +25,9 @@ bool Application::selectAllStatus(int total_omb, QString currentDate)
      return fRes;
 }
 
-bool Application::updateStatusGrid()
+bool Application::updateStatusGrid(int total_omb, QDateTime dateTime)
 {
-
+    db->updateAllStatusBooking(total_omb,dateTime);
 }
 
 
@@ -35,7 +35,6 @@ bool Application::insertNewBooking(int ticketNumber, int omb_num, QString client
                                    int lettini, int sdraio, int cabina, QString arriveDate,
                                    QString departureDate,QString status, QString operatore)
 {
-
     booking newBooking;
     newBooking.ticketNumber = ticketNumber;
     newBooking.timeStamp = QDateTime::currentDateTime();
