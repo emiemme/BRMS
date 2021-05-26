@@ -8,7 +8,9 @@ HomeForm {
         addRows()
         homeTicketForm.closeTicketButton.labelButton.text = "Annulla"
         homeTicketForm.confirmTicketButton.labelButton.text = "Conferma"
-        updateGrid(150, Qt.formatDateTime(new Date(),"yyyy-MM-ddT00:00").toString() )
+        var currentDate = Qt.formatDateTime(new Date(),"yyyy-MM-ddT00:00").toString()
+        updateGrid(150, currentDate )
+        Backend.updateStatusGrid(150, currentDate)
     }
 
     homeTicketForm.closeTicketButton.mouseAreaButton.onClicked: {
@@ -47,9 +49,12 @@ HomeForm {
         }
         var status
         var cellColor
-        var currentDate = Qt.formatDateTime(new Date(),"yyyy-MM-ddThh:mm").toString()
-        //console.log(arriveDate + " == " + currentDate )
-        if(arriveDate === currentDate ) {
+        var currentDate = new Date()
+        var arriveDateCmp = new Date(arriveDate)
+        var departureDateCmp = new Date(departureDate)
+
+        //console.log(arriveDateCmp.getTime()  + " == " + currentDate.getTime() + " == " + departureDateCmp.getTime() )
+        if( currentDate.getTime() >= arriveDateCmp.getTime() && currentDate.getTime() <= departureDateCmp ) {
                 status =    "Arrived"
                 cellColor = "#ff0000"
         } else {
@@ -67,7 +72,6 @@ HomeForm {
             }
             updateCell(omb_number, client_name, cellColor)
         }
-
         homeTicketForm.visible = false
     }
 

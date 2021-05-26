@@ -27,7 +27,9 @@ bool Application::selectAllStatus(int total_omb, QString currentDate)
 
 bool Application::updateStatusGrid(int total_omb, QDateTime dateTime)
 {
-    db->updateAllStatusBooking(total_omb,dateTime);
+    bool fRes = db->updateAllStatusBooking(total_omb,dateTime);
+    qDebug()<<fRes;
+    return fRes;
 }
 
 

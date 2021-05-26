@@ -5,6 +5,8 @@ Item {
     id: item1
     width: 100
     height: 400
+    property alias textAreaDate: textAreaDate
+    property alias buttonUpdateDB: buttonUpdateDB
     property alias infoArea: infoArea
     property alias toolButtonMenu: toolButtonMenu
     property alias dateTimeLabel: dateTimeLabel
@@ -108,6 +110,27 @@ Item {
             anchors.topMargin: 10
             anchors.rightMargin: 8
             anchors.leftMargin: 8
+        }
+
+        Button {
+            id: buttonUpdateDB
+            y: 303
+            text: qsTr("Update DB")
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 5
+            anchors.rightMargin: 5
+        }
+
+        TextArea {
+            id: textAreaDate
+            y: 348
+            height: 44
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 5
+            anchors.rightMargin: 5
+            placeholderText: qsTr("Text Area")
         }
     }
 }

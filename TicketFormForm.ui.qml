@@ -238,7 +238,7 @@ Item {
                 anchors.topMargin: 5
                 anchors.bottomMargin: 20
                 anchors.rightMargin: 20
-                placeholderText: Qt.formatDateTime(new Date(),"yyyy-MM-ddThh:mm").toString()
+                placeholderText: Qt.formatDateTime(new Date(),"yyyy-MM-ddT").toString() + "23:59"
                 inputMethodHints: inputMethodHints
             }
 

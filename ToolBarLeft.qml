@@ -46,6 +46,11 @@ ToolBarLeftForm {
        }
     }
 
+    buttonUpdateDB.onClicked: {
+        console.log("Updating DB with a custom date: " + textAreaDate.text)
+        Backend.updateStatusGrid(150, textAreaDate.text)
+    }
+
     Timer {
         interval: 500; running: true; repeat: true
         onTriggered: dateTimeLabel.text = Qt.formatDateTime(new Date(),"yyyy-MM-dd hh:mm:ss").toString()
