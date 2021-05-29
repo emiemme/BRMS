@@ -36,9 +36,9 @@ set(PROJECT_SOURCES
         db_api.cpp
         db_api.h
         qml.qrc
-        ${TS_FILES}
-)
 
+)
+#        ${TS_FILES}
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Gestionale_lido
         ${PROJECT_SOURCES}

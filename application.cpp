@@ -3,7 +3,8 @@
 Application::Application(QObject *parent) : QObject(parent)
 {
     db = new DB_api();
-    db->openDB();
+    int totalOmb = 155;
+    db->openDB(totalOmb);
     ticketCount = db->getTicketCount();
     if(ticketCount == 0) {
         db->setTicketCount(0);
@@ -18,9 +19,15 @@ Application::Application(QObject *parent) : QObject(parent)
 bool Application::selectAllStatus(int total_omb, QString currentDate)
 {
      bool fRes = false;
-     qml_ombStatus_list = db->selectAllOmbStatus(total_omb,QDateTime::fromString(currentDate, "yyyy-MM-ddThh:mm"));
+     qml_ombStatus_list = db->selectAllOmbStatus(total_omb,QDateTime::fromString(currentDate, "yyyy-MM-dd"));
+     qDebug()<<qml_ombStatus_list.count();
      for(int i=0;i < qml_ombStatus_list.count(); i++) {
         qDebug()<<qml_ombStatus_list.at(i).omb_num<<"-->"<<qml_ombStatus_list.at(i).status<<"-->"<<qml_ombStatus_list.at(i).color<<"-->"<<qml_ombStatus_list.at(i).client_name;
+     }
+     if (qml_ombStatus_list.first().omb_num < 1 || qml_ombStatus_list.first().omb_num > total_omb) {
+         fRes = false;
+     } else {
+        fRes = true;
      }
      return fRes;
 }
@@ -46,8 +53,8 @@ bool Application::insertNewBooking(int ticketNumber, int omb_num, QString client
     newBooking.lettini = lettini;
     newBooking.sdraio = sdraio;
     newBooking.cabina = cabina;
-    newBooking.arriveDate = QDateTime::fromString(arriveDate, "yyyy-MM-ddThh:mm");
-    newBooking.departureDate = QDateTime::fromString(departureDate, "yyyy-MM-ddThh:mm");;
+    newBooking.arriveDate = QDateTime::fromString(arriveDate, "yyyy-MM-dd");
+    newBooking.departureDate = QDateTime::fromString(departureDate, "yyyy-MM-dd");;
     newBooking.status = status;
     newBooking.operatore = operatore;
 

@@ -213,6 +213,7 @@ Item {
                 id: textDateArrive
                 x: 20
                 y: 269
+                height: 50
                 anchors.left: parent.left
                 anchors.right: textDateDepart.left
                 anchors.top: arriveLabel.bottom
@@ -220,25 +221,25 @@ Item {
                 anchors.rightMargin: 80
                 property string property0: "none.none"
                 font.hintingPreference: Font.PreferFullHinting
-                anchors.bottomMargin: 20
+                anchors.bottomMargin: 6
                 anchors.topMargin: 5
                 anchors.leftMargin: 20
-                placeholderText: Qt.formatDateTime(new Date(),"yyyy-MM-ddThh:mm").toString()
+                placeholderText: Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
                 inputMethodHints: inputMethodHints
             }
 
             TextField {
                 id: textDateDepart
-                x: 241
+                x: 240
                 y: 269
                 width: 140
                 anchors.right: parent.right
                 anchors.top: departLabel.bottom
                 anchors.bottom: rectDivider.top
                 anchors.topMargin: 5
-                anchors.bottomMargin: 20
+                anchors.bottomMargin: 6
                 anchors.rightMargin: 20
-                placeholderText: Qt.formatDateTime(new Date(),"yyyy-MM-ddT").toString() + "23:59"
+                placeholderText: Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
                 inputMethodHints: inputMethodHints
             }
 

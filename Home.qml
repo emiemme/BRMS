@@ -3,14 +3,19 @@ import QtQuick.Controls 2.12
 
 HomeForm {
 
+    property var rightList : [13, 20, 33, 40, 53, 60, 73, 80, 92, 98, 110, 116, 125, 129, 138, 142, 151, 155]
+    property var leftList : [1, 12, 21, 32, 41, 52, 61, 72, 81, 91, 99, 109, 117, 124, 130, 137, 143, 150]
+    property var totalOmb : 155
+
 
     Component.onCompleted: {
         addRows()
         homeTicketForm.closeTicketButton.labelButton.text = "Annulla"
         homeTicketForm.confirmTicketButton.labelButton.text = "Conferma"
-        var currentDate = Qt.formatDateTime(new Date(),"yyyy-MM-ddT00:00").toString()
-        updateGrid(150, currentDate )
-        Backend.updateStatusGrid(150, currentDate)
+        var currentDate = Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
+        updateGrid(totalOmb, currentDate)
+        Backend.updateStatusGrid(totalOmb, currentDate)
+
     }
 
     homeTicketForm.closeTicketButton.mouseAreaButton.onClicked: {
@@ -85,74 +90,77 @@ HomeForm {
 
 
     function updateGrid(total_omb, currentDate) {
-        Backend.selectAllStatus(total_omb, currentDate)
-        var rightList = [1, 11, 27, 37, 53, 63, 79, 89, 105, 115, 131, 135, 145, 149, 159, 163]
-        var leftList = [12, 26, 38, 52, 64, 78, 90, 104, 116, 130, 136, 144, 150, 158, 164, 172, 173, 183]
-        var rightListIndex = 0
-        var indexListModel = 0
+        if (Backend.selectAllStatus(total_omb, currentDate) ) {
+            var rightListIndex = 0
+            var indexListModel = 0
 
-        for(var rightRow = 0; rightRow < rightList.length; rightRow+=2) {
-            indexListModel = 0
-            for(var colRIndex = rightList[rightRow]; colRIndex< rightList[rightRow+1]+1; colRIndex++){
-                    if(stackView.children[rightListIndex].model.get(indexListModel).cellNumber == Backend.m_ombStatus_list[colRIndex].b_omb_num) {
-                        stackView.children[rightListIndex].model.get(indexListModel).clientName = Backend.m_ombStatus_list[colRIndex].b_client_name
-                        stackView.children[rightListIndex].model.get(indexListModel).statusColor = Backend.m_ombStatus_list[colRIndex].b_color
-                        stackView.children[rightListIndex].model.get(indexListModel).statusCell = true
-                        break
+            for(var rightRow = 0; rightRow < rightList.length; rightRow+=2) {
+                indexListModel = 0
+                for(var colRIndex = rightList[rightRow+1]; colRIndex > rightList[rightRow]-1; colRIndex--){
+                    if(stackView.children[rightListIndex].model.get(indexListModel).cellNumber == Backend.m_ombStatus_list[colRIndex-1].b_omb_num) {
+//                        console.log(Backend.m_ombStatus_list[colRIndex-1].b_omb_num +" == "+ Backend.m_ombStatus_list[colRIndex].b_client_name)
+                        stackView.children[rightListIndex].model.get(indexListModel).clientName = Backend.m_ombStatus_list[colRIndex-1].b_client_name
+                        stackView.children[rightListIndex].model.get(indexListModel).statusColor = Backend.m_ombStatus_list[colRIndex-1].b_color
+                        if (Backend.m_ombStatus_list[colRIndex-1].b_color === "#FF0000") {
+                           // stackView.children[rightListIndex].model.get(indexListModel).statusCell = false
+                        } else {
+                            stackView.children[rightListIndex].model.get(indexListModel).statusCell = true
+                        }
                     }
-                indexListModel++
+                    indexListModel++
+                }
+                rightListIndex++
             }
-            rightListIndex++
-        }
 
-        var leftListIndex = rightListIndex+2;
-        for(var leftRow = 0; leftRow < leftList.length; leftRow+=2) {
-            indexListModel = 0
-            for(var colLIndex = leftList[leftRow]; colLIndex< leftList[leftRow+1]+1; colLIndex++){
-                    if(stackView.children[leftListIndex].model.get(indexListModel).cellNumber == Backend.m_ombStatus_list[colLIndex].b_omb_num) {
-                        stackView.children[leftListIndex].model.get(indexListModel).clientName = Backend.m_ombStatus_list[colLIndex].b_client_name
-                        stackView.children[leftListIndex].model.get(indexListModel).statusColor = Backend.m_ombStatus_list[colLIndex].b_color
-                        stackView.children[leftListIndex].model.get(indexListModel).statusCell = true
-                        break
+
+            var leftListIndex = rightListIndex;
+            for(var leftRow = 0; leftRow < leftList.length; leftRow+=2) {
+                indexListModel = 0
+                for(var colLIndex = leftList[leftRow+1]; colLIndex > leftList[leftRow]-1; colLIndex--){
+                    if(stackView.children[leftListIndex].model.get(indexListModel).cellNumber == Backend.m_ombStatus_list[colLIndex-1].b_omb_num) {
+                        stackView.children[leftListIndex].model.get(indexListModel).clientName = Backend.m_ombStatus_list[colLIndex-1].b_client_name
+                        stackView.children[leftListIndex].model.get(indexListModel).statusColor = Backend.m_ombStatus_list[colLIndex-1].b_color
+                        if (Backend.m_ombStatus_list[colRIndex-1].b_color === "#FF0000") {
+                            //stackView.children[leftListIndex].model.get(indexListModel).statusCell = false
+                        } else {
+                            stackView.children[leftListIndex].model.get(indexListModel).statusCell = true
+                        }
+                        console.log(Backend.m_ombStatus_list[colLIndex-1].b_omb_num +" == "+ stackView.children[leftListIndex].model.get(indexListModel).statusCell)
                     }
-                indexListModel++
+                    indexListModel++
+                }
+                leftListIndex++
             }
-            leftListIndex++
         }
 
     }
 
 
     function updateCell(currentCell, clientName, statusColor) {
-        var rightList = [1, 11, 27, 37, 53, 63, 79, 89, 105, 115, 131, 135, 145, 149, 159, 163]
-        var leftList = [12, 26, 38, 52, 64, 78, 90, 104, 116, 130, 136, 144, 150, 158, 164, 172, 173, 183]
         var rightListIndex = 0
         var indexListModel = 0
 
         for(var rightRow = 0; rightRow < rightList.length; rightRow+=2) {
             indexListModel = 0
-
-            for(var colRIndex = rightList[rightRow]; colRIndex< rightList[rightRow+1]+1; colRIndex++){
+            for(var colRIndex = rightList[rightRow+1]; colRIndex > rightList[rightRow]-1; colRIndex--){
                 if(stackView.children[rightListIndex].model.get(indexListModel).cellNumber == currentCell) {
                     stackView.children[rightListIndex].model.get(indexListModel).clientName = clientName
                     stackView.children[rightListIndex].model.get(indexListModel).statusColor = statusColor
-                    stackView.children[rightListIndex].model.get(indexListModel).statusCell = false
-                    break
+                    stackView.children[rightListIndex].model.get(indexListModel).statusCell = true
                 }
                 indexListModel++
             }
             rightListIndex++
         }
 
-        var leftListIndex = rightListIndex+2;
+        var leftListIndex = rightListIndex;
         for(var leftRow = 0; leftRow < leftList.length; leftRow+=2) {
             indexListModel = 0
-            for(var colLIndex = leftList[leftRow]; colLIndex< leftList[leftRow+1]+1; colLIndex++){
+            for(var colLIndex = leftList[leftRow+1]; colLIndex > leftList[leftRow]-1; colLIndex--){
                 if(stackView.children[leftListIndex].model.get(indexListModel).cellNumber == currentCell) {
                     stackView.children[leftListIndex].model.get(indexListModel).clientName = clientName
                     stackView.children[leftListIndex].model.get(indexListModel).statusColor = statusColor
-                    stackView.children[leftListIndex].model.get(indexListModel).statusCell = false
-                    break
+                    stackView.children[leftListIndex].model.get(indexListModel).statusCell = true
                 }
                 indexListModel++
             }
@@ -162,23 +170,21 @@ HomeForm {
 
 
     function addRows() {
-        var rightList = [1, 11, 27, 37, 53, 63, 79, 89, 105, 115, 131, 135, 145, 149, 159, 163]
-        var leftList = [12, 26, 38, 52, 64, 78, 90, 104, 116, 130, 136, 144, 150, 158, 164, 172, 173, 183]
         var rightListIndex = 0;
         var indexListModel = 0
         for(var rightRow = 0; rightRow < rightList.length; rightRow+=2) {
             indexListModel = 0
-            for(var colRIndex = rightList[rightRow]; colRIndex< rightList[rightRow+1]+1; colRIndex++){
+            for(var colRIndex = rightList[rightRow+1]; colRIndex > rightList[rightRow]-1; colRIndex--){
                 stackView.children[rightListIndex].model.append({cellNumber: colRIndex, clientName: "Nomelungo", statusColor: "#d85409",statusCell: true} )
                 //console.log(stackView.children[rightListIndex].model.get(indexListModel).cellNumber)
-                indexListModel ++
+                indexListModel++
             }
             rightListIndex++
         }
 
-        var leftListIndex = rightListIndex+2;
+        var leftListIndex = rightListIndex;
         for(var leftRow = 0; leftRow < leftList.length; leftRow+=2) {
-            for(var colLIndex = leftList[leftRow]; colLIndex< leftList[leftRow+1]+1; colLIndex++){
+            for(var colLIndex = leftList[leftRow+1]; colLIndex > leftList[leftRow]-1; colLIndex--){
                 stackView.children[leftListIndex].model.append({cellNumber: colLIndex, clientName: "Nomelungo", statusColor: "#d85409",statusCell: true} )
                 //stackView.children[leftListIndex].model.labelClientName.text = "ciao"
             }

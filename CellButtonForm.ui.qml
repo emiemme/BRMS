@@ -2,8 +2,8 @@ import QtQuick 2.4
 import QtQuick.Controls 2.15
 
 Item {
-    width: 120
-    height: 30
+    width: 122
+    height: 37
     property alias separatorRect: separatorRect
     property alias cellStatusRectColor: separatorRect.color
     property alias labelClientName: labelClientName
@@ -14,6 +14,8 @@ Item {
         id: backgroundRect
         width: 120
         color: "#fccb6d"
+        border.color: "#b2afaf"
+        border.width: 1
         anchors.fill: parent
         z: 0
 

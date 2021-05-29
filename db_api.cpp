@@ -10,7 +10,7 @@ DB_api::DB_api(QObject *parent) : QObject(parent)
 
 }
 
-bool DB_api::openDB()
+bool DB_api::openDB(int totalOmb)
 {
     bool fRes = false;
     sqlDB = QSqlDatabase::addDatabase("QSQLITE");
@@ -21,7 +21,7 @@ bool DB_api::openDB()
                sqlDB.lastError().text().toLatin1().data());
         fRes = false;
     } else {
-            createDB(150);
+            createDB(totalOmb);
             fRes = true;
     }
     return fRes;
@@ -124,14 +124,14 @@ bool DB_api::insertBooking(struct booking newBooking)
         QString currentQuery = "INSERT INTO Omb_"+QString::number(newBooking.omb_num)+" (Ticket_Number, DateTime, Client_Name, Client_Surname, Lettini, Sdraio, Cabina ,Data_Arrivo, Data_Partenza, Status, Operatore) "
                 "VALUES ('" +
                 QString::number(newBooking.ticketNumber) +
-                "', '" + newBooking.timeStamp.toString("yyyy-MM-ddThh:mm") +
+                "', '" + newBooking.timeStamp.toString("yyyy-MM-dd") +
                 "', '" + newBooking.client_name +
                 "', '" + newBooking.client_surname +
                 "', '" + QString::number(newBooking.lettini) +
                 "', '" + QString::number(newBooking.sdraio) +
                 "', '" + QString::number(newBooking.cabina) +
-                "', '" + newBooking.arriveDate.toString("yyyy-MM-ddThh:mm") +
-                "', '" + newBooking.departureDate.toString("yyyy-MM-ddThh:mm") +
+                "', '" + newBooking.arriveDate.toString("yyyy-MM-dd") +
+                "', '" + newBooking.departureDate.toString("yyyy-MM-dd") +
                 "', '" + newBooking.status +
                 "', '" + newBooking.operatore +
                 "')";
@@ -157,14 +157,14 @@ bool DB_api::replaceBooking(struct booking replaceBooking)
         QString currentQuery = "REPLACE INTO Omb_"+QString::number(replaceBooking.omb_num)+" (Ticket_Number, DateTime, Client_Name, Client_Surname, Lettini, Sdraio, Cabina ,Data_Arrivo, Data_Partenza, Status, Operatore) "
                 "VALUES ('" +
                 QString::number(replaceBooking.ticketNumber) +
-                "', '" + replaceBooking.timeStamp.toString("yyyy-MM-ddThh:mm") +
+                "', '" + replaceBooking.timeStamp.toString("yyyy-MM-dd") +
                 "', '" + replaceBooking.client_name +
                 "', '" + replaceBooking.client_surname +
                 "', '" + QString::number(replaceBooking.lettini) +
                 "', '" + QString::number(replaceBooking.sdraio) +
                 "', '" + QString::number(replaceBooking.cabina) +
-                "', '" + replaceBooking.arriveDate.toString("yyyy-MM-ddThh:mm") +
-                "', '" + replaceBooking.departureDate.toString("yyyy-MM-ddThh:mm") +
+                "', '" + replaceBooking.arriveDate.toString("yyyy-MM-dd") +
+                "', '" + replaceBooking.departureDate.toString("yyyy-MM-dd") +
                 "', '" + replaceBooking.status +
                 "', '" + replaceBooking.operatore +
                 "')";
@@ -233,30 +233,35 @@ QList <booking> DB_api::selectOmbBooking(int omb_num)
 QList <ombStatus>  DB_api::selectAllOmbStatus (int total_omb, QDateTime currentDate)
 {
     QList <ombStatus> selectList;
-    struct ombStatus _ombStatus;
     QString color;
     QSqlQuery query(sqlDB);
-    QString _currentDateString = currentDate.toString("yyyy-MM-ddThh:mm");
+    QString _currentDateString = currentDate.toString("yyyy-MM-dd");
     if( total_omb != 0 && currentDate.isValid() ) {
 
         for (int _omb_num = 0; _omb_num < total_omb; _omb_num++ ) {
-            QString currentQuery = "SELECT Status, Client_Name FROM Omb_" + QString::number(_omb_num+1) + "  WHERE Data_Partenza <= '" + _currentDateString + " AND "
-                                   "Data_Arrivo >= "+ _currentDateString + " ' ORDER BY Data_Arrivo" ;
+            QString currentQuery = "SELECT Status, Client_Name FROM Omb_" + QString::number(_omb_num+1) + "  WHERE Data_Partenza >= '" + _currentDateString + "' ORDER BY Data_Arrivo" ;
+            //qDebug()<<currentQuery;
             if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
+                struct ombStatus _ombStatus;
+                _ombStatus.omb_num =_omb_num + 1;
                 while (query.next()) {
-                    _ombStatus.omb_num =_omb_num + 1;
-                    _ombStatus.status = query.value(0).toString();
-                    _ombStatus.client_name =  query.value(1).toString();
-                    if(_ombStatus.status == "Arrived") {
-                        color = "#FF0000";
-                    } else if (_ombStatus.status == "Not Arrived") {
-                        color = "#FFFF00";
-                    } else {
-                        color = "#00FF00";
-                    }
-                    _ombStatus.color = color;
+                    _ombStatus.status      =    query.value(0).toString();
+                    _ombStatus.client_name =    query.value(1).toString();
+                    //qDebug()<<"status= "<< _ombStatus.status;
+                    //qDebug()<<"client_name= "<< _ombStatus.client_name;
                 }
-                selectList.append(_ombStatus);
+                if(_ombStatus.status == "Arrived") {
+                    color = "#FF0000";
+                } else if (_ombStatus.status == "Not Arrived") {
+                    color = "#FFFF00";
+                } else {
+                    color = "#00FF00";
+                }
+                _ombStatus.color = color;
+
+                if(!_ombStatus.color.isEmpty()) {
+                    selectList.append(_ombStatus);
+                }
             }else {
                 qDebug("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
                        query.lastError().text().toLatin1().data());
@@ -272,12 +277,12 @@ bool DB_api::updateAllStatusBooking(int total_omb,QDateTime currentDate)
 {
     bool fRes = false;
     QSqlQuery query(sqlDB);
-    QString _currentDateString = currentDate.toString("yyyy-MM-ddThh:mm");
+    QString _currentDateString = currentDate.toString("yyyy-MM-dd");
     QString currentQuery;
     for (int _omb_num = 1; _omb_num < total_omb; _omb_num++ ) {
         currentQuery = "UPDATE Omb_"+ QString::number(_omb_num)+" SET Status = REPLACE(Status, \"Not Arrived\", \"Arrived\") WHERE Data_Arrivo < '"+_currentDateString+"' AND Data_Partenza > '"+_currentDateString + "'" ;
         if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
-            qDebug()<<"query executed";
+            //qDebug()<<"query executed";
         } else {
             qDebug("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
                    query.lastError().text().toLatin1().data());
@@ -285,7 +290,7 @@ bool DB_api::updateAllStatusBooking(int total_omb,QDateTime currentDate)
 
         currentQuery = "UPDATE Omb_"+ QString::number(_omb_num)+" SET Status = REPLACE(Status, \"Not Arrived\", \"Incoming\") WHERE Data_Arrivo = '"+_currentDateString+"' AND Data_Partenza > '"+_currentDateString + "'" ;
         if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
-            qDebug()<<"query executed";
+            //qDebug()<<"query executed";
         } else {
             qDebug("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
                    query.lastError().text().toLatin1().data());
@@ -293,7 +298,7 @@ bool DB_api::updateAllStatusBooking(int total_omb,QDateTime currentDate)
 
         currentQuery = "UPDATE Omb_"+ QString::number(_omb_num)+" SET Status = REPLACE(Status, \"Arrived\", \"Leaving\") WHERE Data_Arrivo <= '"+_currentDateString+"' AND Data_Partenza = '"+_currentDateString + "'";
         if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
-            qDebug()<<"query executed";
+            //qDebug()<<"query executed";
         } else {
             qDebug("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
                    query.lastError().text().toLatin1().data());
@@ -301,7 +306,7 @@ bool DB_api::updateAllStatusBooking(int total_omb,QDateTime currentDate)
 
         currentQuery = "UPDATE Omb_"+ QString::number(_omb_num)+" SET Status = REPLACE(Status, \"Leaving\", \"Out\") WHERE Data_Partenza < '"+_currentDateString+ "'" ;
         if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
-            qDebug()<<"query executed";
+            //qDebug()<<"query executed";
         } else {
             qDebug("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
                    query.lastError().text().toLatin1().data());

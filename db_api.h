@@ -66,7 +66,7 @@ public:
 
 
 public slots:
-    bool openDB();
+    bool openDB(int totalOmb);
     void closeDB();
     bool createDB(int total_omb);
     bool insertBooking(struct booking newBooking);

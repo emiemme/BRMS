@@ -18,7 +18,6 @@ Page {
     property alias cellButtonListRight7: cellButtonListRight7
     property alias cellButtonListRight8: cellButtonListRight8
     property alias cellButtonListRight9: cellButtonListRight9
-    property alias cellButtonListRight10: cellButtonListRight10
     property alias cellButtonListLeft1: cellButtonListLeft1
     property alias cellButtonListLeft2: cellButtonListLeft2
     property alias cellButtonListLeft3: cellButtonListLeft3
@@ -28,13 +27,12 @@ Page {
     property alias cellButtonListLeft7: cellButtonListLeft7
     property alias cellButtonListLeft8: cellButtonListLeft8
     property alias cellButtonListLeft9: cellButtonListLeft9
-    property alias cellButtonListLeft10: cellButtonListLeft10
     property alias stackView: stackView
     property alias backgroundRect: backgroundRect
 
     Rectangle {
         id: backgroundRect
-        color: "#ffffff"
+        color: "#efb23f"
         anchors.fill: parent
 
         StackView {
@@ -59,7 +57,7 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
 
             }
@@ -82,7 +80,7 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -104,7 +102,7 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -126,7 +124,7 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -142,13 +140,13 @@ Page {
                 model: ListModel {
                     id: cellButtonListRight5
                 }
-                spacing: 0
+                spacing: 5
                 interactive: false
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -164,13 +162,13 @@ Page {
                 model: ListModel {
                     id: cellButtonListRight6
                 }
-                spacing: 0
+                spacing: 5
                 interactive: false
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -181,18 +179,18 @@ Page {
                 anchors.top: parent.top
                 anchors.bottom: passerellaRect.top
                 anchors.leftMargin: 5
-                anchors.bottomMargin: 5
+                anchors.bottomMargin: 66
                 anchors.topMargin: 5
                 model: ListModel {
                     id: cellButtonListRight7
                 }
-                spacing: 0
+                spacing: 5
                 interactive: false
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -204,9 +202,9 @@ Page {
                 anchors.top: parent.top
                 anchors.bottom: passerellaRect.top
                 interactive: false
-                anchors.bottomMargin: 5
+                anchors.bottomMargin: 66
                 anchors.leftMargin: 5
-                spacing: 0
+                spacing: 5
                 model: ListModel {
                     id: cellButtonListRight8
                 }
@@ -215,20 +213,21 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
             ListView {
                 id: rowRight9
-                width: 120
                 anchors.left: rowRight8.right
+                anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: passerellaRect.top
+                anchors.rightMargin: 5
                 interactive: false
-                anchors.bottomMargin: 5
+                anchors.bottomMargin: 66
                 anchors.leftMargin: 5
-                spacing: 0
+                spacing: 5
                 model: ListModel {
                     id: cellButtonListRight9
                 }
@@ -237,29 +236,7 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
-                }
-            }
-
-            ListView {
-                id: rowRight10
-                width: 120
-                anchors.left: rowRight9.right
-                anchors.top: parent.top
-                anchors.bottom: passerellaRect.top
-                interactive: false
-                anchors.bottomMargin: 5
-                anchors.leftMargin: 5
-                spacing: 0
-                model: ListModel {
-                    id: cellButtonListRight10
-                }
-                anchors.topMargin: 5
-                delegate: CellButton {
-                    labelNumber.text: cellNumber
-                    labelClientName.text: clientName
-                    cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -282,7 +259,7 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -304,7 +281,7 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -326,7 +303,7 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -348,7 +325,7 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -361,16 +338,16 @@ Page {
                 interactive: false
                 anchors.bottomMargin: 5
                 anchors.leftMargin: 5
-                spacing: 0
+                spacing: 3
                 model: ListModel {
                     id: cellButtonListLeft5
                 }
-                anchors.topMargin: 5
+                anchors.topMargin: 14
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -383,16 +360,16 @@ Page {
                 interactive: false
                 anchors.bottomMargin: 5
                 anchors.leftMargin: 5
-                spacing: 0
+                spacing: 3
                 model: ListModel {
                     id: cellButtonListLeft6
                 }
-                anchors.topMargin: 5
+                anchors.topMargin: 14
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -405,16 +382,16 @@ Page {
                 interactive: false
                 anchors.bottomMargin: 5
                 anchors.leftMargin: 5
-                spacing: 0
+                spacing: 5
                 model: ListModel {
                     id: cellButtonListLeft7
                 }
-                anchors.topMargin: 5
+                anchors.topMargin: 116
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -427,70 +404,185 @@ Page {
                 interactive: false
                 anchors.bottomMargin: 5
                 anchors.leftMargin: 5
-                spacing: 0
+                spacing: 5
                 model: ListModel {
                     id: cellButtonListLeft8
                 }
-                anchors.topMargin: 5
+                anchors.topMargin: 116
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
             ListView {
                 id: rowLeft9
-                width: 120
                 anchors.left: rowLeft8.right
+                anchors.right: parent.right
                 anchors.top: passerellaRect.bottom
                 anchors.bottom: parent.bottom
+                anchors.rightMargin: 5
                 interactive: false
                 anchors.bottomMargin: 5
                 anchors.leftMargin: 5
-                spacing: 0
+                spacing: 5
                 model: ListModel {
                     id: cellButtonListLeft9
                 }
-                anchors.topMargin: 5
+                anchors.topMargin: 116
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatus: statusCell
-                }
-            }
-
-            ListView {
-                id: rowLeft10
-                width: 120
-                anchors.left: rowLeft9.right
-                anchors.top: passerellaRect.bottom
-                anchors.bottom: parent.bottom
-                interactive: false
-                anchors.bottomMargin: 5
-                anchors.leftMargin: 5
-                spacing: 0
-                model: ListModel {
-                    id: cellButtonListLeft10
-                }
-                anchors.topMargin: 5
-                delegate: CellButton {
-                    labelNumber.text: cellNumber
-                    labelClientName.text: clientName
-                    cellStatusRectColor: statusColor
-                    cellStatus: statusCell
+                    cellStatusEmpty: cellStatusEmpty
                 }
             }
             Rectangle {
                 id: passerellaRect
-                y: 337
-                width: 1122
-                height: 30
+                y: 305
+                height: 45
                 color: "#ffd819"
                 anchors.left: seaRect.right
-                anchors.leftMargin: 6
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.leftMargin: 4
+
+                Label {
+                    id: labelPrimaFila
+                    width: 120
+                    text: qsTr("1° Fila")
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.leftMargin: 5
+                    anchors.bottomMargin: 8
+                    anchors.topMargin: 8
+                    font.bold: true
+                }
+
+                Label {
+                    id: labelSecondaFila
+                    width: 120
+                    text: qsTr("2° Fila")
+                    anchors.left: labelPrimaFila.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.bold: true
+                    anchors.leftMargin: 5
+                    anchors.bottomMargin: 8
+                    anchors.topMargin: 8
+                }
+
+                Label {
+                    id: labelTerzaFila
+                    width: 120
+                    text: qsTr("3° Fila")
+                    anchors.left: labelSecondaFila.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.bold: true
+                    anchors.leftMargin: 5
+                    anchors.topMargin: 8
+                    anchors.bottomMargin: 8
+                }
+
+                Label {
+                    id: labelQuartaFila
+                    width: 120
+                    text: qsTr("4° Fila")
+                    anchors.left: labelTerzaFila.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.bold: true
+                    anchors.leftMargin: 5
+                    anchors.topMargin: 8
+                    anchors.bottomMargin: 8
+                }
+
+                Label {
+                    id: labelQuintaFila
+                    width: 120
+                    text: qsTr("5° Fila")
+                    anchors.left: labelQuartaFila.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.bold: true
+                    anchors.leftMargin: 5
+                    anchors.topMargin: 8
+                    anchors.bottomMargin: 8
+                }
+
+                Label {
+                    id: labelSestaFila
+                    width: 120
+                    text: qsTr("6° Fila")
+                    anchors.left: labelQuintaFila.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.bold: true
+                    anchors.leftMargin: 5
+                    anchors.bottomMargin: 8
+                    anchors.topMargin: 8
+                }
+
+                Label {
+                    id: labelSettimaFila
+                    width: 120
+                    text: qsTr("7° Fila")
+                    anchors.left: labelSestaFila.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.bold: true
+                    anchors.leftMargin: 5
+                    anchors.topMargin: 8
+                    anchors.bottomMargin: 8
+                }
+
+                Label {
+                    id: labelOttavaFila
+                    width: 120
+                    text: qsTr("8° Fila")
+                    anchors.left: labelSettimaFila.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.bold: true
+                    anchors.leftMargin: 5
+                    anchors.bottomMargin: 8
+                    anchors.topMargin: 8
+                }
+
+                Label {
+                    id: labelNonaFila
+                    width: 120
+                    text: qsTr("9° Fila")
+                    anchors.left: labelOttavaFila.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.bold: true
+                    anchors.leftMargin: 5
+                    anchors.bottomMargin: 8
+                    anchors.topMargin: 8
+                }
             }
             Rectangle {
                 id: seaRect
@@ -529,6 +621,7 @@ Page {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.5}
+    D{i:0;formeditorZoom:0.75}D{i:27}D{i:54}D{i:58}D{i:59}D{i:60}D{i:61}D{i:62}D{i:63}
+D{i:64}D{i:65}D{i:66}D{i:57}
 }
 ##^##*/

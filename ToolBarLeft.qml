@@ -53,7 +53,7 @@ ToolBarLeftForm {
 
     Timer {
         interval: 500; running: true; repeat: true
-        onTriggered: dateTimeLabel.text = Qt.formatDateTime(new Date(),"yyyy-MM-dd hh:mm:ss").toString()
+        onTriggered: dateTimeLabel.text = Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
     }
 
 }

@@ -3,9 +3,13 @@ import QtQuick.Controls 2.12
 
 CellButtonForm {
     property alias cellButton: cellButton
-    property alias cellStatus: cellButton.isCellEmpty
+    property alias cellStatusEmpty: cellButton.isCellEmpty
     property bool isCellEmpty
     id:cellButton
+
+    Component.onCompleted: {
+        console.log(isCellEmpty)
+    }
 
     MouseArea {
             anchors.fill: parent
