@@ -3,19 +3,17 @@ import QtQuick.Controls 2.12
 
 CellButtonForm {
     property alias cellButton: cellButton
-    property alias cellStatusEmpty: cellButton.isCellEmpty
-    property bool isCellEmpty
     id:cellButton
 
     Component.onCompleted: {
-        console.log(isCellEmpty)
+        console.log(separatorRect.color)
     }
 
     MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: {
-                if (isCellEmpty === true) {
+                if (separatorRect.color == "#00ff00") {
                     console.log("cell "+ labelNumber.text  +" Clicked but Empty")
                     homeTicketForm.visible = true
                     homeTicketForm.labelUmbrella.text = labelNumber.text

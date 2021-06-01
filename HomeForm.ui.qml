@@ -57,7 +57,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
 
             }
@@ -80,7 +79,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -102,7 +100,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -124,7 +121,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -146,7 +142,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -168,7 +163,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -190,7 +184,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -213,7 +206,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -236,7 +228,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -259,7 +250,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -281,7 +271,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -303,7 +292,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -325,7 +313,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -347,7 +334,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -369,7 +355,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -391,7 +376,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -413,7 +397,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
 
@@ -436,7 +419,6 @@ Page {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
-                    cellStatusEmpty: cellStatusEmpty
                 }
             }
             Rectangle {

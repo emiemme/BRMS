@@ -5,7 +5,7 @@ HomeForm {
 
     property var rightList : [13, 20, 33, 40, 53, 60, 73, 80, 92, 98, 110, 116, 125, 129, 138, 142, 151, 155]
     property var leftList : [1, 12, 21, 32, 41, 52, 61, 72, 81, 91, 99, 109, 117, 124, 130, 137, 143, 150]
-    property var totalOmb : 155
+    property int totalOmb : 155
 
 
     Component.onCompleted: {
@@ -101,11 +101,6 @@ HomeForm {
 //                        console.log(Backend.m_ombStatus_list[colRIndex-1].b_omb_num +" == "+ Backend.m_ombStatus_list[colRIndex].b_client_name)
                         stackView.children[rightListIndex].model.get(indexListModel).clientName = Backend.m_ombStatus_list[colRIndex-1].b_client_name
                         stackView.children[rightListIndex].model.get(indexListModel).statusColor = Backend.m_ombStatus_list[colRIndex-1].b_color
-                        if (Backend.m_ombStatus_list[colRIndex-1].b_color === "#FF0000") {
-                           // stackView.children[rightListIndex].model.get(indexListModel).statusCell = false
-                        } else {
-                            stackView.children[rightListIndex].model.get(indexListModel).statusCell = true
-                        }
                     }
                     indexListModel++
                 }
@@ -120,12 +115,6 @@ HomeForm {
                     if(stackView.children[leftListIndex].model.get(indexListModel).cellNumber == Backend.m_ombStatus_list[colLIndex-1].b_omb_num) {
                         stackView.children[leftListIndex].model.get(indexListModel).clientName = Backend.m_ombStatus_list[colLIndex-1].b_client_name
                         stackView.children[leftListIndex].model.get(indexListModel).statusColor = Backend.m_ombStatus_list[colLIndex-1].b_color
-                        if (Backend.m_ombStatus_list[colRIndex-1].b_color === "#FF0000") {
-                            //stackView.children[leftListIndex].model.get(indexListModel).statusCell = false
-                        } else {
-                            stackView.children[leftListIndex].model.get(indexListModel).statusCell = true
-                        }
-                        console.log(Backend.m_ombStatus_list[colLIndex-1].b_omb_num +" == "+ stackView.children[leftListIndex].model.get(indexListModel).statusCell)
                     }
                     indexListModel++
                 }
@@ -146,7 +135,6 @@ HomeForm {
                 if(stackView.children[rightListIndex].model.get(indexListModel).cellNumber == currentCell) {
                     stackView.children[rightListIndex].model.get(indexListModel).clientName = clientName
                     stackView.children[rightListIndex].model.get(indexListModel).statusColor = statusColor
-                    stackView.children[rightListIndex].model.get(indexListModel).statusCell = true
                 }
                 indexListModel++
             }
@@ -160,7 +148,6 @@ HomeForm {
                 if(stackView.children[leftListIndex].model.get(indexListModel).cellNumber == currentCell) {
                     stackView.children[leftListIndex].model.get(indexListModel).clientName = clientName
                     stackView.children[leftListIndex].model.get(indexListModel).statusColor = statusColor
-                    stackView.children[leftListIndex].model.get(indexListModel).statusCell = true
                 }
                 indexListModel++
             }
@@ -175,7 +162,7 @@ HomeForm {
         for(var rightRow = 0; rightRow < rightList.length; rightRow+=2) {
             indexListModel = 0
             for(var colRIndex = rightList[rightRow+1]; colRIndex > rightList[rightRow]-1; colRIndex--){
-                stackView.children[rightListIndex].model.append({cellNumber: colRIndex, clientName: "Nomelungo", statusColor: "#d85409",statusCell: true} )
+                stackView.children[rightListIndex].model.append({cellNumber: colRIndex, clientName: "Nomelungo", statusColor: "#d85409"} )
                 //console.log(stackView.children[rightListIndex].model.get(indexListModel).cellNumber)
                 indexListModel++
             }
@@ -185,7 +172,7 @@ HomeForm {
         var leftListIndex = rightListIndex;
         for(var leftRow = 0; leftRow < leftList.length; leftRow+=2) {
             for(var colLIndex = leftList[leftRow+1]; colLIndex > leftList[leftRow]-1; colLIndex--){
-                stackView.children[leftListIndex].model.append({cellNumber: colLIndex, clientName: "Nomelungo", statusColor: "#d85409",statusCell: true} )
+                stackView.children[leftListIndex].model.append({cellNumber: colLIndex, clientName: "Nomelungo", statusColor: "#d85409"} )
                 //stackView.children[leftListIndex].model.labelClientName.text = "ciao"
             }
             leftListIndex++
