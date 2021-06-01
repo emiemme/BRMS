@@ -16,8 +16,8 @@ function displayInfo(omb_num) {
                 labelNLettini.text = Backend.m_booking_list[i].b_lettini
                 labelNSdraio.text = Backend.m_booking_list[i].b_sdraio
                 labelNCabina.text = Backend.m_booking_list[i].b_cabina
-                labelArriveDate.text = Backend.m_booking_list[i].b_arriveDate
-                labelDepartureDate.text = Backend.m_booking_list[i].b_departureDate
+                labelArriveDate.text = new Date(Backend.m_booking_list[i].b_arriveDate).toISOString().split('T')[0]
+                labelDepartureDate.text = new Date(Backend.m_booking_list[i].b_departureDate).toISOString().split('T')[0]
             }
             var row = { checked: false ,
                         name_surname: Backend.m_booking_list[i].b_client_name +" "+ Backend.m_booking_list[i].b_client_surname ,

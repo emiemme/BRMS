@@ -20,8 +20,8 @@ public:
         Q_PROPERTY(int b_lettini MEMBER lettini)
         Q_PROPERTY(int b_sdraio MEMBER sdraio)
         Q_PROPERTY(int b_cabina MEMBER cabina)
-        Q_PROPERTY(QDateTime b_arriveDate MEMBER arriveDate)
-        Q_PROPERTY(QDateTime b_departureDate MEMBER departureDate)
+        Q_PROPERTY(QDate b_arriveDate MEMBER arriveDate)
+        Q_PROPERTY(QDate b_departureDate MEMBER departureDate)
         Q_PROPERTY(QString b_status MEMBER status)
         Q_PROPERTY(QString b_operatore MEMBER operatore)
 
@@ -33,8 +33,8 @@ public:
         int         lettini;
         int         sdraio;
         int         cabina;
-        QDateTime   arriveDate;
-        QDateTime   departureDate;
+        QDate       arriveDate;
+        QDate       departureDate;
         QString     status;
         QString     operatore;
 };

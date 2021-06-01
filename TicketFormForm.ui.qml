@@ -6,7 +6,8 @@ import Qt.labs.calendar 1.0
 Item {
     id: ticketForm
     width: 400
-    height: 400
+    height: 450
+    property alias checkBoxDaily: checkBoxDaily
     property alias textDateDepartPlaceholderText: textDateDepart.placeholderText
     property alias textDateArrivePlaceholderText: textDateArrive.placeholderText
     property alias textFieldSurnamePlaceholderText: textFieldSurname.placeholderText
@@ -49,12 +50,12 @@ Item {
                 y: 90
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.top: textFieldName.bottom
+                anchors.top: checkBoxDaily.bottom
                 anchors.bottom: rectDivider.top
                 anchors.bottomMargin: 91
                 anchors.leftMargin: 14
                 anchors.rightMargin: 6
-                anchors.topMargin: 5
+                anchors.topMargin: 10
                 columnSpacing: 1
                 rowSpacing: 1
                 boundsBehavior: Flickable.StopAtBounds
@@ -113,29 +114,37 @@ Item {
 
             GeneralButton {
                 id: closeTicketButton
-                x: 8
                 y: 336
                 width: 100
                 height: 50
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: 15
+                anchors.bottomMargin: 15
             }
 
             GeneralButton {
                 id: confirmTicketButton
                 x: 292
-                y: 336
+                anchors.right: parent.right
+                anchors.top: rectDivider.bottom
+                anchors.bottom: parent.bottom
+                anchors.topMargin: 5
+                anchors.bottomMargin: 15
+                anchors.rightMargin: 15
             }
 
             Rectangle {
                 id: rectDivider
                 x: 10
-                y: 321
+                y: 320
                 height: 10
                 color: "#0c3483"
                 radius: 2.5
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: closeTicketButton.top
-                anchors.bottomMargin: 5
+                anchors.bottomMargin: 6
                 anchors.leftMargin: 10
                 anchors.rightMargin: 10
             }
@@ -143,13 +152,27 @@ Item {
             TextField {
                 id: textFieldName
                 x: 116
-                y: 42
+                y: 30
                 width: 113
                 height: 43
                 anchors.right: textFieldSurname.left
-                anchors.rightMargin: 30
+                anchors.rightMargin: 31
                 hoverEnabled: false
-                placeholderText: qsTr("Daily")
+                placeholderText: qsTr("Giornaliero")
+            }
+
+            TextField {
+                id: textFieldSurname
+                x: 260
+                y: 30
+                width: 115
+                height: 43
+                visible: false
+                text: ""
+                anchors.right: parent.right
+                anchors.rightMargin: 25
+                placeholderText: qsTr("Cognome")
+                hoverEnabled: false
             }
 
             Label {
@@ -163,7 +186,9 @@ Item {
                 anchors.top: parent.top
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignVCenter
-                anchors.leftMargin: 5
+                font.bold: true
+                font.pointSize: 14
+                anchors.leftMargin: 21
                 anchors.rightMargin: 5
                 anchors.topMargin: 5
             }
@@ -171,15 +196,15 @@ Item {
             Label {
                 id: labelClientName
                 x: 14
-                y: 49
+                y: 37
                 height: 30
                 text: qsTr("Nome Cliente:")
                 anchors.left: parent.left
                 anchors.right: textFieldName.left
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                anchors.rightMargin: 22
-                anchors.leftMargin: 14
+                anchors.rightMargin: 16
+                anchors.leftMargin: 20
             }
 
             Label {
@@ -218,6 +243,7 @@ Item {
                 anchors.right: textDateDepart.left
                 anchors.top: arriveLabel.bottom
                 anchors.bottom: rectDivider.top
+                horizontalAlignment: Text.AlignHCenter
                 anchors.rightMargin: 80
                 property string property0: "none.none"
                 font.hintingPreference: Font.PreferFullHinting
@@ -236,6 +262,7 @@ Item {
                 anchors.right: parent.right
                 anchors.top: departLabel.bottom
                 anchors.bottom: rectDivider.top
+                horizontalAlignment: Text.AlignHCenter
                 anchors.topMargin: 5
                 anchors.bottomMargin: 6
                 anchors.rightMargin: 20
@@ -243,18 +270,6 @@ Item {
                 inputMethodHints: inputMethodHints
             }
 
-            TextField {
-                id: textFieldSurname
-                x: 260
-                y: 42
-                width: 115
-                height: 43
-                text: ""
-                anchors.right: parent.right
-                anchors.rightMargin: 25
-                placeholderText: qsTr("Daily")
-                hoverEnabled: false
-            }
 
             Label {
                 id: labelOmb
@@ -268,6 +283,24 @@ Item {
                 anchors.topMargin: 5
                 anchors.leftMargin: 5
             }
+
+            CheckBox {
+                id: checkBoxDaily
+                height: 48
+                text: qsTr("Abbonamento")
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: textFieldName.bottom
+                anchors.topMargin: 10
+                anchors.rightMargin: 240
+                anchors.leftMargin: 14
+            }
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;formeditorZoom:1.659999966621399}D{i:18}D{i:19}D{i:30}
+}
+##^##*/

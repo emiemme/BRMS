@@ -6,7 +6,7 @@ CellButtonForm {
     id:cellButton
 
     Component.onCompleted: {
-        console.log(separatorRect.color)
+        //console.log(separatorRect.color)
     }
 
     MouseArea {

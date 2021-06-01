@@ -149,51 +149,53 @@ Item {
 
             GeneralButton {
                 id: modifyInfoButton
+                width: 100
                 height: 60
-                anchors.left: addInfoButton.right
+                anchors.right: removeInfoButton.left
                 anchors.top: rectDivider1.bottom
                 anchors.bottom: parent.bottom
-                anchors.leftMargin: 10
-                anchors.bottomMargin: 10
-                anchors.topMargin: 10
+                anchors.rightMargin: 15
+                anchors.bottomMargin: 15
+                anchors.topMargin: 6
                 labelButton.text: "Modifica"
             }
 
             GeneralButton {
                 id: removeInfoButton
+                width: 100
                 height: 60
-                anchors.left: modifyInfoButton.right
+                anchors.right: parent.right
                 anchors.top: rectDivider1.bottom
                 anchors.bottom: parent.bottom
-                anchors.leftMargin: 10
-                anchors.bottomMargin: 10
-                anchors.topMargin: 10
+                anchors.rightMargin: 15
+                anchors.bottomMargin: 15
+                anchors.topMargin: 5
                 labelButton.text: "Rimuovi"
             }
 
             GeneralButton {
                 id: closeinfoButton
-                height: 60
-                anchors.left: removeInfoButton.right
-                anchors.right: parent.right
+                width: 100
+                anchors.left: parent.left
                 anchors.top: rectDivider1.bottom
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 10
-                anchors.rightMargin: 10
-                anchors.leftMargin: 157
-                anchors.topMargin: 10
+                anchors.bottomMargin: 15
+                anchors.leftMargin: 15
+                anchors.topMargin: 11
                 labelButton.text: "Annulla"
             }
 
             GeneralButton {
                 id: addInfoButton
                 height: 60
-                anchors.left: parent.left
+                anchors.left: closeinfoButton.right
+                anchors.right: modifyInfoButton.left
                 anchors.top: rectDivider1.bottom
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 10
-                anchors.topMargin: 10
-                anchors.leftMargin: 13
+                anchors.rightMargin: 15
+                anchors.bottomMargin: 15
+                anchors.topMargin: 6
+                anchors.leftMargin: 140
                 labelButton.text: "Aggiungi"
             }
 

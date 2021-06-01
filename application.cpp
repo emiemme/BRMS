@@ -53,8 +53,8 @@ bool Application::insertNewBooking(int ticketNumber, int omb_num, QString client
     newBooking.lettini = lettini;
     newBooking.sdraio = sdraio;
     newBooking.cabina = cabina;
-    newBooking.arriveDate = QDateTime::fromString(arriveDate, "yyyy-MM-dd");
-    newBooking.departureDate = QDateTime::fromString(departureDate, "yyyy-MM-dd");;
+    newBooking.arriveDate = QDate::fromString(arriveDate, "yyyy-MM-dd");
+    newBooking.departureDate = QDate::fromString(departureDate, "yyyy-MM-dd");;
     newBooking.status = status;
     newBooking.operatore = operatore;
 

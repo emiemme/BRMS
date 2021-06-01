@@ -24,6 +24,22 @@ HomeForm {
          homeTicketForm.visible = false
     }
 
+    homeTicketForm.checkBoxDaily.onCheckedChanged: {
+        console.log (homeTicketForm.checkBoxDaily.checked)
+        if(homeTicketForm.checkBoxDaily.checked) {
+            homeTicketForm.textFieldSurname.visible = true
+            homeTicketForm.textFieldName.placeholderText = "Nome"
+            homeTicketForm.textDateArrive.text =  Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
+            homeTicketForm.textDateDepart.text =  Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
+        } else {
+            homeTicketForm.textFieldSurname.visible = false
+            homeTicketForm.textFieldName.placeholderText = "Giornaliero"
+            homeTicketForm.textDateArrive.text = ""
+            homeTicketForm.textDateDeparture.text = ""
+        }
+
+    }
+
     homeTicketForm.confirmTicketButton.mouseAreaButton.onClicked: {
         console.log("Confirmed")
 
@@ -59,12 +75,18 @@ HomeForm {
         var departureDateCmp = new Date(departureDate)
 
         //console.log(arriveDateCmp.getTime()  + " == " + currentDate.getTime() + " == " + departureDateCmp.getTime() )
-        if( currentDate.getTime() >= arriveDateCmp.getTime() && currentDate.getTime() <= departureDateCmp ) {
-                status =    "Arrived"
-                cellColor = "#ff0000"
+        if(!homeTicketForm.checkBoxDaily.checked) {
+           console.log("giornaliero")
+            status =    "Daily"
+            cellColor = "#ff0000"
         } else {
-                status =    "Not Arrived"
-                cellColor = "#00ff00"
+            if( currentDate.getTime() >= arriveDateCmp.getTime() && currentDate.getTime() <= departureDateCmp ) {
+                    status =    "Arrived"
+                    cellColor = "#ff0000"
+            } else {
+                    status =    "Not Arrived"
+                    cellColor = "#00ff00"
+            }
         }
 
         var operatore =      "Maria"

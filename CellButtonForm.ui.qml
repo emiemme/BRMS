@@ -68,14 +68,16 @@ Item {
         Label {
             id: labelClientName
             x: 47
-            y: 0
             width: 73
-            height: 30
             text: qsTr("")
             anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             wrapMode: Text.WordWrap
+            anchors.topMargin: 0
+            anchors.bottomMargin: 0
             anchors.rightMargin: 0
         }
     }
@@ -83,6 +85,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:3}
+    D{i:0;formeditorZoom:3}D{i:5}
 }
 ##^##*/

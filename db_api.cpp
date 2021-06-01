@@ -213,8 +213,8 @@ QList <booking> DB_api::selectOmbBooking(int omb_num)
                   _booking.lettini = query.value(4).toInt();
                   _booking.sdraio = query.value(5).toInt();
                   _booking.cabina = query.value(6).toInt();
-                  _booking.arriveDate = query.value(7).toDateTime();
-                  _booking.departureDate = query.value(8).toDateTime();
+                  _booking.arriveDate = query.value(7).toDate();
+                  _booking.departureDate = query.value(8).toDate();
                   _booking.status = query.value(9).toString();
                   _booking.operatore = query.value(10).toString();
 
@@ -250,7 +250,7 @@ QList <ombStatus>  DB_api::selectAllOmbStatus (int total_omb, QDateTime currentD
                     //qDebug()<<"status= "<< _ombStatus.status;
                     //qDebug()<<"client_name= "<< _ombStatus.client_name;
                 }
-                if(_ombStatus.status == "Arrived") {
+                if(_ombStatus.status == "Arrived" || _ombStatus.status == "Daily") {
                     color = "#FF0000";
                 } else if (_ombStatus.status == "Not Arrived") {
                     color = "#FFFF00";
@@ -280,36 +280,63 @@ bool DB_api::updateAllStatusBooking(int total_omb,QDateTime currentDate)
     QString _currentDateString = currentDate.toString("yyyy-MM-dd");
     QString currentQuery;
     for (int _omb_num = 1; _omb_num < total_omb; _omb_num++ ) {
-        currentQuery = "UPDATE Omb_"+ QString::number(_omb_num)+" SET Status = REPLACE(Status, \"Not Arrived\", \"Arrived\") WHERE Data_Arrivo < '"+_currentDateString+"' AND Data_Partenza > '"+_currentDateString + "'" ;
-        if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
-            //qDebug()<<"query executed";
-        } else {
-            qDebug("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
-                   query.lastError().text().toLatin1().data());
-        }
 
-        currentQuery = "UPDATE Omb_"+ QString::number(_omb_num)+" SET Status = REPLACE(Status, \"Not Arrived\", \"Incoming\") WHERE Data_Arrivo = '"+_currentDateString+"' AND Data_Partenza > '"+_currentDateString + "'" ;
-        if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
-            //qDebug()<<"query executed";
-        } else {
-            qDebug("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
-                   query.lastError().text().toLatin1().data());
-        }
 
-        currentQuery = "UPDATE Omb_"+ QString::number(_omb_num)+" SET Status = REPLACE(Status, \"Arrived\", \"Leaving\") WHERE Data_Arrivo <= '"+_currentDateString+"' AND Data_Partenza = '"+_currentDateString + "'";
+        currentQuery = "SELECT Status FROM Omb_" + QString::number(_omb_num+1) + " ORDER BY Data_Arrivo" ;
+        //qDebug()<<currentQuery;
         if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
-            //qDebug()<<"query executed";
-        } else {
-            qDebug("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
-                   query.lastError().text().toLatin1().data());
-        }
+            QString currentStatus;
+            while (query.next()) {
+                currentStatus      =    query.value(0).toString();
+                if(currentStatus == "Not Arrived") {
+                    currentQuery = "UPDATE Omb_"+ QString::number(_omb_num)+" SET Status = REPLACE(Status, \"Not Arrived\", \"Arrived\") WHERE Data_Arrivo < '"+_currentDateString+"' AND Data_Partenza > '"+_currentDateString + "'" ;
+                    if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
+                        //qDebug()<<"query executed";
+                    } else {
+                        qDebug("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
+                               query.lastError().text().toLatin1().data());
+                    }
+                    currentQuery = "UPDATE Omb_"+ QString::number(_omb_num)+" SET Status = REPLACE(Status, \"Not Arrived\", \"Incoming\") WHERE Data_Arrivo = '"+_currentDateString+"' AND Data_Partenza > '"+_currentDateString + "'" ;
+                    if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
+                        //qDebug()<<"query executed";
+                    } else {
+                        qDebug("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
+                               query.lastError().text().toLatin1().data());
+                    }
+                } else if(currentStatus == "Arrived") {
 
-        currentQuery = "UPDATE Omb_"+ QString::number(_omb_num)+" SET Status = REPLACE(Status, \"Leaving\", \"Out\") WHERE Data_Partenza < '"+_currentDateString+ "'" ;
-        if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
-            //qDebug()<<"query executed";
-        } else {
+                    currentQuery = "UPDATE Omb_"+ QString::number(_omb_num)+" SET Status = REPLACE(Status, \"Arrived\", \"Leaving\") WHERE Data_Arrivo <= '"+_currentDateString+"' AND Data_Partenza = '"+_currentDateString + "'";
+                    if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
+                        //qDebug()<<"query executed";
+                    } else {
+                        qDebug("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
+                               query.lastError().text().toLatin1().data());
+                    }
+                } else if(currentStatus == "Leaving") {
+
+                    currentQuery = "UPDATE Omb_"+ QString::number(_omb_num)+" SET Status = REPLACE(Status, \"Leaving\", \"Out\") WHERE Data_Partenza < '"+_currentDateString+ "'" ;
+                    if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
+                        //qDebug()<<"query executed";
+                    } else {
+                        qDebug("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
+                               query.lastError().text().toLatin1().data());
+                    }
+                } else if(currentStatus == "Daily") {
+
+                    currentQuery = "UPDATE Omb_"+ QString::number(_omb_num)+" SET Status = REPLACE(Status, \"Daily\", \"Out\") WHERE Data_Partenza < '"+_currentDateString+ "'" ;
+                    if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
+                        //qDebug()<<"query executed";
+                    } else {
+                        qDebug("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
+                               query.lastError().text().toLatin1().data());
+                    }
+                }
+            }
+
+        }else {
             qDebug("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
                    query.lastError().text().toLatin1().data());
+            break;
         }
     }
     qDebug()<<"FINITO!!!";
