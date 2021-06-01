@@ -252,7 +252,7 @@ QList <ombStatus>  DB_api::selectAllOmbStatus (int total_omb, QDateTime currentD
                 }
                 if(_ombStatus.status == "Arrived" || _ombStatus.status == "Daily") {
                     color = "#FF0000";
-                } else if (_ombStatus.status == "Not Arrived") {
+                } else if (_ombStatus.status == "Not Arrived" || _ombStatus.status == "Incoming") {
                     color = "#FFFF00";
                 } else {
                     color = "#00FF00";
