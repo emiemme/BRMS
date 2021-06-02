@@ -5,6 +5,7 @@ import Qt.labs.qmlmodels 1.0
 Item {
     width: 600
     height: 600
+    property alias checkBoxGroup: checkBoxGroup
     property alias tableModelInfo: tableModelInfo
     property alias tableItems: tableItems
     property alias labelUmbrella: labelUmbrella
@@ -18,7 +19,7 @@ Item {
     property alias closeinfoButton: closeinfoButton
     property alias removeInfoButton: removeInfoButton
     property alias modifyInfoButton: modifyInfoButton
-
+    ButtonGroup { id: checkBoxGroup }
     Rectangle {
         id: backgroundRect
         color: "#f6d365"
@@ -28,6 +29,7 @@ Item {
         anchors.bottomMargin: 0
         anchors.leftMargin: 0
         anchors.topMargin: 0
+
         MouseArea {
             id: mouseArea
             anchors.fill: parent
@@ -36,52 +38,119 @@ Item {
                 id: tableItems
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.top: labelBookingList.bottom
+                anchors.top: header.bottom
                 anchors.bottom: rectDivider1.top
+                anchors.topMargin: 1
                 delegate:
                     DelegateChooser {
                     DelegateChoice {
-                        CheckBox {
-                            onToggled: model.display = checked
+                        Rectangle {
+                            implicitWidth: 58
+                            implicitHeight: 20
+
+                            CheckBox {
+                                anchors.fill: parent
+                                checked: model.display
+                                onToggled: model.display = checked
+                                ButtonGroup.group: checkBoxGroup
+                            }
                         }
                         column: 0
                     }
 
                     DelegateChoice {
-                        Label {
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
+                        Rectangle {
+                            implicitWidth: 75
+                            implicitHeight: 40
+                            Label {
+                                text: model.display
+                                anchors.fill: parent
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                wrapMode: Text.WordWrap
+                            }
                         }
                         column: 1
                     }
-
                     DelegateChoice {
-                        Label {
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
+                        Rectangle {
+                            implicitWidth: 75
+                            implicitHeight: 40
+                            Label {
+                                text: model.display
+                                anchors.fill: parent
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                wrapMode: Text.WordWrap
+                            }
                         }
                         column: 2
                     }
+
                     DelegateChoice {
-                        Label {
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
+                        Rectangle {
+                            implicitWidth: 100
+                            implicitHeight: 40
+                            Label {
+                                text: model.display
+                                anchors.fill: parent
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
                         }
                         column: 3
                     }
                     DelegateChoice {
-                        Label {
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
+                        Rectangle {
+                            implicitWidth: 100
+                            implicitHeight: 40
+                            Label {
+                                text: model.display
+                                anchors.fill: parent
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
                         }
                         column: 4
                     }
                     DelegateChoice {
-                        Label {
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
+                        Rectangle {
+                            implicitWidth: 50
+                            implicitHeight: 40
+                            Label {
+                                text: model.display
+                                anchors.fill: parent
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
                         }
                         column: 5
+                    }
+                    DelegateChoice {
+                        Rectangle {
+                            implicitWidth: 50
+                            implicitHeight: 40
+                            Label {
+                                text: model.display
+                                anchors.fill: parent
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                        }
+                        column: 6
+                    }
+                    DelegateChoice {
+                        Rectangle {
+                            implicitWidth: 50
+                            implicitHeight: 40
+                            Label {
+                                text: model.display
+                                anchors.fill: parent
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                        }
+                        column: 7
                     }
                 }
                 anchors.leftMargin: 15
@@ -91,9 +160,11 @@ Item {
                     TableModelColumn {
                         display: "checked"
                     }
-
                     TableModelColumn {
-                        display: "name_surname"
+                        display: "name"
+                    }
+                    TableModelColumn {
+                        display: "surname"
                     }
 
                     TableModelColumn {
@@ -108,13 +179,15 @@ Item {
                     TableModelColumn {
                         display: "sdraio"
                     }
+                    TableModelColumn {
+                        display: "cabina"
+                    }
                 }
                 anchors.rightMargin: 15
-                anchors.topMargin: 5
-                anchors.bottomMargin: 15
+                anchors.bottomMargin: 16
                 implicitWidth: 30
                 rowSpacing: 1
-                columnSpacing: 1
+                columnSpacing: 2
             }
 
 
@@ -260,7 +333,7 @@ Item {
                 id: labelNameSurname
                 width: 85
                 height: 30
-                text: qsTr("Label")
+                text: qsTr("")
                 anchors.left: labelClientName.right
                 anchors.top: parent.top
                 horizontalAlignment: Text.AlignLeft
@@ -325,7 +398,7 @@ Item {
                 id: labelNLettini
                 width: 85
                 height: 30
-                text: qsTr("Label")
+                text: qsTr("")
                 anchors.left: labelLettini.right
                 anchors.top: labelNameSurname.bottom
                 horizontalAlignment: Text.AlignLeft
@@ -338,7 +411,7 @@ Item {
                 id: labelNSdraio
                 width: 85
                 height: 30
-                text: qsTr("Label")
+                text: qsTr("")
                 anchors.left: labelSdraio.right
                 anchors.top: labelNLettini.bottom
                 horizontalAlignment: Text.AlignLeft
@@ -351,7 +424,7 @@ Item {
                 id: labelNCabina
                 width: 85
                 height: 30
-                text: qsTr("Label")
+                text: qsTr("")
                 anchors.left: labelCabina.right
                 anchors.top: labelNSdraio.bottom
                 horizontalAlignment: Text.AlignLeft
@@ -363,7 +436,7 @@ Item {
             Label {
                 id: labelArriveDate
                 height: 30
-                text: qsTr("Label")
+                text: qsTr("")
                 anchors.left: labelArrive.right
                 anchors.right: parent.right
                 anchors.top: parent.top
@@ -377,7 +450,7 @@ Item {
             Label {
                 id: labelDepartureDate
                 height: 30
-                text: qsTr("Label")
+                text: qsTr("")
                 anchors.left: labelDeparture.right
                 anchors.right: parent.right
                 anchors.top: labelArriveDate.bottom
@@ -398,6 +471,120 @@ Item {
                 anchors.topMargin: 5
                 anchors.rightMargin: 449
                 anchors.leftMargin: 15
+            }
+
+            Rectangle {
+                id: header
+                height: 22
+                color: "#ffffff"
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: labelBookingList.bottom
+                anchors.leftMargin: 15
+                anchors.rightMargin: 15
+                anchors.topMargin: 5
+
+                Label {
+                    id: labelHeaderSelezione
+                    width: 60
+                    text: qsTr("Seleziona")
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.topMargin: 0
+                    anchors.bottomMargin: 0
+                    anchors.leftMargin: 0
+                }
+
+                Label {
+                    id: labelHeaderNome
+                    width: 150
+                    text: qsTr("Nome")
+                    anchors.left: labelHeaderSelezione.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.leftMargin: 2
+                    anchors.bottomMargin: 0
+                    anchors.topMargin: 0
+                }
+
+                Label {
+                    id: labelHeaderArrivo
+                    x: 205
+                    y: 3
+                    width: 100
+                    text: qsTr("Arrivo")
+                    anchors.left: labelHeaderNome.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.leftMargin: 2
+                    anchors.topMargin: 0
+                    anchors.bottomMargin: 0
+                }
+
+                Label {
+                    id: labelHeaderDepature
+                    width: 100
+                    text: qsTr("Partenza")
+                    anchors.left: labelHeaderArrivo.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.leftMargin: 2
+                    anchors.topMargin: 0
+                    anchors.bottomMargin: 0
+                }
+
+                Label {
+                    id: labelHeaderLettini
+                    width: 50
+                    text: qsTr("Lettini")
+                    anchors.left: labelHeaderDepature.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.leftMargin: 2
+                    anchors.topMargin: 0
+                    anchors.bottomMargin: 0
+                }
+
+                Label {
+                    id: labelHeaderSdraio
+                    width: 50
+                    text: qsTr("Sdraio")
+                    anchors.left: labelHeaderLettini.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.leftMargin: 2
+                    anchors.topMargin: 0
+                    anchors.bottomMargin: 0
+                }
+
+                Label {
+                    id: labelHeaderCabina
+                    text: qsTr("Cabina")
+                    anchors.left: labelHeaderSdraio.right
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.rightMargin: 0
+                    anchors.leftMargin: 2
+                    anchors.topMargin: 0
+                    anchors.bottomMargin: 0
+                }
+
             }
 
 

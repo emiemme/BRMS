@@ -20,9 +20,9 @@ bool Application::selectAllStatus(int total_omb, QString currentDate)
 {
      bool fRes = false;
      qml_ombStatus_list = db->selectAllOmbStatus(total_omb,QDateTime::fromString(currentDate, "yyyy-MM-dd"));
-     qDebug()<<qml_ombStatus_list.count();
+     //qDebug()<<qml_ombStatus_list.count();
      for(int i=0;i < qml_ombStatus_list.count(); i++) {
-        qDebug()<<qml_ombStatus_list.at(i).omb_num<<"-->"<<qml_ombStatus_list.at(i).status<<"-->"<<qml_ombStatus_list.at(i).color<<"-->"<<qml_ombStatus_list.at(i).client_name;
+        //qDebug()<<qml_ombStatus_list.at(i).omb_num<<"-->"<<qml_ombStatus_list.at(i).status<<"-->"<<qml_ombStatus_list.at(i).color<<"-->"<<qml_ombStatus_list.at(i).client_name;
      }
      if (qml_ombStatus_list.first().omb_num < 1 || qml_ombStatus_list.first().omb_num > total_omb) {
          fRes = false;
@@ -35,7 +35,7 @@ bool Application::selectAllStatus(int total_omb, QString currentDate)
 bool Application::updateStatusGrid(int total_omb, QDateTime dateTime)
 {
     bool fRes = db->updateAllStatusBooking(total_omb,dateTime);
-    qDebug()<<fRes;
+    //qDebug()<<fRes;
     return fRes;
 }
 

@@ -12,6 +12,7 @@ HomeForm {
         addRows()
         homeTicketForm.closeTicketButton.labelButton.text = "Annulla"
         homeTicketForm.confirmTicketButton.labelButton.text = "Conferma"
+        homeTicketForm.bookingTicketButton.labelButton.text = "Prenotazioni"
         var currentDate = Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
         updateGrid(totalOmb, currentDate)
         Backend.updateStatusGrid(totalOmb, currentDate)
@@ -40,6 +41,15 @@ HomeForm {
 
     }
 
+    homeTicketForm.bookingTicketButton.mouseAreaButton.onClicked: {
+        console.log("Prenotazioni")
+
+        homeTicketForm.visible = false
+        infoCell.visible = true
+        infoCell.displayInfo(homeTicketForm.labelUmbrella.text)
+        infoCell.la
+    }
+
     homeTicketForm.confirmTicketButton.mouseAreaButton.onClicked: {
         console.log("Confirmed")
 
@@ -55,9 +65,20 @@ HomeForm {
            client_surname  =  "None"
         }
 
-        var lettini =        homeTicketForm.tableModelTicket.rows[1].amount
-        var sdraio =         homeTicketForm.tableModelTicket.rows[2].amount
-        var cabina =         0
+        var lettini
+        if(homeTicketForm.tableModelTicket.rows[1].checked) {
+           lettini = homeTicketForm.tableModelTicket.rows[1].amount
+        } else {
+           lettini = 0
+        }
+        var sdraio
+        if(homeTicketForm.tableModelTicket.rows[2].checked) {
+            sdraio = homeTicketForm.tableModelTicket.rows[2].amount
+        } else {
+            sdraio = 0
+        }
+
+        var cabina = 0
 
         var arriveDate = homeTicketForm.textDateArrive.text
         if (arriveDate === "" || arriveDate  === null || arriveDate === undefined) {
@@ -107,6 +128,52 @@ HomeForm {
         console.log("Clicked")
 
         infoCell.visible = false
+    }
+
+    infoCell.addInfoButton.mouseAreaButton.onClicked: {
+        infoCell.visible = false
+        homeTicketForm.visible = true
+
+        homeTicketForm.labelUmbrella.text = infoCell.labelUmbrella.text
+        homeTicketForm.textFieldName.text = ""
+        homeTicketForm.textFieldSurname.text = ""
+        homeTicketForm.textDateArrive.text = ""
+        homeTicketForm.textDateDepart.text = ""
+    }
+
+    infoCell.modifyInfoButton.mouseAreaButton.onClicked: {
+        infoCell.visible = false
+        homeTicketForm.visible = true
+
+        homeTicketForm.labelUmbrella.text = infoCell.labelUmbrella.text
+        for(var i = 0; i< infoCell.checkBoxGroup.buttons.length; i++) {
+
+            if (infoCell.checkBoxGroup.buttons[i].checked) {
+                homeTicketForm.checkBoxDaily.checked = true
+                homeTicketForm.textFieldName.text =      infoCell.tableModelInfo.rows[i].name
+                homeTicketForm.textFieldSurname.text =   infoCell.tableModelInfo.rows[i].surname
+                homeTicketForm.textDateArrive.text =     infoCell.tableModelInfo.rows[i].arrive_date
+                homeTicketForm.textDateDepart.text =     infoCell.tableModelInfo.rows[i].departure_date
+                var row
+                if(infoCell.tableModelInfo.rows[i].lettini > 0) {
+                    row = {checked: true, currentText: "Lettini", amount: infoCell.tableModelInfo.rows[i].lettini}
+                    homeTicketForm.tableModelTicket.setRow(1,row)
+                } else {
+                    row = {checked: false, currentText: "Lettini", amount: 0}
+                    homeTicketForm.tableModelTicket.setRow(1,row)
+                }
+                if(infoCell.tableModelInfo.rows[i].sdraio > 0) {
+                    row = {checked: true, currentText: "Sdraio", amount: infoCell.tableModelInfo.rows[i].sdraio}
+                    homeTicketForm.tableModelTicket.setRow(2,row)
+                } else {
+                    row = {checked: false, currentText: "Sdraio", amount: 0}
+                    homeTicketForm.tableModelTicket.setRow(2,row)
+                }
+                break
+            }
+        }
+
+
     }
 
 

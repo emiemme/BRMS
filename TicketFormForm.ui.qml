@@ -7,6 +7,7 @@ Item {
     id: ticketForm
     width: 400
     height: 450
+    property alias bookingTicketButton: bookingTicketButton
     property alias checkBoxDaily: checkBoxDaily
     property alias textDateDepartPlaceholderText: textDateDepart.placeholderText
     property alias textDateArrivePlaceholderText: textDateArrive.placeholderText
@@ -294,6 +295,18 @@ Item {
                 anchors.topMargin: 10
                 anchors.rightMargin: 240
                 anchors.leftMargin: 14
+            }
+
+            GeneralButton {
+                id: bookingTicketButton
+                x: 179
+                y: 385
+                anchors.right: confirmTicketButton.left
+                anchors.top: rectDivider.bottom
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 15
+                anchors.rightMargin: 5
+                anchors.topMargin: 5
             }
         }
     }

@@ -17,7 +17,15 @@ CellButtonForm {
                     console.log("cell "+ labelNumber.text  +" Clicked but Empty")
                     homeTicketForm.visible = true
                     homeTicketForm.labelUmbrella.text = labelNumber.text
-                    homeTicketForm.textFieldName.text = cellButton.labelClientName.text
+                    homeTicketForm.textFieldName.text = ""
+                    homeTicketForm.textFieldSurname.text = ""
+                    homeTicketForm.textDateArrive.text = ""
+                    homeTicketForm.textDateDepart.text = ""
+                    homeTicketForm.checkBoxDaily.checked = false
+                    var row = {checked: true, currentText: "Lettini", amount: 2}
+                    homeTicketForm.tableModelTicket.setRow(1,row)
+                    row = {checked: false, currentText: "Sdraio", amount: 0}
+                    homeTicketForm.tableModelTicket.setRow(2,row)
                 } else {
                     console.log("cell "+ labelNumber.text  +" Clicked but not Empty")
                     infoCell.visible = true
