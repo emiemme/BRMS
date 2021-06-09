@@ -5,10 +5,13 @@ Item {
     id: toolbarleftform
     width: 100
     height: 400
+    property alias infoAreaArrive: infoAreaArrive
+    property alias infoAreaDepart: infoAreaDepart
+    property alias infoAreaFreeOmb: infoAreaFreeOmb
+    property alias infoArea3: infoArea3
     property alias toolbarleftform: toolbarleftform
     property alias textAreaDate: textAreaDate
     property alias buttonUpdateDB: buttonUpdateDB
-    property alias infoArea: infoArea
     property alias toolButtonMenu: toolButtonMenu
     property alias dateTimeLabel: dateTimeLabel
 
@@ -28,16 +31,6 @@ Item {
             }
         }
 
-        ToolbarInfoCell {
-            id: infoArea
-            height: 50
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: toolBar.bottom
-            anchors.topMargin: 10
-            anchors.leftMargin: 8
-            anchors.rightMargin: 8
-        }
 
         ToolBar {
             id: toolBar
@@ -78,24 +71,35 @@ Item {
         }
 
         ToolbarInfoCell {
-            id: infoArea1
+            id: infoAreaFreeOmb
+            height: 50
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: toolBar.bottom
+            anchors.topMargin: 10
+            anchors.leftMargin: 8
+            anchors.rightMargin: 8
+        }
+
+        ToolbarInfoCell {
+            id: infoAreaArrive
             y: 89
             height: 50
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.top: infoArea.bottom
+            anchors.top: infoAreaFreeOmb.bottom
             anchors.topMargin: 10
             anchors.rightMargin: 8
             anchors.leftMargin: 8
         }
 
         ToolbarInfoCell {
-            id: infoArea2
+            id: infoAreaDepart
             y: 89
             height: 50
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.top: infoArea1.bottom
+            anchors.top: infoAreaArrive.bottom
             anchors.topMargin: 10
             anchors.rightMargin: 8
             anchors.leftMargin: 8
@@ -107,7 +111,7 @@ Item {
             height: 50
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.top: infoArea2.bottom
+            anchors.top: infoAreaDepart.bottom
             anchors.topMargin: 10
             anchors.rightMargin: 8
             anchors.leftMargin: 8
@@ -138,6 +142,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:1.66}D{i:5}D{i:7}D{i:8}D{i:6}D{i:9}D{i:10}D{i:11}D{i:1}
+    D{i:0;formeditorZoom:1.66}
 }
 ##^##*/

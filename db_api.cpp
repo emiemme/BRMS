@@ -281,22 +281,25 @@ bool DB_api::updateAllStatusBooking(int total_omb,QDateTime currentDate)
     QString _currentQuery;
     QStringList _update_query_list;
     for (int _omb_num = 1; _omb_num < total_omb; _omb_num++ ) {
-        _currentQuery =  "SELECT Data_Arrivo, Data_Partenza, Ticket_Number  FROM Omb_" + QString::number(_omb_num+1) +" ORDER BY Data_Arrivo" ;
+        _currentQuery =  "SELECT Data_Arrivo, Data_Partenza, Ticket_Number, Status  FROM Omb_" + QString::number(_omb_num+1) +" ORDER BY Data_Arrivo" ;
 
         if (query.exec(_currentQuery) && query.lastError().type() == QSqlError::NoError) {
             //qDebug()<<currentQuery;
             QDateTime _data_arrivo;
             QDateTime _data_partenza;
             QString _ticket_number;
+            QString _status;
             while (query.next()) {
                 _data_arrivo      =    QDateTime::fromString( query.value(0).toString(),"yyyy-MM-dd");
                 _data_partenza    =    QDateTime::fromString(query.value(1).toString(),"yyyy-MM-dd");
-                _ticket_number    = query.value(2).toString();
+                _ticket_number    =    query.value(2).toString();
+                _status           =    query.value(3).toString();
 
                 if(currentDate > _data_arrivo && currentDate < _data_partenza) {
                     _update_query_list.append("UPDATE Omb_"+ QString::number(_omb_num+1)+" SET Status = \"Arrived\" WHERE Ticket_Number = "+_ticket_number);
                 }
                 else if (currentDate == _data_arrivo) {
+                    if(_status != "Daily")
                     _update_query_list.append("UPDATE Omb_"+ QString::number(_omb_num+1)+" SET Status = \"Incoming\" WHERE Ticket_Number = "+_ticket_number);
 
                 }
@@ -305,6 +308,7 @@ bool DB_api::updateAllStatusBooking(int total_omb,QDateTime currentDate)
 
                 }
                 else if ( currentDate == _data_partenza) {
+                    if(_status != "Daily")
                     _update_query_list.append("UPDATE Omb_"+ QString::number(_omb_num+1)+" SET Status = \"Leaving\" WHERE Ticket_Number = "+_ticket_number);
 
                 }

@@ -1,7 +1,20 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+//import QtQuick.Controls 1.4 as Old
 
 ToolBarLeftForm {
+
+//    Old.Calendar {
+//         anchors.centerIn: parent
+//         id: calendar
+//     }
+
+    Component.onCompleted: {
+        infoAreaFreeOmb.labelInfo.text = "Totale Ombrelloni liberi:"
+        infoAreaArrive.labelInfo.text = "Arrivi:"
+        infoAreaDepart.labelInfo.text = "Partenze:"
+
+    }
 
     toolButtonMenu.text: stackView.depth > 1 ? "\u25C0" : "\u2630"
     toolButtonMenu.onClicked: {
@@ -53,7 +66,7 @@ ToolBarLeftForm {
 
     Timer {
         interval: 500; running: true; repeat: true
-        onTriggered: dateTimeLabel.text = Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
+        onTriggered: dateTimeLabel.text = Qt.formatDateTime(new Date(),"yyyy-MM-dd hh:mm:ss").toString()
     }
 
 }

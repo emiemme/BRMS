@@ -50,8 +50,9 @@ HomeForm {
         homeTicketForm.visible = false
         infoCell.visible = true
         infoCell.displayInfo(homeTicketForm.labelUmbrella.text)
-        infoCell.la
+        //infoCell.la
     }
+
 
     homeTicketForm.confirmTicketButton.mouseAreaButton.onClicked: {
         console.log("Confirmed")
@@ -122,8 +123,8 @@ HomeForm {
                 console.log("Update ticket count")
             }
             //updateCell(omb_number, client_name, cellColor)
-            Backend.updateStatusGrid(totalOmb, currentDate)
-            updateGrid(totalOmb, currentDate)
+            Backend.updateStatusGrid(totalOmb, Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString())
+            updateGrid(totalOmb, Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString())
         }
         homeTicketForm.visible = false
     }
