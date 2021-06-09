@@ -5,6 +5,7 @@ import Qt.labs.qmlmodels 1.0
 Item {
     width: 600
     height: 600
+    property alias labelTicketNumber: labelTicketNumber
     property alias checkBoxGroup: checkBoxGroup
     property alias tableModelInfo: tableModelInfo
     property alias tableItems: tableItems
@@ -152,6 +153,19 @@ Item {
                         }
                         column: 7
                     }
+                    DelegateChoice {
+                        Rectangle {
+                            implicitWidth: 50
+                            implicitHeight: 40
+                            Label {
+                                text: model.display
+                                anchors.fill: parent
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                        }
+                        column: 8
+                    }
                 }
                 anchors.leftMargin: 15
 
@@ -182,6 +196,9 @@ Item {
                     TableModelColumn {
                         display: "cabina"
                     }
+                    TableModelColumn {
+                        display: "NumeroT"
+                    }
                 }
                 anchors.rightMargin: 15
                 anchors.bottomMargin: 16
@@ -200,7 +217,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.top: labelCabina.bottom
-                anchors.topMargin: 10
+                anchors.topMargin: 24
                 anchors.leftMargin: 10
                 anchors.rightMargin: 10
             }
@@ -321,12 +338,12 @@ Item {
                 width: 85
                 height: 30
                 text: qsTr("Lettini")
-                anchors.left: parent.left
-                anchors.top: labelClientName.bottom
+                anchors.left: labelNameSurname.right
+                anchors.top: parent.top
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignVCenter
-                anchors.leftMargin: 15
-                anchors.topMargin: 5
+                anchors.leftMargin: 141
+                anchors.topMargin: 50
             }
 
             Label {
@@ -339,7 +356,7 @@ Item {
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignVCenter
                 anchors.topMargin: 50
-                anchors.leftMargin: 30
+                anchors.leftMargin: 15
             }
 
             Label {
@@ -351,7 +368,7 @@ Item {
                 anchors.top: labelLettini.bottom
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignVCenter
-                anchors.leftMargin: 15
+                anchors.leftMargin: 341
                 anchors.topMargin: 5
             }
 
@@ -364,8 +381,8 @@ Item {
                 anchors.top: labelSdraio.bottom
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignVCenter
-                anchors.leftMargin: 15
-                anchors.topMargin: 5
+                anchors.leftMargin: 341
+                anchors.topMargin: 4
             }
 
             Label {
@@ -373,12 +390,12 @@ Item {
                 width: 85
                 height: 30
                 text: qsTr("Data Arrivo:")
-                anchors.left: labelNameSurname.right
-                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.top: labelClientName.bottom
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignVCenter
-                anchors.leftMargin: 130
-                anchors.topMargin: 50
+                anchors.leftMargin: 15
+                anchors.topMargin: 5
             }
 
             Label {
@@ -386,79 +403,80 @@ Item {
                 width: 85
                 height: 30
                 text: qsTr("Data Partenza")
-                anchors.left: labelNLettini.right
+                anchors.left: parent.left
                 anchors.top: labelArrive.bottom
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignVCenter
-                anchors.leftMargin: 130
-                anchors.topMargin: 20
+                anchors.leftMargin: 15
+                anchors.topMargin: 3
             }
 
             Label {
                 id: labelNLettini
-                width: 85
                 height: 30
                 text: qsTr("")
                 anchors.left: labelLettini.right
-                anchors.top: labelNameSurname.bottom
+                anchors.right: parent.right
+                anchors.top: parent.top
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignVCenter
+                anchors.rightMargin: 59
+                anchors.topMargin: 50
                 anchors.leftMargin: 30
-                anchors.topMargin: 5
             }
 
             Label {
                 id: labelNSdraio
-                width: 85
                 height: 30
                 text: qsTr("")
                 anchors.left: labelSdraio.right
+                anchors.right: parent.right
                 anchors.top: labelNLettini.bottom
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignVCenter
+                anchors.rightMargin: 59
                 anchors.leftMargin: 30
                 anchors.topMargin: 5
             }
 
             Label {
                 id: labelNCabina
-                width: 85
                 height: 30
                 text: qsTr("")
                 anchors.left: labelCabina.right
+                anchors.right: parent.right
                 anchors.top: labelNSdraio.bottom
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignVCenter
+                anchors.rightMargin: 59
                 anchors.leftMargin: 30
                 anchors.topMargin: 5
             }
 
             Label {
                 id: labelArriveDate
+                width: 100
                 height: 30
                 text: qsTr("")
                 anchors.left: labelArrive.right
-                anchors.right: parent.right
-                anchors.top: parent.top
+                anchors.top: labelNameSurname.bottom
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignVCenter
-                anchors.rightMargin: 56
-                anchors.topMargin: 50
-                anchors.leftMargin: 30
+                anchors.topMargin: 5
+                anchors.leftMargin: 15
             }
 
             Label {
                 id: labelDepartureDate
+                width: 89
                 height: 30
                 text: qsTr("")
                 anchors.left: labelDeparture.right
-                anchors.right: parent.right
                 anchors.top: labelArriveDate.bottom
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignVCenter
-                anchors.rightMargin: 56
-                anchors.leftMargin: 30
-                anchors.topMargin: 20
+                anchors.leftMargin: 15
+                anchors.topMargin: 3
             }
 
             Label {
@@ -585,6 +603,28 @@ Item {
                     anchors.bottomMargin: 0
                 }
 
+            }
+
+            Label {
+                id: labelTicket
+                width: 85
+                height: 17
+                text: qsTr("Numero Ticket:")
+                anchors.left: parent.left
+                anchors.top: labelDepartureDate.bottom
+                anchors.topMargin: 5
+                anchors.leftMargin: 15
+            }
+
+            Label {
+                id: labelTicketNumber
+                width: 85
+                height: 17
+                text: qsTr("-1")
+                anchors.left: labelTicket.right
+                anchors.top: labelDepartureDate.bottom
+                anchors.topMargin: 5
+                anchors.leftMargin: 15
             }
 
 

@@ -3,9 +3,11 @@ import QtQuick.Controls 2.12
 import Qt.labs.qmlmodels 1.0
 
 Page {
-    id: item1
+    id: homeform
     width: 1200
     height: 1080
+    property alias buttonUpdateGrid: buttonUpdateGrid
+    property alias homeform: homeform
     property alias infoCell: infoCell
     property alias rowRight1: rowRight1
     property alias homeTicketForm: homeTicketForm
@@ -596,6 +598,13 @@ Page {
                 y: 8
                 visible: false
             }
+
+            Button {
+                id: buttonUpdateGrid
+                x: 1015
+                y: 261
+                text: qsTr("UpdateGrid")
+            }
         }
     }
 
@@ -603,7 +612,6 @@ Page {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.75}D{i:27}D{i:54}D{i:58}D{i:59}D{i:60}D{i:61}D{i:62}D{i:63}
-D{i:64}D{i:65}D{i:66}D{i:57}
+    D{i:0;formeditorZoom:0.75}
 }
 ##^##*/

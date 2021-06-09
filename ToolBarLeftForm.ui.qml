@@ -2,9 +2,10 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 Item {
-    id: item1
+    id: toolbarleftform
     width: 100
     height: 400
+    property alias toolbarleftform: toolbarleftform
     property alias textAreaDate: textAreaDate
     property alias buttonUpdateDB: buttonUpdateDB
     property alias infoArea: infoArea

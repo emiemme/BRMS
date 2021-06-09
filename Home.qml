@@ -6,6 +6,9 @@ HomeForm {
     property var rightList : [13, 20, 33, 40, 53, 60, 73, 80, 92, 98, 110, 116, 125, 129, 138, 142, 151, 155]
     property var leftList : [1, 12, 21, 32, 41, 52, 61, 72, 81, 91, 99, 109, 117, 124, 130, 137, 143, 150]
     property int totalOmb : 155
+    buttonUpdateGrid.onClicked: {
+        updateGrid(155,"2021-06-10")
+}
 
 
     Component.onCompleted: {
@@ -14,8 +17,8 @@ HomeForm {
         homeTicketForm.confirmTicketButton.labelButton.text = "Conferma"
         homeTicketForm.bookingTicketButton.labelButton.text = "Prenotazioni"
         var currentDate = Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
-        updateGrid(totalOmb, currentDate)
         Backend.updateStatusGrid(totalOmb, currentDate)
+        updateGrid(totalOmb, currentDate)
 
     }
 
@@ -118,7 +121,9 @@ HomeForm {
             if (Backend.setTicketCount() ) {
                 console.log("Update ticket count")
             }
-            updateCell(omb_number, client_name, cellColor)
+            //updateCell(omb_number, client_name, cellColor)
+            Backend.updateStatusGrid(totalOmb, currentDate)
+            updateGrid(totalOmb, currentDate)
         }
         homeTicketForm.visible = false
     }

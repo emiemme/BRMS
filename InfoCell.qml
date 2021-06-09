@@ -21,6 +21,7 @@ function displayInfo(omb_num) {
                     labelNLettini.text = Backend.m_booking_list[i].b_lettini
                     labelNSdraio.text = Backend.m_booking_list[i].b_sdraio
                     labelNCabina.text = Backend.m_booking_list[i].b_cabina
+                    labelTicketNumber.text = Backend.m_booking_list[i].b_ticketNumber
                     labelArriveDate.text = arriveDate
                     labelDepartureDate.text = departureDate
                     check = true
@@ -32,7 +33,8 @@ function displayInfo(omb_num) {
                             departure_date:  departureDate ,
                             lettini: Backend.m_booking_list[i].b_lettini ,
                             sdraio:  Backend.m_booking_list[i].b_sdraio,
-                            cabina: 0}
+                            cabina: 0,
+                            numeroT: Backend.m_booking_list[i].b_ticketNumber}
                 tableModelInfo.appendRow(row)
             }
         } else {

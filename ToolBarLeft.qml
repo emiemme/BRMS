@@ -48,7 +48,7 @@ ToolBarLeftForm {
 
     buttonUpdateDB.onClicked: {
         console.log("Updating DB with a custom date: " + textAreaDate.text)
-        Backend.updateStatusGrid(150, textAreaDate.text)
+        Backend.updateStatusGrid(155, textAreaDate.text)
     }
 
     Timer {
