@@ -1,12 +1,13 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Qt.labs.qmlmodels 1.0
-import Qt.labs.calendar 1.0
 
 Item {
     id: ticketForm
     width: 400
     height: 450
+    property var ticketNumber: -1
+    property alias datePickerArrive: datePickerArrive
     property alias bookingTicketButton: bookingTicketButton
     property alias checkBoxDaily: checkBoxDaily
     property alias textDateDepartPlaceholderText: textDateDepart.placeholderText
@@ -41,6 +42,7 @@ Item {
             }
         }
 
+
         MouseArea {
             id: mouseArea
             anchors.fill: parent
@@ -53,10 +55,10 @@ Item {
                 anchors.right: parent.right
                 anchors.top: checkBoxDaily.bottom
                 anchors.bottom: rectDivider.top
-                anchors.bottomMargin: 91
+                anchors.bottomMargin: 70
                 anchors.leftMargin: 14
                 anchors.rightMargin: 6
-                anchors.topMargin: 10
+                anchors.topMargin: -5
                 columnSpacing: 1
                 rowSpacing: 1
                 boundsBehavior: Flickable.StopAtBounds
@@ -83,6 +85,11 @@ Item {
                         {
                             checked: false,
                             currentText: "Sdraio",
+                            amount: 0
+                        },
+                        {
+                            checked: false,
+                            currentText: "Cabina",
                             amount: 0
                         }
                     ]
@@ -253,6 +260,7 @@ Item {
                 anchors.leftMargin: 20
                 placeholderText: Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
                 inputMethodHints: inputMethodHints
+
             }
 
             TextField {
@@ -287,14 +295,14 @@ Item {
 
             CheckBox {
                 id: checkBoxDaily
-                height: 48
+                height: 36
                 text: qsTr("Abbonamento")
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.top: textFieldName.bottom
-                anchors.topMargin: 10
-                anchors.rightMargin: 240
-                anchors.leftMargin: 14
+                anchors.topMargin: 6
+                anchors.rightMargin: 234
+                anchors.leftMargin: 20
             }
 
             GeneralButton {
@@ -310,10 +318,17 @@ Item {
             }
         }
     }
+
+    DatePicker {
+        id: datePickerArrive
+        x: -58
+        y: 338
+        width: 221
+        height: 295
+        mm: 9
+        fontSizePx: 12
+        cellSize: 27
+    }
 }
 
-/*##^##
-Designer {
-    D{i:0;formeditorZoom:1.659999966621399}D{i:18}D{i:19}D{i:30}
-}
-##^##*/
+

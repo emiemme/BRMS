@@ -3,7 +3,7 @@
 Application::Application(QObject *parent) : QObject(parent)
 {
     db = new DB_api();
-    int totalOmb = 155;
+    int totalOmb = 173;
     db->openDB(totalOmb);
     ticketCount = db->getTicketCount();
     if(ticketCount == 0) {
@@ -42,7 +42,7 @@ bool Application::updateStatusGrid(int total_omb, QDateTime dateTime)
 
 bool Application::insertNewBooking(int ticketNumber, int omb_num, QString clientName, QString clientSurname,
                                    int lettini, int sdraio, int cabina, QString arriveDate,
-                                   QString departureDate,QString status, QString operatore)
+                                   QString departureDate,QString status, QString acconto, bool saldo, QString operatore)
 {
     booking newBooking;
     newBooking.ticketNumber = ticketNumber;
@@ -56,9 +56,20 @@ bool Application::insertNewBooking(int ticketNumber, int omb_num, QString client
     newBooking.arriveDate = QDate::fromString(arriveDate, "yyyy-MM-dd");
     newBooking.departureDate = QDate::fromString(departureDate, "yyyy-MM-dd");;
     newBooking.status = status;
+    newBooking.acconto = acconto;
+    newBooking.saldo = saldo;
     newBooking.operatore = operatore;
 
     return db->insertBooking(newBooking);
+}
+
+bool Application::deleteBooking(int ticketNumber, int omb_num)
+{
+    booking deleteBooking;
+    deleteBooking.ticketNumber = ticketNumber;
+    deleteBooking.omb_num = omb_num;
+
+    return db->deleteBooking(deleteBooking);
 }
 
 bool Application::selectOmbBookings(QString ombNumb)

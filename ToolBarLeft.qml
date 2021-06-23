@@ -4,13 +4,13 @@ import QtQuick.Controls 2.12
 
 ToolBarLeftForm {
 
-//    Old.Calendar {
-//         anchors.centerIn: parent
-//         id: calendar
-//     }
+    //    Old.Calendar {
+    //         anchors.centerIn: parent
+    //         id: calendar
+    //     }
 
     Component.onCompleted: {
-        infoAreaFreeOmb.labelInfo.text = "Totale Ombrelloni liberi:"
+        infoAreaFreeOmb.labelInfo.text = "Ombrelloni liberi:"
         infoAreaArrive.labelInfo.text = "Arrivi:"
         infoAreaDepart.labelInfo.text = "Partenze:"
 
@@ -66,7 +66,7 @@ ToolBarLeftForm {
 
     Timer {
         interval: 500; running: true; repeat: true
-        onTriggered: dateTimeLabel.text = Qt.formatDateTime(new Date(),"yyyy-MM-dd hh:mm:ss").toString()
+        onTriggered: dateTimeLabel.text = Qt.formatDateTime(new Date(),"yyyy-MM-dd \n hh:mm:ss").toString()
     }
 
 }

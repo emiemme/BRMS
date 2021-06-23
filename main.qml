@@ -4,8 +4,8 @@ import QtQuick.Controls 2.15
 
 ApplicationWindow {
     id: window
-    width: 1520
-    height: 800
+    width: 1366
+    height: 768 //768
     visible: true
     title: qsTr("Stack")
     flags: Qt.FramelessWindowHint | Qt.Window

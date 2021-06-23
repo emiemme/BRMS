@@ -197,7 +197,7 @@ Item {
                         display: "cabina"
                     }
                     TableModelColumn {
-                        display: "NumeroT"
+                        display: "numeroT"
                     }
                 }
                 anchors.rightMargin: 15

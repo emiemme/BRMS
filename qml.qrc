@@ -19,5 +19,6 @@
         <file>GeneralButtonForm.ui.qml</file>
         <file>InfoCell.qml</file>
         <file>InfoCellForm.ui.qml</file>
+        <file>DatePicker.qml</file>
     </qresource>
 </RCC>

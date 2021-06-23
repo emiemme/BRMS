@@ -4,8 +4,8 @@ import Qt.labs.qmlmodels 1.0
 
 Page {
     id: homeform
-    width: 1200
-    height: 1080
+    width: 1240
+    height: 768
     property alias buttonUpdateGrid: buttonUpdateGrid
     property alias homeform: homeform
     property alias infoCell: infoCell
@@ -47,8 +47,8 @@ Page {
                 anchors.left: seaRect.right
                 anchors.top: parent.top
                 anchors.bottom: passerellaRect.top
-                anchors.leftMargin: 5
-                anchors.bottomMargin: 5
+                anchors.leftMargin: 3
+                anchors.bottomMargin: -21
                 anchors.topMargin: 5
                 spacing: 0
                 interactive: false
@@ -69,7 +69,7 @@ Page {
                 anchors.left: rowRight1.right
                 anchors.top: parent.top
                 anchors.bottom: passerellaRect.top
-                anchors.leftMargin: 5
+                anchors.leftMargin: 3
                 anchors.bottomMargin: 5
                 anchors.topMargin: 5
                 model: ListModel {
@@ -90,7 +90,7 @@ Page {
                 anchors.left: rowRight2.right
                 anchors.top: parent.top
                 anchors.bottom: passerellaRect.top
-                anchors.leftMargin: 5
+                anchors.leftMargin: 3
                 anchors.bottomMargin: 5
                 anchors.topMargin: 5
                 model: ListModel {
@@ -111,7 +111,7 @@ Page {
                 anchors.left: rowRight3.right
                 anchors.top: parent.top
                 anchors.bottom: passerellaRect.top
-                anchors.leftMargin: 5
+                anchors.leftMargin: 3
                 anchors.bottomMargin: 5
                 anchors.topMargin: 5
                 model: ListModel {
@@ -132,13 +132,13 @@ Page {
                 anchors.left: rowRight4.right
                 anchors.top: parent.top
                 anchors.bottom: passerellaRect.top
-                anchors.leftMargin: 5
+                anchors.leftMargin: 3
                 anchors.bottomMargin: 5
                 anchors.topMargin: 5
                 model: ListModel {
                     id: cellButtonListRight5
                 }
-                spacing: 5
+                spacing: 0
                 interactive: false
                 delegate: CellButton {
                     labelNumber.text: cellNumber
@@ -153,13 +153,13 @@ Page {
                 anchors.left: rowRight5.right
                 anchors.top: parent.top
                 anchors.bottom: passerellaRect.top
-                anchors.leftMargin: 6
+                anchors.leftMargin: 3
                 anchors.bottomMargin: 5
                 anchors.topMargin: 5
                 model: ListModel {
                     id: cellButtonListRight6
                 }
-                spacing: 5
+                spacing: 0
                 interactive: false
                 delegate: CellButton {
                     labelNumber.text: cellNumber
@@ -174,13 +174,13 @@ Page {
                 anchors.left: rowRight6.right
                 anchors.top: parent.top
                 anchors.bottom: passerellaRect.top
-                anchors.leftMargin: 5
-                anchors.bottomMargin: 66
+                anchors.leftMargin: 3
+                anchors.bottomMargin: 5
                 anchors.topMargin: 5
                 model: ListModel {
                     id: cellButtonListRight7
                 }
-                spacing: 5
+                spacing: 0
                 interactive: false
                 delegate: CellButton {
                     labelNumber.text: cellNumber
@@ -198,7 +198,7 @@ Page {
                 anchors.bottom: passerellaRect.top
                 interactive: false
                 anchors.bottomMargin: 66
-                anchors.leftMargin: 5
+                anchors.leftMargin: 3
                 spacing: 5
                 model: ListModel {
                     id: cellButtonListRight8
@@ -213,14 +213,13 @@ Page {
 
             ListView {
                 id: rowRight9
+                width: 120
                 anchors.left: rowRight8.right
-                anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: passerellaRect.top
-                anchors.rightMargin: 5
                 interactive: false
                 anchors.bottomMargin: 66
-                anchors.leftMargin: 5
+                anchors.leftMargin: 3
                 spacing: 5
                 model: ListModel {
                     id: cellButtonListRight9
@@ -234,6 +233,29 @@ Page {
             }
 
             ListView {
+                id: rowRight10
+                width: 125
+                anchors.left: rowRight9.right
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.bottom: passerellaRect.top
+                anchors.rightMargin: 0
+                model: ListModel {
+                    id: cellButtonListRight10
+                }
+                anchors.leftMargin: 3
+                anchors.bottomMargin: 66
+                delegate: CellButton {
+                    labelClientName.text: clientName
+                    labelNumber.text: cellNumber
+                    cellStatusRectColor: statusColor
+                }
+                spacing: 5
+                interactive: false
+                anchors.topMargin: 5
+            }
+
+            ListView {
                 id: rowLeft1
                 x: 90
                 width: 120
@@ -241,13 +263,13 @@ Page {
                 anchors.top: passerellaRect.bottom
                 anchors.bottom: parent.bottom
                 interactive: false
-                anchors.bottomMargin: 5
-                anchors.leftMargin: 5
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 3
                 spacing: 0
                 model: ListModel {
                     id: cellButtonListLeft1
                 }
-                anchors.topMargin: 5
+                anchors.topMargin: 3
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
@@ -262,13 +284,13 @@ Page {
                 anchors.top: passerellaRect.bottom
                 anchors.bottom: parent.bottom
                 interactive: false
-                anchors.bottomMargin: 5
-                anchors.leftMargin: 5
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 3
                 spacing: 0
                 model: ListModel {
                     id: cellButtonListLeft2
                 }
-                anchors.topMargin: 5
+                anchors.topMargin: 3
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
@@ -283,13 +305,13 @@ Page {
                 anchors.top: passerellaRect.bottom
                 anchors.bottom: parent.bottom
                 interactive: false
-                anchors.bottomMargin: 5
-                anchors.leftMargin: 5
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 3
                 spacing: 0
                 model: ListModel {
                     id: cellButtonListLeft3
                 }
-                anchors.topMargin: 5
+                anchors.topMargin: 3
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
@@ -304,13 +326,13 @@ Page {
                 anchors.top: passerellaRect.bottom
                 anchors.bottom: parent.bottom
                 interactive: false
-                anchors.bottomMargin: 5
-                anchors.leftMargin: 5
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 3
                 spacing: 0
                 model: ListModel {
                     id: cellButtonListLeft4
                 }
-                anchors.topMargin: 5
+                anchors.topMargin: 3
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
@@ -325,13 +347,13 @@ Page {
                 anchors.top: passerellaRect.bottom
                 anchors.bottom: parent.bottom
                 interactive: false
-                anchors.bottomMargin: 5
-                anchors.leftMargin: 5
-                spacing: 3
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 3
+                spacing: 0
                 model: ListModel {
                     id: cellButtonListLeft5
                 }
-                anchors.topMargin: 14
+                anchors.topMargin: 3
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
@@ -346,13 +368,13 @@ Page {
                 anchors.top: passerellaRect.bottom
                 anchors.bottom: parent.bottom
                 interactive: false
-                anchors.bottomMargin: 5
-                anchors.leftMargin: 5
-                spacing: 3
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 3
+                spacing: 0
                 model: ListModel {
                     id: cellButtonListLeft6
                 }
-                anchors.topMargin: 14
+                anchors.topMargin: 3
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
@@ -367,13 +389,13 @@ Page {
                 anchors.top: passerellaRect.bottom
                 anchors.bottom: parent.bottom
                 interactive: false
-                anchors.bottomMargin: 5
-                anchors.leftMargin: 5
-                spacing: 5
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 3
+                spacing: 0
                 model: ListModel {
                     id: cellButtonListLeft7
                 }
-                anchors.topMargin: 116
+                anchors.topMargin: 3
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
@@ -388,13 +410,13 @@ Page {
                 anchors.top: passerellaRect.bottom
                 anchors.bottom: parent.bottom
                 interactive: false
-                anchors.bottomMargin: 5
-                anchors.leftMargin: 5
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 3
                 spacing: 5
                 model: ListModel {
                     id: cellButtonListLeft8
                 }
-                anchors.topMargin: 116
+                anchors.topMargin: 78
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
@@ -404,29 +426,50 @@ Page {
 
             ListView {
                 id: rowLeft9
+                width: 120
                 anchors.left: rowLeft8.right
-                anchors.right: parent.right
                 anchors.top: passerellaRect.bottom
                 anchors.bottom: parent.bottom
-                anchors.rightMargin: 5
                 interactive: false
-                anchors.bottomMargin: 5
-                anchors.leftMargin: 5
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 3
                 spacing: 5
                 model: ListModel {
                     id: cellButtonListLeft9
                 }
-                anchors.topMargin: 116
+                anchors.topMargin: 78
                 delegate: CellButton {
                     labelNumber.text: cellNumber
                     labelClientName.text: clientName
                     cellStatusRectColor: statusColor
                 }
             }
+            ListView {
+                id: rowLeft10
+                anchors.left: rowLeft9.right
+                anchors.right: parent.right
+                anchors.top: passerellaRect.bottom
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: 3
+                model: ListModel {
+                    id: cellButtonListLeft10
+                }
+                anchors.bottomMargin: 0
+                delegate: CellButton {
+                    labelClientName.text: clientName
+                    labelNumber.text: cellNumber
+                    cellStatusRectColor: statusColor
+                }
+                anchors.rightMargin: 0
+                spacing: 5
+                interactive: false
+                anchors.topMargin: 78
+            }
+
             Rectangle {
                 id: passerellaRect
-                y: 305
-                height: 45
+                y: 340
+                height: 16
                 color: "#ffd819"
                 anchors.left: seaRect.right
                 anchors.right: parent.right
@@ -567,10 +610,25 @@ Page {
                     anchors.bottomMargin: 8
                     anchors.topMargin: 8
                 }
+
+                Label {
+                    id: labeldecimaFila
+                    width: 120
+                    text: qsTr("10° Fila")
+                    anchors.left: labelNonaFila.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.bold: true
+                    anchors.leftMargin: 5
+                    anchors.bottomMargin: 8
+                    anchors.topMargin: 8
+                }
             }
             Rectangle {
                 id: seaRect
-                width: 30
+                width: 5
                 color: "#26deff"
                 anchors.left: parent.left
                 anchors.top: parent.top
@@ -587,8 +645,8 @@ Page {
                 visible: false
                 anchors.verticalCenter: parent.verticalCenter
                 z: 4
-                anchors.verticalCenterOffset: -280
-                anchors.horizontalCenterOffset: 0
+                anchors.verticalCenterOffset: -99
+                anchors.horizontalCenterOffset: 16
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
@@ -605,6 +663,8 @@ Page {
                 y: 261
                 text: qsTr("UpdateGrid")
             }
+
+
         }
     }
 
@@ -612,6 +672,6 @@ Page {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.75}
+    D{i:0;formeditorZoom:0.5}
 }
 ##^##*/

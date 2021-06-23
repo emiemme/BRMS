@@ -4,30 +4,29 @@ import Qt.labs.qmlmodels 1.0
 
 Page {
     id: mainView
-    width: 1520
-    height: 800
+    width: 1366
+    height: 768
     property alias mainView: mainView
     property alias stackView: stackView
 
     ToolBarLeft {
         id: toolBarLeft
-        x: 1628
-        width: 292
-        height: 800
-        anchors.right: parent.right
+        x: 1240
+        width: 126
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.topMargin: 0
         anchors.bottomMargin: 0
-        anchors.rightMargin: 0
     }
     StackView {
         id: stackView
-        width: 1220
+        width: 1240
         visible: true
         anchors.left: parent.left
+        anchors.right: toolBarLeft.left
         anchors.top: parent.top
         anchors.bottom: parent.bottom
+        anchors.rightMargin: 0
         anchors.leftMargin: 0
         anchors.bottomMargin: 0
         anchors.topMargin: 0
@@ -37,6 +36,6 @@ Page {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.5}
+    D{i:0;formeditorZoom:0.5}D{i:1}D{i:2}
 }
 ##^##*/

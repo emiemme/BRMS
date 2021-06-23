@@ -1,14 +1,20 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Controls 1.4 as Old
+
+
 
 HomeForm {
 
-    property var rightList : [13, 20, 33, 40, 53, 60, 73, 80, 92, 98, 110, 116, 125, 129, 138, 142, 151, 155]
-    property var leftList : [1, 12, 21, 32, 41, 52, 61, 72, 81, 91, 99, 109, 117, 124, 130, 137, 143, 150]
-    property int totalOmb : 155
+    property var rightList : [12, 20, 32, 40, 52, 60, 72, 80, 92, 99, 111, 118, 130, 137, 146, 149, 158, 161, 170, 173]
+    property var leftList :  [1,  11, 21, 31, 41, 51, 61, 71, 81, 91, 100, 110, 119, 129, 138, 145, 150, 157, 162, 169]
+    property int totalOmb : 173
+
     buttonUpdateGrid.onClicked: {
         updateGrid(155,"2021-06-10")
 }
+
+
 
 
     Component.onCompleted: {
@@ -20,6 +26,43 @@ HomeForm {
         Backend.updateStatusGrid(totalOmb, currentDate)
         updateGrid(totalOmb, currentDate)
 
+    }
+
+//    Old.Calendar {
+//        x: 350
+//        y: 350
+//        id: calendarArrive
+//        visible: false
+//     }
+//    Old.Calendar {
+//        x: 650
+//        y: 350
+//        id: calendarDeparture
+//        visible: false
+//     }
+
+//    homeTicketForm.textDateArrive.onTextChanged: {
+//        calendarArrive.visible = true
+//    }
+
+//    homeTicketForm.textDateDepart.onTextChanged: {
+//        calendarDeparture.visible = true
+//    }
+
+//    calendarArrive.onClicked: {
+//        calendarArrive.visible = false
+//    }
+
+//    calendarDeparture.onClicked: {
+//        calendarDeparture.visible = false
+//    }
+
+    homeTicketForm.datePickerArrive.onOk: {
+        homeTicketForm.datePickerArrive.visible = false
+    }
+
+    homeTicketForm.datePickerArrive.onCancel: {
+        homeTicketForm.datePickerArrive.visible = false
     }
 
     homeTicketForm.closeTicketButton.mouseAreaButton.onClicked: {
@@ -57,7 +100,14 @@ HomeForm {
     homeTicketForm.confirmTicketButton.mouseAreaButton.onClicked: {
         console.log("Confirmed")
 
-        var ticketNumber = Backend.getTicketCount() + 1;
+        var ticketNumber
+        if(homeTicketForm.ticketNumber != -1) {
+            ticketNumber = homeTicketForm.ticketNumber
+            homeTicketForm.ticketNumber = -1
+        } else {
+            ticketNumber = Backend.getTicketCount() + 1
+        }
+
         var omb_number = homeTicketForm.labelUmbrella.text
         var client_name  =   homeTicketForm.textFieldName.text
         if (client_name === "" || client_name  === null || client_name === undefined ) {
@@ -83,6 +133,11 @@ HomeForm {
         }
 
         var cabina = 0
+        if(homeTicketForm.tableModelTicket.rows[3].checked) {
+            cabina = homeTicketForm.tableModelTicket.rows[3].amount
+        } else {
+            cabina = 0
+        }
 
         var arriveDate = homeTicketForm.textDateArrive.text
         if (arriveDate === "" || arriveDate  === null || arriveDate === undefined) {
@@ -113,10 +168,11 @@ HomeForm {
                     cellColor = "#00ff00"
             }
         }
-
+        var acconto = "0.0"
+        var saldo = "false"
         var operatore =      "Maria"
         if ( Backend.insertNewBooking(ticketNumber, omb_number, client_name, client_surname,
-                                 lettini, sdraio, cabina, arriveDate, departureDate, status, operatore) ) {
+                                 lettini, sdraio, cabina, arriveDate, departureDate, status, acconto, saldo, operatore) ) {
             console.log("New Ticket inserted")
             // Aggiorno contatore ticket interno
             if (Backend.setTicketCount() ) {
@@ -147,9 +203,21 @@ HomeForm {
         homeTicketForm.textDateDepart.text = ""
     }
 
+    infoCell.removeInfoButton.mouseAreaButton.onClicked: {
+        for(var i = 0; i< infoCell.checkBoxGroup.buttons.length; i++) {
+
+            if (infoCell.checkBoxGroup.buttons[i].checked) {
+                Backend.deleteBooking(infoCell.tableModelInfo.rows[i].numeroT, infoCell.labelUmbrella.text)
+                //update infoCell
+                //update grid
+            }
+        }
+    }
+
     infoCell.modifyInfoButton.mouseAreaButton.onClicked: {
         infoCell.visible = false
         homeTicketForm.visible = true
+
 
         homeTicketForm.labelUmbrella.text = infoCell.labelUmbrella.text
         for(var i = 0; i< infoCell.checkBoxGroup.buttons.length; i++) {
@@ -160,6 +228,7 @@ HomeForm {
                 homeTicketForm.textFieldSurname.text =   infoCell.tableModelInfo.rows[i].surname
                 homeTicketForm.textDateArrive.text =     infoCell.tableModelInfo.rows[i].arrive_date
                 homeTicketForm.textDateDepart.text =     infoCell.tableModelInfo.rows[i].departure_date
+                homeTicketForm.ticketNumber         =    infoCell.tableModelInfo.rows[i].numeroT
                 var row
                 if(infoCell.tableModelInfo.rows[i].lettini > 0) {
                     row = {checked: true, currentText: "Lettini", amount: infoCell.tableModelInfo.rows[i].lettini}

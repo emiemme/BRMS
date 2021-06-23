@@ -11,6 +11,7 @@ function displayInfo(omb_num) {
         Backend.selectOmbBookings(omb_num)
         labelUmbrella.text = omb_num
         tableModelInfo.clear()
+
         if( Backend.m_booking_list_length > 0) {
             for(var i=0; i< Backend.m_booking_list_length; i++ ) {
                 var arriveDate =  new Date(Backend.m_booking_list[i].b_arriveDate).toISOString().split('T')[0]
@@ -33,7 +34,7 @@ function displayInfo(omb_num) {
                             departure_date:  departureDate ,
                             lettini: Backend.m_booking_list[i].b_lettini ,
                             sdraio:  Backend.m_booking_list[i].b_sdraio,
-                            cabina: 0,
+                            cabina: Backend.m_booking_list[i].b_cabina,
                             numeroT: Backend.m_booking_list[i].b_ticketNumber}
                 tableModelInfo.appendRow(row)
             }

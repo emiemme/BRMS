@@ -23,6 +23,8 @@ public:
         Q_PROPERTY(QDate b_arriveDate MEMBER arriveDate)
         Q_PROPERTY(QDate b_departureDate MEMBER departureDate)
         Q_PROPERTY(QString b_status MEMBER status)
+        Q_PROPERTY(QString b_status MEMBER acconto)
+        Q_PROPERTY(bool b_operatore MEMBER saldo)
         Q_PROPERTY(QString b_operatore MEMBER operatore)
 
         int         ticketNumber;
@@ -36,6 +38,8 @@ public:
         QDate       arriveDate;
         QDate       departureDate;
         QString     status;
+        QString     acconto;
+        bool        saldo;
         QString     operatore;
 };
 Q_DECLARE_METATYPE(booking)
