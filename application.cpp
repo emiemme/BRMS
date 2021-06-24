@@ -42,7 +42,7 @@ bool Application::updateStatusGrid(int total_omb, QDateTime dateTime)
 
 bool Application::insertNewBooking(int ticketNumber, int omb_num, QString clientName, QString clientSurname,
                                    int lettini, int sdraio, int cabina, QString arriveDate,
-                                   QString departureDate,QString status, QString acconto, bool saldo, QString operatore)
+                                   QString departureDate,QString status, QString acconto, QString cell_number, QString operatore)
 {
     booking newBooking;
     newBooking.ticketNumber = ticketNumber;
@@ -57,7 +57,7 @@ bool Application::insertNewBooking(int ticketNumber, int omb_num, QString client
     newBooking.departureDate = QDate::fromString(departureDate, "yyyy-MM-dd");;
     newBooking.status = status;
     newBooking.acconto = acconto;
-    newBooking.saldo = saldo;
+    newBooking.cell_number = cell_number;
     newBooking.operatore = operatore;
 
     return db->insertBooking(newBooking);
@@ -77,7 +77,6 @@ bool Application::selectOmbBookings(QString ombNumb)
     bool fRes = false;
     qml_booking_list =  db->selectOmbBooking(ombNumb.toInt());
     return fRes;
-
 }
 
 int Application::getTicketCount()

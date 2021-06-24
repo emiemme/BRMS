@@ -57,12 +57,27 @@ HomeForm {
 //        calendarDeparture.visible = false
 //    }
 
+    homeTicketForm.dateArriveMouseArea.onClicked: {
+        homeTicketForm.datePickerArrive.visible = true
+    }
     homeTicketForm.datePickerArrive.onOk: {
+        homeTicketForm.datePickerArrive.visible = false
+        homeTicketForm.textDateArrive.text = selectDate
+    }
+    homeTicketForm.datePickerArrive.onCancel: {
         homeTicketForm.datePickerArrive.visible = false
     }
 
-    homeTicketForm.datePickerArrive.onCancel: {
-        homeTicketForm.datePickerArrive.visible = false
+
+    homeTicketForm.dateDepartureMouseArea.onClicked: {
+        homeTicketForm.datePickerDeparture.visible = true
+    }
+    homeTicketForm.datePickerDeparture.onOk: {
+        homeTicketForm.datePickerDeparture.visible = false
+        homeTicketForm.textDateDepart.text = selectDate
+    }
+    homeTicketForm.datePickerDeparture.onCancel: {
+        homeTicketForm.datePickerDeparture.visible = false
     }
 
     homeTicketForm.closeTicketButton.mouseAreaButton.onClicked: {
@@ -74,15 +89,16 @@ HomeForm {
     homeTicketForm.checkBoxDaily.onCheckedChanged: {
         console.log (homeTicketForm.checkBoxDaily.checked)
         if(homeTicketForm.checkBoxDaily.checked) {
-            homeTicketForm.textFieldSurname.visible = true
+            homeTicketForm.textFieldName.visible = true
+            homeTicketForm.textFieldAcconto.visible = true
+            homeTicketForm.textFieldSurname.placeholderText = "Cognome"
             homeTicketForm.textFieldName.placeholderText = "Nome"
-            homeTicketForm.textDateArrive.text =  Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
-            homeTicketForm.textDateDepart.text =  Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
         } else {
-            homeTicketForm.textFieldSurname.visible = false
-            homeTicketForm.textFieldName.placeholderText = "Giornaliero"
-            homeTicketForm.textDateArrive.text = ""
-            homeTicketForm.textDateDeparture.text = ""
+            homeTicketForm.textFieldName.visible = false
+            homeTicketForm.textFieldAcconto.visible = false
+            homeTicketForm.textFieldSurname.placeholderText = "Giornaliero"
+            homeTicketForm.textDateArrive.placeholderText =  Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
+            homeTicketForm.textDateDepart.placeholderText =  Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
         }
 
     }
@@ -111,12 +127,12 @@ HomeForm {
         var omb_number = homeTicketForm.labelUmbrella.text
         var client_name  =   homeTicketForm.textFieldName.text
         if (client_name === "" || client_name  === null || client_name === undefined ) {
-           client_name  =   homeTicketForm.textFieldName.placeholderText
+           client_name  =    "-"
         }
 
         var client_surname = homeTicketForm.textFieldSurname.text
         if (client_surname === "" || client_surname  === null || client_surname === undefined ) {
-           client_surname  =  "None"
+           client_surname  =  homeTicketForm.textFieldSurname.placeholderText
         }
 
         var lettini
@@ -169,10 +185,10 @@ HomeForm {
             }
         }
         var acconto = "0.0"
-        var saldo = "false"
+        var cell_number = "000 0000000"
         var operatore =      "Maria"
         if ( Backend.insertNewBooking(ticketNumber, omb_number, client_name, client_surname,
-                                 lettini, sdraio, cabina, arriveDate, departureDate, status, acconto, saldo, operatore) ) {
+                                 lettini, sdraio, cabina, arriveDate, departureDate, status, acconto, cell_number, operatore) ) {
             console.log("New Ticket inserted")
             // Aggiorno contatore ticket interno
             if (Backend.setTicketCount() ) {
@@ -208,8 +224,8 @@ HomeForm {
 
             if (infoCell.checkBoxGroup.buttons[i].checked) {
                 Backend.deleteBooking(infoCell.tableModelInfo.rows[i].numeroT, infoCell.labelUmbrella.text)
-                //update infoCell
-                //update grid
+                infoCell.displayInfo( infoCell.labelUmbrella.text)
+                updateGrid(totalOmb, Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString())
             }
         }
     }
@@ -262,8 +278,8 @@ HomeForm {
                 indexListModel = 0
                 for(var colRIndex = rightList[rightRow+1]; colRIndex > rightList[rightRow]-1; colRIndex--){
                     if(stackView.children[rightListIndex].model.get(indexListModel).cellNumber == Backend.m_ombStatus_list[colRIndex-1].b_omb_num) {
-//                        console.log(Backend.m_ombStatus_list[colRIndex-1].b_omb_num +" == "+ Backend.m_ombStatus_list[colRIndex].b_client_name)
-                        stackView.children[rightListIndex].model.get(indexListModel).clientName = Backend.m_ombStatus_list[colRIndex-1].b_client_name
+                        //console.log(Backend.m_ombStatus_list[colRIndex-1].b_omb_num +" == "+ Backend.m_ombStatus_list[colRIndex].b_client_surname)
+                        stackView.children[rightListIndex].model.get(indexListModel).clientSurname = Backend.m_ombStatus_list[colRIndex-1].b_client_surname
                         stackView.children[rightListIndex].model.get(indexListModel).statusColor = Backend.m_ombStatus_list[colRIndex-1].b_color
                     }
                     indexListModel++
@@ -277,7 +293,7 @@ HomeForm {
                 indexListModel = 0
                 for(var colLIndex = leftList[leftRow+1]; colLIndex > leftList[leftRow]-1; colLIndex--){
                     if(stackView.children[leftListIndex].model.get(indexListModel).cellNumber == Backend.m_ombStatus_list[colLIndex-1].b_omb_num) {
-                        stackView.children[leftListIndex].model.get(indexListModel).clientName = Backend.m_ombStatus_list[colLIndex-1].b_client_name
+                        stackView.children[leftListIndex].model.get(indexListModel).clientSurname = Backend.m_ombStatus_list[colLIndex-1].b_client_surname
                         stackView.children[leftListIndex].model.get(indexListModel).statusColor = Backend.m_ombStatus_list[colLIndex-1].b_color
                     }
                     indexListModel++
@@ -289,7 +305,7 @@ HomeForm {
     }
 
 
-    function updateCell(currentCell, clientName, statusColor) {
+    function updateCell(currentCell, clientSurname, statusColor) {
         var rightListIndex = 0
         var indexListModel = 0
 
@@ -297,7 +313,7 @@ HomeForm {
             indexListModel = 0
             for(var colRIndex = rightList[rightRow+1]; colRIndex > rightList[rightRow]-1; colRIndex--){
                 if(stackView.children[rightListIndex].model.get(indexListModel).cellNumber == currentCell) {
-                    stackView.children[rightListIndex].model.get(indexListModel).clientName = clientName
+                    stackView.children[rightListIndex].model.get(indexListModel).clientSurname = clientSurname
                     stackView.children[rightListIndex].model.get(indexListModel).statusColor = statusColor
                 }
                 indexListModel++
@@ -310,7 +326,7 @@ HomeForm {
             indexListModel = 0
             for(var colLIndex = leftList[leftRow+1]; colLIndex > leftList[leftRow]-1; colLIndex--){
                 if(stackView.children[leftListIndex].model.get(indexListModel).cellNumber == currentCell) {
-                    stackView.children[leftListIndex].model.get(indexListModel).clientName = clientName
+                    stackView.children[leftListIndex].model.get(indexListModel).clientSurname = clientSurname
                     stackView.children[leftListIndex].model.get(indexListModel).statusColor = statusColor
                 }
                 indexListModel++
@@ -326,7 +342,7 @@ HomeForm {
         for(var rightRow = 0; rightRow < rightList.length; rightRow+=2) {
             indexListModel = 0
             for(var colRIndex = rightList[rightRow+1]; colRIndex > rightList[rightRow]-1; colRIndex--){
-                stackView.children[rightListIndex].model.append({cellNumber: colRIndex, clientName: "Nomelungo", statusColor: "#d85409"} )
+                stackView.children[rightListIndex].model.append({cellNumber: colRIndex, clientSurname: "Nomelungo", statusColor: "#d85409"} )
                 //console.log(stackView.children[rightListIndex].model.get(indexListModel).cellNumber)
                 indexListModel++
             }
@@ -336,7 +352,7 @@ HomeForm {
         var leftListIndex = rightListIndex;
         for(var leftRow = 0; leftRow < leftList.length; leftRow+=2) {
             for(var colLIndex = leftList[leftRow+1]; colLIndex > leftList[leftRow]-1; colLIndex--){
-                stackView.children[leftListIndex].model.append({cellNumber: colLIndex, clientName: "Nomelungo", statusColor: "#d85409"} )
+                stackView.children[leftListIndex].model.append({cellNumber: colLIndex, clientSurname: "Nomelungo", statusColor: "#d85409"} )
                 //stackView.children[leftListIndex].model.labelClientName.text = "ciao"
             }
             leftListIndex++

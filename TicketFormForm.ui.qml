@@ -6,6 +6,10 @@ Item {
     id: ticketForm
     width: 400
     height: 450
+    property alias dateDepartureMouseArea: dateDepartureMouseArea
+    property alias datePickerDeparture: datePickerDeparture
+    property alias dateArriveMouseArea: dateArriveMouseArea
+    property alias textFieldAcconto: textFieldAcconto
     property var ticketNumber: -1
     property alias datePickerArrive: datePickerArrive
     property alias bookingTicketButton: bookingTicketButton
@@ -56,8 +60,8 @@ Item {
                 anchors.top: checkBoxDaily.bottom
                 anchors.bottom: rectDivider.top
                 anchors.bottomMargin: 70
-                anchors.leftMargin: 14
-                anchors.rightMargin: 6
+                anchors.leftMargin: 15
+                anchors.rightMargin: 20
                 anchors.topMargin: -5
                 columnSpacing: 1
                 rowSpacing: 1
@@ -159,27 +163,27 @@ Item {
 
             TextField {
                 id: textFieldName
-                x: 116
-                y: 30
-                width: 113
-                height: 43
-                anchors.right: textFieldSurname.left
-                anchors.rightMargin: 31
-                hoverEnabled: false
-                placeholderText: qsTr("Giornaliero")
-            }
-
-            TextField {
-                id: textFieldSurname
-                x: 260
+                x: 272
                 y: 30
                 width: 115
                 height: 43
                 visible: false
-                text: ""
                 anchors.right: parent.right
-                anchors.rightMargin: 25
-                placeholderText: qsTr("Cognome")
+                anchors.rightMargin: 20
+                hoverEnabled: false
+            }
+
+            TextField {
+                id: textFieldSurname
+                x: 135
+                y: 30
+                width: 115
+                height: 43
+                visible: true
+                text: ""
+                anchors.right: textFieldName.left
+                anchors.rightMargin: 20
+                placeholderText: qsTr("Giornaliero")
                 hoverEnabled: false
             }
 
@@ -208,10 +212,10 @@ Item {
                 height: 30
                 text: qsTr("Nome Cliente:")
                 anchors.left: parent.left
-                anchors.right: textFieldName.left
+                anchors.right: textFieldSurname.left
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                anchors.rightMargin: 16
+                anchors.rightMargin: 20
                 anchors.leftMargin: 20
             }
 
@@ -224,7 +228,7 @@ Item {
                 text: qsTr("Data Arrivo")
                 anchors.left: parent.left
                 anchors.top: tableItems.bottom
-                anchors.topMargin: 15
+                anchors.topMargin: 5
                 anchors.leftMargin: 20
 
             }
@@ -238,15 +242,16 @@ Item {
                 text: qsTr("Data Partenza")
                 anchors.right: parent.right
                 anchors.top: tableItems.bottom
-                anchors.topMargin: 15
+                anchors.topMargin: 5
                 anchors.rightMargin: 20
             }
 
             TextField {
                 id: textDateArrive
-                x: 20
+                x: 10
                 y: 269
                 height: 50
+                text: ""
                 anchors.left: parent.left
                 anchors.right: textDateDepart.left
                 anchors.top: arriveLabel.bottom
@@ -256,10 +261,14 @@ Item {
                 property string property0: "none.none"
                 font.hintingPreference: Font.PreferFullHinting
                 anchors.bottomMargin: 6
-                anchors.topMargin: 5
+                anchors.topMargin: 0
                 anchors.leftMargin: 20
                 placeholderText: Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
                 inputMethodHints: inputMethodHints
+                MouseArea {
+                    id:dateArriveMouseArea
+                    anchors.fill: parent
+                }
 
             }
 
@@ -268,15 +277,20 @@ Item {
                 x: 240
                 y: 269
                 width: 140
+                text: ""
                 anchors.right: parent.right
                 anchors.top: departLabel.bottom
                 anchors.bottom: rectDivider.top
                 horizontalAlignment: Text.AlignHCenter
-                anchors.topMargin: 5
+                anchors.topMargin: 0
                 anchors.bottomMargin: 6
                 anchors.rightMargin: 20
                 placeholderText: Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
                 inputMethodHints: inputMethodHints
+                MouseArea {
+                    id:dateDepartureMouseArea
+                    anchors.fill: parent
+                }
             }
 
 
@@ -298,10 +312,10 @@ Item {
                 height: 36
                 text: qsTr("Abbonamento")
                 anchors.left: parent.left
-                anchors.right: parent.right
+                anchors.right: textFieldAcconto.left
                 anchors.top: textFieldName.bottom
                 anchors.topMargin: 6
-                anchors.rightMargin: 234
+                anchors.rightMargin: 90
                 anchors.leftMargin: 20
             }
 
@@ -316,18 +330,42 @@ Item {
                 anchors.rightMargin: 5
                 anchors.topMargin: 5
             }
+
+            TextField {
+                id: textFieldAcconto
+                x: 251
+                y: 76
+                width: 115
+                visible: false
+                anchors.right: parent.right
+                anchors.rightMargin: 20
+                placeholderText: qsTr("Acconto")
+            }
         }
     }
 
     DatePicker {
         id: datePickerArrive
-        x: -58
-        y: 338
+        x: -61
+        y: 330
         width: 221
         height: 295
+        visible: false
         mm: 9
         fontSizePx: 12
         cellSize: 27
+    }
+
+    DatePicker {
+        id: datePickerDeparture
+        x: 239
+        y: 330
+        width: 221
+        height: 295
+        visible: false
+        cellSize: 27
+        fontSizePx: 12
+        mm: 9
     }
 }
 

@@ -57,7 +57,7 @@ Page {
                 }
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
 
@@ -79,7 +79,7 @@ Page {
                 interactive: false
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -100,7 +100,7 @@ Page {
                 interactive: false
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -121,7 +121,7 @@ Page {
                 interactive: false
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -142,7 +142,7 @@ Page {
                 interactive: false
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -163,7 +163,7 @@ Page {
                 interactive: false
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -184,7 +184,7 @@ Page {
                 interactive: false
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -206,7 +206,7 @@ Page {
                 anchors.topMargin: 5
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -227,7 +227,7 @@ Page {
                 anchors.topMargin: 5
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -246,7 +246,7 @@ Page {
                 anchors.leftMargin: 3
                 anchors.bottomMargin: 66
                 delegate: CellButton {
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     labelNumber.text: cellNumber
                     cellStatusRectColor: statusColor
                 }
@@ -272,7 +272,7 @@ Page {
                 anchors.topMargin: 3
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -293,7 +293,7 @@ Page {
                 anchors.topMargin: 3
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -314,7 +314,7 @@ Page {
                 anchors.topMargin: 3
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -335,7 +335,7 @@ Page {
                 anchors.topMargin: 3
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -356,7 +356,7 @@ Page {
                 anchors.topMargin: 3
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -377,7 +377,7 @@ Page {
                 anchors.topMargin: 3
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -398,7 +398,7 @@ Page {
                 anchors.topMargin: 3
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -419,7 +419,7 @@ Page {
                 anchors.topMargin: 78
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -440,7 +440,7 @@ Page {
                 anchors.topMargin: 78
                 delegate: CellButton {
                     labelNumber.text: cellNumber
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     cellStatusRectColor: statusColor
                 }
             }
@@ -456,7 +456,7 @@ Page {
                 }
                 anchors.bottomMargin: 0
                 delegate: CellButton {
-                    labelClientName.text: clientName
+                    labelClientName.text: clientSurname
                     labelNumber.text: cellNumber
                     cellStatusRectColor: statusColor
                 }

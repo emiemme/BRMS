@@ -23,8 +23,8 @@ public:
         Q_PROPERTY(QDate b_arriveDate MEMBER arriveDate)
         Q_PROPERTY(QDate b_departureDate MEMBER departureDate)
         Q_PROPERTY(QString b_status MEMBER status)
-        Q_PROPERTY(QString b_status MEMBER acconto)
-        Q_PROPERTY(bool b_operatore MEMBER saldo)
+        Q_PROPERTY(QString b_acconto MEMBER acconto)
+        Q_PROPERTY(QString b_cell_number MEMBER cell_number)
         Q_PROPERTY(QString b_operatore MEMBER operatore)
 
         int         ticketNumber;
@@ -39,7 +39,7 @@ public:
         QDate       departureDate;
         QString     status;
         QString     acconto;
-        bool        saldo;
+        QString     cell_number;
         QString     operatore;
 };
 Q_DECLARE_METATYPE(booking)
@@ -49,12 +49,12 @@ struct ombStatus
     Q_GADGET
 public:
         Q_PROPERTY(int b_omb_num MEMBER omb_num)
-        Q_PROPERTY(QString b_client_name MEMBER client_name)
+        Q_PROPERTY(QString b_client_surname MEMBER client_surname)
         Q_PROPERTY(QString b_status MEMBER status)
         Q_PROPERTY(QString b_color MEMBER color)
 
         int         omb_num;
-        QString     client_name;
+        QString     client_surname;
         QString     status;
         QString     color;
 };

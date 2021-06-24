@@ -22,7 +22,7 @@ class Application: public QObject
 public:
     explicit Application(QObject *parent = nullptr);
     Q_INVOKABLE bool selectAllStatus(int total_omb, QString currentDate);
-    Q_INVOKABLE bool insertNewBooking(int ticketNumber, int omb_num, QString clientName, QString clientSurname, int lettini, int sdraio, int cabina, QString arriveDate, QString departureDate, QString status, QString acconto, bool saldo, QString operatore);
+    Q_INVOKABLE bool insertNewBooking(int ticketNumber, int omb_num, QString clientName, QString clientSurname, int lettini, int sdraio, int cabina, QString arriveDate, QString departureDate, QString status, QString acconto, QString cell_number, QString operatore);
     Q_INVOKABLE bool deleteBooking(int ticketNumber, int omb_num);
 
     Q_INVOKABLE void    setTicketCount();
