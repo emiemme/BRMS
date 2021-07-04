@@ -23,6 +23,7 @@ CellButtonForm {
                     homeTicketForm.textDateDepart.text = ""
                     homeTicketForm.checkBoxDaily.checked = false
                     homeTicketForm.textFieldAcconto.text = ""
+                    homeTicketForm.textFieldCellNum.text = ""
                     var row = {checked: true, currentText: "Ombrellone", amount: 1}
                     homeTicketForm.tableModelTicket.setRow(0,row)
                     row = {checked: true, currentText: "Lettini", amount: 2}

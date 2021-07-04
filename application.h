@@ -47,15 +47,28 @@ public:
     int getOmbStatusLength() const {return qml_ombStatus_list.count();}
 
 
+    //Expose freeOmb,bookingOmb & leavingOmb to qml
+    Q_INVOKABLE int     getFreeOmbCount();
+    Q_INVOKABLE int     getIncomingOmbCount();
+    Q_INVOKABLE int     getBookingOmbCount();
+    Q_INVOKABLE int     getLeavingOmbCount();
+    Q_INVOKABLE int     getDailyOmbCount();
+
+
 private slots:
     void debugStruct(booking newBooking);
 
 private:
     DB_api  *db;
     int     ticketCount;
+    int     freeOmb;
+    int     bookingOmb;
+    int     leavingOmb;
+    int     incomingOmb;
 
 signals:
     void bookingChanged();
+    void gridUpdateCompleted();
 
 
 };

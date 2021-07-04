@@ -1,6 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtQuick.Controls 1.4 as Old
+//import QtQuick.Controls 1.4 as Old
 
 
 
@@ -9,6 +9,8 @@ HomeForm {
     property var rightList : [12, 20, 32, 40, 52, 60, 72, 80, 92, 99, 111, 118, 130, 137, 146, 149, 158, 161, 170, 173]
     property var leftList :  [1,  11, 21, 31, 41, 51, 61, 71, 81, 91, 100, 110, 119, 129, 138, 145, 150, 157, 162, 169]
     property int totalOmb : 173
+
+    signal updateMapCompleted()
 
     buttonUpdateGrid.onClicked: {
         updateGrid(155,"2021-06-10")
@@ -25,37 +27,7 @@ HomeForm {
         var currentDate = Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
         Backend.updateStatusGrid(totalOmb, currentDate)
         updateGrid(totalOmb, currentDate)
-
     }
-
-//    Old.Calendar {
-//        x: 350
-//        y: 350
-//        id: calendarArrive
-//        visible: false
-//     }
-//    Old.Calendar {
-//        x: 650
-//        y: 350
-//        id: calendarDeparture
-//        visible: false
-//     }
-
-//    homeTicketForm.textDateArrive.onTextChanged: {
-//        calendarArrive.visible = true
-//    }
-
-//    homeTicketForm.textDateDepart.onTextChanged: {
-//        calendarDeparture.visible = true
-//    }
-
-//    calendarArrive.onClicked: {
-//        calendarArrive.visible = false
-//    }
-
-//    calendarDeparture.onClicked: {
-//        calendarDeparture.visible = false
-//    }
 
     homeTicketForm.dateArriveMouseArea.onClicked: {
         homeTicketForm.datePickerArrive.visible = true
@@ -91,11 +63,13 @@ HomeForm {
         if(homeTicketForm.checkBoxDaily.checked) {
             homeTicketForm.textFieldName.visible = true
             homeTicketForm.textFieldAcconto.visible = true
+            homeTicketForm.textFieldCellNum.visible = true
             homeTicketForm.textFieldSurname.placeholderText = "Cognome"
             homeTicketForm.textFieldName.placeholderText = "Nome"
         } else {
             homeTicketForm.textFieldName.visible = false
             homeTicketForm.textFieldAcconto.visible = false
+            homeTicketForm.textFieldCellNum.visible = false
             homeTicketForm.textFieldSurname.placeholderText = "Giornaliero"
             homeTicketForm.textDateArrive.placeholderText =  Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
             homeTicketForm.textDateDepart.placeholderText =  Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
@@ -185,7 +159,11 @@ HomeForm {
             }
         }
         var acconto = "0.0"
-        var cell_number = "000 0000000"
+        var cell_number = homeTicketForm.textFieldCellNum.text
+        if(cell_number === "" || cell_number  === null || cell_number === undefined) {
+            cell_number = "000 0000000"
+        }
+
         var operatore =      "Maria"
         if ( Backend.insertNewBooking(ticketNumber, omb_number, client_name, client_surname,
                                  lettini, sdraio, cabina, arriveDate, departureDate, status, acconto, cell_number, operatore) ) {
@@ -279,9 +257,15 @@ HomeForm {
                 for(var colRIndex = rightList[rightRow+1]; colRIndex > rightList[rightRow]-1; colRIndex--){
                     if(stackView.children[rightListIndex].model.get(indexListModel).cellNumber == Backend.m_ombStatus_list[colRIndex-1].b_omb_num) {
                         //console.log(Backend.m_ombStatus_list[colRIndex-1].b_omb_num +" == "+ Backend.m_ombStatus_list[colRIndex].b_client_surname)
-                        stackView.children[rightListIndex].model.get(indexListModel).clientSurname = Backend.m_ombStatus_list[colRIndex-1].b_client_surname
-                        stackView.children[rightListIndex].model.get(indexListModel).statusColor = Backend.m_ombStatus_list[colRIndex-1].b_color
+                        if( Backend.m_ombStatus_list[colRIndex-1].b_status != "Not Arrived") {
+                            stackView.children[rightListIndex].model.get(indexListModel).clientSurname = Backend.m_ombStatus_list[colRIndex-1].b_client_surname
+                            stackView.children[rightListIndex].model.get(indexListModel).statusColor = Backend.m_ombStatus_list[colRIndex-1].b_color
+                        } else {
+                            stackView.children[rightListIndex].model.get(indexListModel).clientSurname = ""
+                            stackView.children[rightListIndex].model.get(indexListModel).statusColor = Backend.m_ombStatus_list[colRIndex-1].b_color
+                        }
                     }
+
                     indexListModel++
                 }
                 rightListIndex++
@@ -293,14 +277,21 @@ HomeForm {
                 indexListModel = 0
                 for(var colLIndex = leftList[leftRow+1]; colLIndex > leftList[leftRow]-1; colLIndex--){
                     if(stackView.children[leftListIndex].model.get(indexListModel).cellNumber == Backend.m_ombStatus_list[colLIndex-1].b_omb_num) {
-                        stackView.children[leftListIndex].model.get(indexListModel).clientSurname = Backend.m_ombStatus_list[colLIndex-1].b_client_surname
-                        stackView.children[leftListIndex].model.get(indexListModel).statusColor = Backend.m_ombStatus_list[colLIndex-1].b_color
+                       if( Backend.m_ombStatus_list[colLIndex-1].b_status != "Not Arrived") {
+                            stackView.children[leftListIndex].model.get(indexListModel).clientSurname = Backend.m_ombStatus_list[colLIndex-1].b_client_surname
+                            stackView.children[leftListIndex].model.get(indexListModel).statusColor = Backend.m_ombStatus_list[colLIndex-1].b_color
+                       } else {
+                           stackView.children[leftListIndex].model.get(indexListModel).clientSurname = ""
+                           stackView.children[leftListIndex].model.get(indexListModel).statusColor = Backend.m_ombStatus_list[colLIndex-1].b_color
+                       }
                     }
                     indexListModel++
                 }
                 leftListIndex++
             }
         }
+
+
 
     }
 

@@ -12,11 +12,22 @@ function displayInfo(omb_num) {
         labelUmbrella.text = omb_num
         tableModelInfo.clear()
 
+        labelNameSurname.text = ""
+        labelNLettini.text = ""
+        labelNSdraio.text = ""
+        labelNCabina.text = ""
+        labelTicketNumber.text = ""
+        labelArriveDate.text = ""
+        labelDepartureDate.text = ""
+
+
         if( Backend.m_booking_list_length > 0) {
             for(var i=0; i< Backend.m_booking_list_length; i++ ) {
                 var arriveDate =  new Date(Backend.m_booking_list[i].b_arriveDate).toISOString().split('T')[0]
                 var departureDate = new Date(Backend.m_booking_list[i].b_departureDate).toISOString().split('T')[0]
                 var check =  false
+                console.log("Status = " +Backend.m_booking_list[i].b_status)
+                tvRectColor = "#FFFFFF"
                 if ( Backend.m_booking_list[i].b_status === "Arrived" || Backend.m_booking_list[i].b_status === "Daily"){
                     labelNameSurname.text = Backend.m_booking_list[i].b_client_name +" "+ Backend.m_booking_list[i].b_client_surname
                     labelNLettini.text = Backend.m_booking_list[i].b_lettini
@@ -26,6 +37,8 @@ function displayInfo(omb_num) {
                     labelArriveDate.text = arriveDate
                     labelDepartureDate.text = departureDate
                     check = true
+                    tvRectColor = "#00FF00"
+
                 }
                 var row = { checked: check ,
                             name: Backend.m_booking_list[i].b_client_name,

@@ -6,6 +6,7 @@ Item {
     id: ticketForm
     width: 400
     height: 450
+    property alias textFieldCellNum: textFieldCellNum
     property alias dateDepartureMouseArea: dateDepartureMouseArea
     property alias datePickerDeparture: datePickerDeparture
     property alias dateArriveMouseArea: dateArriveMouseArea
@@ -312,10 +313,10 @@ Item {
                 height: 36
                 text: qsTr("Abbonamento")
                 anchors.left: parent.left
-                anchors.right: textFieldAcconto.left
+                anchors.right: textFieldCellNum.left
                 anchors.top: textFieldName.bottom
                 anchors.topMargin: 6
-                anchors.rightMargin: 90
+                anchors.rightMargin: 7
                 anchors.leftMargin: 20
             }
 
@@ -333,13 +334,26 @@ Item {
 
             TextField {
                 id: textFieldAcconto
-                x: 251
-                y: 76
-                width: 115
+                x: 285
+                y: 72
+                width: 95
+                height: 43
                 visible: false
                 anchors.right: parent.right
                 anchors.rightMargin: 20
                 placeholderText: qsTr("Acconto")
+            }
+
+            TextField {
+                id: textFieldCellNum
+                x: 180
+                y: 72
+                width: 95
+                height: 43
+                visible: false
+                anchors.right: textFieldAcconto.left
+                anchors.rightMargin: 5
+                placeholderText: qsTr("Numero Cell.")
             }
         }
     }

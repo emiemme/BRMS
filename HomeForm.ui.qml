@@ -35,6 +35,7 @@ Page {
     Rectangle {
         id: backgroundRect
         color: "#efb23f"
+
         anchors.fill: parent
 
         StackView {
@@ -661,6 +662,7 @@ Page {
                 id: buttonUpdateGrid
                 x: 1015
                 y: 261
+                visible: false
                 text: qsTr("UpdateGrid")
             }
 

@@ -5,6 +5,7 @@ import Qt.labs.qmlmodels 1.0
 Item {
     width: 600
     height: 600
+    property var tvRectColor: "#FF0000"
     property alias labelTicketNumber: labelTicketNumber
     property alias checkBoxGroup: checkBoxGroup
     property alias tableModelInfo: tableModelInfo
@@ -46,6 +47,7 @@ Item {
                     DelegateChooser {
                     DelegateChoice {
                         Rectangle {
+                            color: tvRectColor
                             implicitWidth: 58
                             implicitHeight: 20
 
@@ -61,6 +63,7 @@ Item {
 
                     DelegateChoice {
                         Rectangle {
+                            color: tvRectColor
                             implicitWidth: 75
                             implicitHeight: 40
                             Label {
@@ -75,6 +78,7 @@ Item {
                     }
                     DelegateChoice {
                         Rectangle {
+                            color: tvRectColor
                             implicitWidth: 75
                             implicitHeight: 40
                             Label {
@@ -90,6 +94,7 @@ Item {
 
                     DelegateChoice {
                         Rectangle {
+                            color: tvRectColor
                             implicitWidth: 100
                             implicitHeight: 40
                             Label {
@@ -103,6 +108,7 @@ Item {
                     }
                     DelegateChoice {
                         Rectangle {
+                            color: tvRectColor
                             implicitWidth: 100
                             implicitHeight: 40
                             Label {
@@ -116,6 +122,7 @@ Item {
                     }
                     DelegateChoice {
                         Rectangle {
+                            color: tvRectColor
                             implicitWidth: 50
                             implicitHeight: 40
                             Label {
@@ -129,6 +136,7 @@ Item {
                     }
                     DelegateChoice {
                         Rectangle {
+                            color: tvRectColor
                             implicitWidth: 50
                             implicitHeight: 40
                             Label {
@@ -142,6 +150,7 @@ Item {
                     }
                     DelegateChoice {
                         Rectangle {
+                            color: tvRectColor
                             implicitWidth: 50
                             implicitHeight: 40
                             Label {
@@ -155,6 +164,7 @@ Item {
                     }
                     DelegateChoice {
                         Rectangle {
+                            color: tvRectColor
                             implicitWidth: 50
                             implicitHeight: 40
                             Label {

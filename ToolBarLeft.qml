@@ -1,20 +1,22 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-//import QtQuick.Controls 1.4 as Old
 
 ToolBarLeftForm {
-
-    //    Old.Calendar {
-    //         anchors.centerIn: parent
-    //         id: calendar
-    //     }
-
     Component.onCompleted: {
-        infoAreaFreeOmb.labelInfo.text = "Ombrelloni liberi:"
+        infoAreaFreeOmb.labelInfo.text = "Liberi:"
         infoAreaArrive.labelInfo.text = "Arrivi:"
         infoAreaDepart.labelInfo.text = "Partenze:"
+        infoAreaBooked.labelInfo.text = "Abbonati:"
+        infoAreaDaily.labelInfo.text = "Giornalieri:"
+        infoAreaFreeOmb.labelValue.text = Backend.getFreeOmbCount()
+        infoAreaArrive.labelValue.text = Backend.getIncomingOmbCount()
+        infoAreaDepart.labelValue.text = Backend.getLeavingOmbCount()
+        infoAreaBooked.labelValue.text = Backend.getBookingOmbCount()
+        infoAreaDaily.labelValue.text = Backend.getDailyOmbCount()
 
     }
+
+
 
     toolButtonMenu.text: stackView.depth > 1 ? "\u25C0" : "\u2630"
     toolButtonMenu.onClicked: {
@@ -64,9 +66,26 @@ ToolBarLeftForm {
         Backend.updateStatusGrid(155, textAreaDate.text)
     }
 
+    Connections {
+        target: Backend
+
+        function onGridUpdateCompleted() {
+            infoAreaFreeOmb.labelValue.text = Backend.getFreeOmbCount()
+            infoAreaArrive.labelValue.text = Backend.getIncomingOmbCount()
+            infoAreaDepart.labelValue.text = Backend.getLeavingOmbCount()
+            infoAreaBooked.labelValue.text = Backend.getBookingOmbCount()
+            infoAreaDaily.labelValue.text = Backend.getDailyOmbCount()
+
+        }
+    }
+
+
     Timer {
         interval: 500; running: true; repeat: true
-        onTriggered: dateTimeLabel.text = Qt.formatDateTime(new Date(),"yyyy-MM-dd \n hh:mm:ss").toString()
+        onTriggered: { dateTimeLabel.text = Qt.formatDateTime(new Date(),"yyyy-MM-dd \n hh:mm:ss").toString()
+
+        }
+
     }
 
 }

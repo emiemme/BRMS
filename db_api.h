@@ -67,6 +67,11 @@ class DB_api : public QObject
 
 public:
     explicit DB_api(QObject *parent = nullptr);
+    int     freeOmb;
+    int     bookingOmb;
+    int     leavingOmb;
+    int     incomingOmb;
+    int     dailyOmb;
 
 
 public slots:
@@ -95,8 +100,6 @@ signals:
 
 private:
     QSqlDatabase sqlDB;
-
-
 };
 
 #endif // DB_API_H

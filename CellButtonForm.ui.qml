@@ -13,7 +13,7 @@ Item {
     Rectangle {
         id: backgroundRect
         width: 120
-        color: "#fccb6d"
+        //color: "#fccb6d"
         border.color: "#b2afaf"
         border.width: 1
         anchors.fill: parent
@@ -85,6 +85,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:3}D{i:5}
+    D{i:0;formeditorZoom:1.5}
 }
 ##^##*/

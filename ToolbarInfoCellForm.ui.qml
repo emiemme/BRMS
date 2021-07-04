@@ -26,6 +26,8 @@ Item {
             anchors.top: parent.top
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
+            font.pointSize: 14
+            font.bold: true
             anchors.rightMargin: 5
             anchors.leftMargin: 5
             anchors.topMargin: 0
@@ -40,6 +42,8 @@ Item {
             anchors.bottom: parent.bottom
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
+            font.pointSize: 14
+            font.bold: true
             anchors.leftMargin: 5
             anchors.bottomMargin: 8
             anchors.topMargin: 0

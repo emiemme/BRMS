@@ -10,7 +10,6 @@ Application::Application(QObject *parent) : QObject(parent)
         db->setTicketCount(0);
     }
 
-
 //    qDebug()<<db->selectOmbBooking(1).at(0).ticketNumber;
 //    qDebug()<<db->selectOmbBooking(1).at(1).ticketNumber;
 }
@@ -21,13 +20,14 @@ bool Application::selectAllStatus(int total_omb, QString currentDate)
      bool fRes = false;
      qml_ombStatus_list = db->selectAllOmbStatus(total_omb,QDateTime::fromString(currentDate, "yyyy-MM-dd"));
      //qDebug()<<qml_ombStatus_list.count();
-     for(int i=0;i < qml_ombStatus_list.count(); i++) {
-        //qDebug()<<qml_ombStatus_list.at(i).omb_num<<"-->"<<qml_ombStatus_list.at(i).status<<"-->"<<qml_ombStatus_list.at(i).color<<"-->"<<qml_ombStatus_list.at(i).client_name;
-     }
+//     for(int i=0;i < qml_ombStatus_list.count(); i++) {
+//        //qDebug()<<qml_ombStatus_list.at(i).omb_num<<"-->"<<qml_ombStatus_list.at(i).status<<"-->"<<qml_ombStatus_list.at(i).color<<"-->"<<qml_ombStatus_list.at(i).client_name;
+//     }
      if (qml_ombStatus_list.first().omb_num < 1 || qml_ombStatus_list.first().omb_num > total_omb) {
          fRes = false;
      } else {
         fRes = true;
+        emit gridUpdateCompleted();
      }
      return fRes;
 }
@@ -88,6 +88,29 @@ void Application::setTicketCount()
 {
     ticketCount =  db->getTicketCount();
 }
+
+int Application::getFreeOmbCount()
+{
+    return db->freeOmb;
+}
+int Application::getBookingOmbCount()
+{
+    return db->bookingOmb;
+}
+int Application::getLeavingOmbCount()
+{
+    return db->leavingOmb;
+}
+int Application::getIncomingOmbCount()
+{
+    return db->incomingOmb;
+}
+
+int Application::getDailyOmbCount()
+{
+    return db->dailyOmb;
+}
+
 
 void Application::debugStruct(booking newBooking)
 {

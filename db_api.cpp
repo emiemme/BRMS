@@ -7,7 +7,11 @@
 
 DB_api::DB_api(QObject *parent) : QObject(parent)
 {
-
+    freeOmb    = 0;
+    bookingOmb = 0;
+    leavingOmb = 0;
+    incomingOmb = 0;
+    dailyOmb = 0;
 }
 
 bool DB_api::openDB(int totalOmb)
@@ -222,8 +226,8 @@ QList <booking> DB_api::selectOmbBooking(int omb_num)
                   _booking.arriveDate = query.value(7).toDate();
                   _booking.departureDate = query.value(8).toDate();
                   _booking.status = query.value(9).toString();
-                  _booking.status = query.value(10).toString();
-                  _booking.status = query.value(11).toString();
+                  _booking.acconto = query.value(10).toString();
+                  _booking.cell_number = query.value(11).toString();
                   _booking.operatore = query.value(12).toString();
 
                   _selectList.append(_booking);
@@ -242,6 +246,11 @@ QList <ombStatus>  DB_api::selectAllOmbStatus (int total_omb, QDateTime currentD
 {
     QList <ombStatus> _selectList;
     QSqlQuery _query(sqlDB);
+    freeOmb    = total_omb +1;
+    bookingOmb = 0;
+    leavingOmb = 0;
+    incomingOmb = 0;
+    dailyOmb = 0;
     if( total_omb != 0 && currentDate.isValid() ) {
 
         for (int _omb_num = 0; _omb_num < total_omb; _omb_num++ ) {
@@ -254,18 +263,33 @@ QList <ombStatus>  DB_api::selectAllOmbStatus (int total_omb, QDateTime currentD
                 while (_query.next()) {
                     _ombStatus.status      =    _query.value(0).toString();
                     _ombStatus.client_surname =    _query.value(1).toString();
-                    qDebug()<<"_omb_num= "<<_omb_num + 1;
-                    qDebug()<<"Client_Surname= "<< _ombStatus.client_surname;
-                    qDebug()<<"status= "<< _ombStatus.status;
+                    qDebug()<<"Omb_num = "<<_omb_num + 1;
+                    qDebug()<<"Client_Surname = "<< _ombStatus.client_surname;
+                    qDebug()<<"Status = "<< _ombStatus.status;
 
-                    if(_ombStatus.status == "Arrived" || _ombStatus.status == "Daily") {
+                    if(_ombStatus.status == "Arrived") {
                         _ombStatus.color = "#FF0000";
-                    } else if (_ombStatus.status == "Not Arrived" || _ombStatus.status == "Incoming") {
+                        bookingOmb++;
+                        freeOmb--;
+                    } else if (_ombStatus.status == "Daily") {
+                        _ombStatus.color = "#FF0000";
+                        dailyOmb++;
+                        freeOmb--;
+                    }else if (_ombStatus.status == "Incoming") {
                         _ombStatus.color = "#FFFF00";
-                    } else if (_ombStatus.status == "Leaving") {
-                        _ombStatus.color = "#FF6700";
+                        incomingOmb++;
+                        freeOmb--;
+                    } else if (_ombStatus.status == "Not Arrived") {
+                        _ombStatus.color = "#00FF00";
+//                        incomingOmb++;
+//                        freeOmb--;
                     }
-
+                    else if (_ombStatus.status == "Leaving") {
+                        //_ombStatus.color = "#FF6700";
+                        _ombStatus.color = "#0c3483";
+                        leavingOmb++;
+                        freeOmb--;
+                    }
                     if(_ombStatus.color != "#00FF00") {
                         break;
                     }
