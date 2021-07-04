@@ -21,7 +21,7 @@ bool DB_api::openDB(int totalOmb)
     sqlDB.setDatabaseName(BASE_PATH "Gestionale_Lido.sqlite");
 
     if(!sqlDB.open()) {
-        qDebug("[%s] open (%s) ERROR '%s'", __PRETTY_FUNCTION__, sqlDB.databaseName().toLatin1().data(),
+        qCritical("[%s] open (%s) ERROR '%s'", __PRETTY_FUNCTION__, sqlDB.databaseName().toLatin1().data(),
                sqlDB.lastError().text().toLatin1().data());
         fRes = false;
     } else {
@@ -44,7 +44,7 @@ bool DB_api::_queryTheDB(const QString text, QString msg)
         // qDebug("query='%s'\n%s ... OK", text.toLatin1().data(), msg.toLatin1().data());
         return true;
     } else {
-        qDebug("query='%s'\n%s ... ERROR %s", text.toLatin1().data(), msg.toLatin1().data(), query.lastError().text().toLatin1().data());
+        qWarning("query='%s'\n%s ... ERROR %s", text.toLatin1().data(), msg.toLatin1().data(), query.lastError().text().toLatin1().data());
         return false;
     }
 }
@@ -53,7 +53,7 @@ bool DB_api::_queryTheDB(const QString text, QString msg)
 bool DB_api::createDB(int total_omb)
 {
     bool fRes = false;
-    qDebug("[%s] empty database file ...", __PRETTY_FUNCTION__);
+    qWarning("[%s] empty database file ...", __PRETTY_FUNCTION__);
 
     bool ok;
     ok = _queryTheDB("BEGIN TRANSACTION;",QString("[%1] begin").arg(__PRETTY_FUNCTION__));
@@ -233,11 +233,11 @@ QList <booking> DB_api::selectOmbBooking(int omb_num)
                   _selectList.append(_booking);
                 }
         } else {
-            qDebug("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
+            qWarning("query='%s'\n[%s] ... ERROR %s", currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
                    query.lastError().text().toLatin1().data());
         }
     } else {
-        qDebug()<<"Wrong Omb Number";
+        qCritical()<<"Wrong Omb Number";
     }
  return _selectList ;
 }
@@ -301,7 +301,7 @@ QList <ombStatus>  DB_api::selectAllOmbStatus (int total_omb, QDateTime currentD
             }
         }
     } else {
-        qDebug()<<"Wrong total_omb Number or datetime";
+        qCritical()<<"Wrong total_omb Number or datetime";
     }
  return _selectList ;
 }
@@ -353,14 +353,14 @@ bool DB_api::updateAllStatusBooking(int total_omb,QDateTime currentDate)
                     if (query.exec(_listQuery) && query.lastError().type() == QSqlError::NoError) {
                         qDebug()<<"query executed:"<<_listQuery;
                     } else {
-                        qDebug("query='%s'\n[%s] ... ERROR %s", _listQuery.toLatin1().data(), __PRETTY_FUNCTION__,
+                        qWarning("query='%s'\n[%s] ... ERROR %s", _listQuery.toLatin1().data(), __PRETTY_FUNCTION__,
                                query.lastError().text().toLatin1().data());
                     }
                 }
                 _update_query_list.clear();
             }
         }else {
-            qDebug("query='%s'\n[%s] ... ERROR %s", _currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
+            qWarning("query='%s'\n[%s] ... ERROR %s", _currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
                    query.lastError().text().toLatin1().data());
             break;
         }

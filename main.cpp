@@ -1,7 +1,37 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QtDebug>
+#include <QFile>
+#include <QTextStream>
 #include "application.h"
+
+void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    QString txt;
+    switch (type) {
+    case QtDebugMsg:
+        txt = QString("[%1] Debug: %2").arg(QDateTime::currentDateTime().toString("yyyy-MM-ddThh:mm:ss")).arg(msg);
+        fprintf(stderr, "Debug: %s \n", msg.toLatin1().data());
+        break;
+    case QtWarningMsg:
+        txt = QString("[%1] Warning: %2").arg(QDateTime::currentDateTime().toString("yyyy-MM-ddThh:mm:ss")).arg(msg);
+        fprintf(stderr, "Warning: %s \n", msg.toLatin1().data());
+    break;
+    case QtCriticalMsg:
+        txt = QString("[%1] Critical: %2").arg(QDateTime::currentDateTime().toString("yyyy-MM-ddThh:mm:ss")).arg(msg);
+        fprintf(stderr, "Critical: %s \n", msg.toLatin1().data());
+    break;
+    case QtFatalMsg:
+        txt = QString("[%1] Fatal: %2").arg(QDateTime::currentDateTime().toString("yyyy-MM-ddThh:mm:ss")).arg(msg);
+        fprintf(stderr, "Fatal: %s \n", msg.toLatin1().data());
+    break;
+    }
+    QFile outFile("Gestionale_Lido.log");
+    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+    QTextStream ts(&outFile);
+    ts << txt << Qt::endl;
+}
 
 int main(int argc, char *argv[])
 {
@@ -11,7 +41,8 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
-    QGuiApplication app(argc, argv);
+     qInstallMessageHandler(myMessageOutput);
+     QGuiApplication app(argc, argv);
 
 
     QQmlApplicationEngine engine;
@@ -33,3 +64,9 @@ int main(int argc, char *argv[])
 
     return app.exec();
 }
+
+
+
+
+
+

@@ -53,9 +53,8 @@ HomeForm {
     }
 
     homeTicketForm.closeTicketButton.mouseAreaButton.onClicked: {
-        console.log("Clicked")
-
-         homeTicketForm.visible = false
+        //console.log("Clicked")
+        homeTicketForm.visible = false
     }
 
     homeTicketForm.checkBoxDaily.onCheckedChanged: {
@@ -79,7 +78,6 @@ HomeForm {
 
     homeTicketForm.bookingTicketButton.mouseAreaButton.onClicked: {
         console.log("Prenotazioni")
-
         homeTicketForm.visible = false
         infoCell.visible = true
         infoCell.displayInfo(homeTicketForm.labelUmbrella.text)
@@ -89,7 +87,6 @@ HomeForm {
 
     homeTicketForm.confirmTicketButton.mouseAreaButton.onClicked: {
         console.log("Confirmed")
-
         var ticketNumber
         if(homeTicketForm.ticketNumber != -1) {
             ticketNumber = homeTicketForm.ticketNumber
