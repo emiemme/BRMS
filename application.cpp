@@ -111,6 +111,11 @@ int Application::getDailyOmbCount()
     return db->dailyOmb;
 }
 
+void Application::emitViewName(bool state)
+{
+    emit viewName(state);
+}
+
 
 void Application::debugStruct(booking newBooking)
 {

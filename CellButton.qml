@@ -9,6 +9,8 @@ CellButtonForm {
         //console.log(separatorRect.color)
     }
 
+
+
     MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton
@@ -43,4 +45,11 @@ CellButtonForm {
     function setNumber(n) {
         labelNumber.text = n
     }
+    Connections {
+        target: Backend
+        function onViewName(viewState){
+            labelClientName.visible = viewState
+        }
+     }
 }
+

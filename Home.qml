@@ -240,9 +240,9 @@ HomeForm {
         }
 
 
+
+
     }
-
-
 
     function updateGrid(total_omb, currentDate) {
         if (Backend.selectAllStatus(total_omb, currentDate) ) {

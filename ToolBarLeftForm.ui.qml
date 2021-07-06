@@ -5,6 +5,7 @@ Item {
     id: toolbarleftform
     width: 100
     height: 700
+    property alias checkBoxViewName: checkBoxViewName
     property alias infoAreaDaily: infoAreaDaily
     property alias infoAreaBooked: infoAreaBooked
     property alias infoAreaArrive: infoAreaArrive
@@ -71,12 +72,26 @@ Item {
             }
         }
 
+        CheckBox {
+            id: checkBoxViewName
+            text: qsTr("Visualizza<br>Nomi")
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: toolBar.bottom
+            checked: true
+            font.bold: true
+            display: AbstractButton.TextBesideIcon
+            anchors.topMargin: 10
+            anchors.leftMargin: 8
+            anchors.rightMargin: 8
+        }
+
         ToolbarInfoCell {
             id: infoAreaFreeOmb
             height: 50
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.top: toolBar.bottom
+            anchors.top: checkBoxViewName.bottom
             backgroundRect.color: "#07bc1d"
             anchors.topMargin: 10
             anchors.leftMargin: 8
@@ -157,11 +172,12 @@ Item {
             placeholderText: qsTr("Text Area")
         }
 
+
     }
 }
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:1.66}D{i:12}D{i:13}D{i:14}
+    D{i:0;formeditorZoom:1.66}D{i:8}
 }
 ##^##*/

@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 ToolBarLeftForm {
+    id: toolBarLeft
     Component.onCompleted: {
         infoAreaFreeOmb.labelInfo.text = "Liberi:"
         infoAreaArrive.labelInfo.text = "Arrivi:"
@@ -64,6 +65,10 @@ ToolBarLeftForm {
     buttonUpdateDB.onClicked: {
         console.log("Updating DB with a custom date: " + textAreaDate.text)
         Backend.updateStatusGrid(155, textAreaDate.text)
+    }
+
+    checkBoxViewName.onCheckStateChanged: {
+            Backend.emitViewName(checkBoxViewName.checkState)
     }
 
     Connections {
