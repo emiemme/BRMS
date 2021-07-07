@@ -71,6 +71,78 @@ ToolBarLeftForm {
             Backend.emitViewName(checkBoxViewName.checkState)
     }
 
+
+//    Search Bar code snippet
+//    ListModel {
+//        id: resultSearchList
+//    }
+//    QtObject {
+//        id: internal
+//        property bool finished: false
+//        property bool busy: false
+//    }
+//    TextField {
+//        anchors.centerIn: parent
+//        id: textfield
+//        onTextChanged: {
+//            internal.finished = false
+//            internal.busy = true
+//            if(text.length > 2) {
+//                searchElement(text)
+//                console.log("text changed:" + text)
+//            }
+//        }
+//        Popup {
+//            id: popup
+//            y: parent.height
+//            visible: !internal.finished && textfield.length > 0
+//            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+//            contentItem: Loader{
+//                    sourceComponent: internal.busy ? busy_component: lv_component
+//                }
+//        }
+//    }
+//    function searchElement(searchText) {
+//        resultSearchList.clear()
+//        var arraySearchElements = ["ciao", "saluti", "salati", "cipresso","cia"]
+//        for(var i =0; i< arraySearchElements.length; i++) {
+//            if(arraySearchElements[i].search(searchText) > -1 ) {
+//                resultSearchList.append({name:arraySearchElements[i]})
+//            }
+//        }
+//        if(resultSearchList.count > 0 )
+//            internal.busy = false
+//    }
+
+//    Component{
+//        id: busy_component
+//        BusyIndicator {
+//            running: true
+//        }
+//    }
+
+//    Component{
+//        id: lv_component
+//        ListView {
+//            implicitWidth: contentItem.childrenRect.width
+//            implicitHeight: contentHeight
+//            model: resultSearchList
+//            delegate: Text {
+//                text: model.name
+//                MouseArea{
+//                    id: mousearea
+//                    anchors.fill: parent
+//                    hoverEnabled: true
+//                    onClicked: {
+//                        textfield.text = model.name
+//                        internal.finished = true
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+
     Connections {
         target: Backend
 
