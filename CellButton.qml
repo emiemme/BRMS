@@ -55,9 +55,12 @@ CellButtonForm {
         function onSearchCompleted(omb_search_vals){
 
             for(var i=0; i < omb_search_vals.length; i++) {
-                if (omb_search_vals[i].b_omb_num === labelNumber.text ) {
+                var cell_number = omb_search_vals[i].b_omb_num
+                if (labelNumber.text == cell_number ) {
                     cellGlow.visible =  true
                     console.log("---------------------------------")
+                } else {
+                   cellGlow.visible =  false
                 }
             }
         }
