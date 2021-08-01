@@ -60,6 +60,17 @@ public:
 };
 Q_DECLARE_METATYPE(ombStatus)
 
+struct searchStruct
+{
+    Q_GADGET
+public:
+        Q_PROPERTY(int b_omb_num MEMBER omb_num)
+        Q_PROPERTY(QString b_searchName MEMBER searchName)
+
+        int         omb_num;
+        QString     searchName;
+};
+Q_DECLARE_METATYPE(searchStruct)
 
 class DB_api : public QObject
 {
@@ -85,8 +96,11 @@ public slots:
     bool updateAllStatusBooking(int total_omb, QDateTime currentDate);
 
 
+
     QList <booking> selectOmbBooking(int omb_num);
     QList <ombStatus> selectAllOmbStatus (int total_omb,QDateTime currentDate);
+    QList <searchStruct> selectSearchValues(int total_omb, QString searchVal);
+
     int getTicketCount();
 
 

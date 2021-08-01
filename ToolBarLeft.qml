@@ -3,6 +3,8 @@ import QtQuick.Controls 2.12
 
 ToolBarLeftForm {
     id: toolBarLeft
+    property int totalOmb : 173
+
     Component.onCompleted: {
         infoAreaFreeOmb.labelInfo.text = "Liberi:"
         infoAreaArrive.labelInfo.text = "Arrivi:"
@@ -64,7 +66,7 @@ ToolBarLeftForm {
 
     buttonUpdateDB.onClicked: {
         console.log("Updating DB with a custom date: " + textAreaDate.text)
-        Backend.updateStatusGrid(155, textAreaDate.text)
+        Backend.updateStatusGrid(totalOmb, textAreaDate.text)
     }
 
     checkBoxViewName.onCheckStateChanged: {
@@ -72,15 +74,70 @@ ToolBarLeftForm {
     }
 
 
+    //SearchBar:
+    ListModel {
+      id: resultSearchList
+    }
+
+    QtObject {
+        id: internal
+        property bool finished: false
+        property bool busy: false
+    }
+    searchField.onTextEdited: {
+        internal.finished = false
+        internal.busy = true
+        if(searchField.text.length > 2) {
+            searchElement(searchField.text)
+            console.log("text changed:" + searchField.text)
+
+        }
+    }
+
+        function searchElement(searchText) {
+            resultSearchList.clear()
+
+            var arraySearchElementsStruct =  Backend.getSearchValues(totalOmb,searchField.text) //["ciao", "saluti", "salati", "cipresso","cia"]
+            console.log(arraySearchElementsStruct)
+            for(var i =0; i< arraySearchElementsStruct.length; i++) {
+                if(arraySearchElementsStruct[i].b_searchName.search(searchText) > -1 ) {
+                    resultSearchList.append({name:arraySearchElementsStruct[i].b_searchName})
+                }
+            }
+            if(resultSearchList.count > 0 )
+                internal.busy = false
+        }
+            Component{
+                id: busy_component
+                BusyIndicator {
+                    running: true
+                }
+            }
+
+            Component{
+                id: lv_component
+                ListView {
+                    implicitWidth: contentItem.childrenRect.width
+                    implicitHeight: contentHeight
+                    model: resultSearchList
+                    delegate: Text {
+                        id:searchText
+                        text: model.name
+                        MouseArea{
+                            id: mousearea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: {
+                                searchField.text = model.name
+                                internal.finished = true
+                            }
+                        }
+                    }
+                }
+            }
+
 //    Search Bar code snippet
-//    ListModel {
-//        id: resultSearchList
-//    }
-//    QtObject {
-//        id: internal
-//        property bool finished: false
-//        property bool busy: false
-//    }
+
 //    TextField {
 //        anchors.centerIn: parent
 //        id: textfield

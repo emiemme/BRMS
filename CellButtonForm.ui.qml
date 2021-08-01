@@ -1,9 +1,11 @@
 import QtQuick 2.4
 import QtQuick.Controls 2.15
+import QtGraphicalEffects 1.0
 
 Item {
     width: 122
     height: 37
+    property alias cellGlow: cellGlow
     property alias separatorRect: separatorRect
     property alias cellStatusRectColor: separatorRect.color
     property alias labelClientName: labelClientName
@@ -31,6 +33,16 @@ Item {
             anchors.rightMargin: 5
             anchors.topMargin: 0
             fillMode: Image.PreserveAspectFit
+
+            Glow {
+                       id: cellGlow
+                       anchors.fill: image
+                       visible: false
+                       radius: 3
+                       samples: 17
+                       color: "red"
+                       source: image
+                   }
 
             Label {
                 id: labelNumber

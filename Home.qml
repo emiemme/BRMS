@@ -14,7 +14,7 @@ HomeForm {
 
     buttonUpdateGrid.onClicked: {
         updateGrid(155,"2021-06-10")
-}
+    }
 
 
 

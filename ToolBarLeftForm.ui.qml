@@ -5,6 +5,8 @@ Item {
     id: toolbarleftform
     width: 100
     height: 700
+    property alias popupSearchField: popupSearchField
+    property alias searchField: searchField
     property alias checkBoxViewName: checkBoxViewName
     property alias infoAreaDaily: infoAreaDaily
     property alias infoAreaBooked: infoAreaBooked
@@ -72,26 +74,13 @@ Item {
             }
         }
 
-        CheckBox {
-            id: checkBoxViewName
-            text: qsTr("Visualizza<br>Nomi")
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: toolBar.bottom
-            checked: true
-            font.bold: true
-            display: AbstractButton.TextBesideIcon
-            anchors.topMargin: 10
-            anchors.leftMargin: 8
-            anchors.rightMargin: 8
-        }
 
         ToolbarInfoCell {
             id: infoAreaFreeOmb
             height: 50
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.top: checkBoxViewName.bottom
+            anchors.top: toolBar.bottom
             backgroundRect.color: "#07bc1d"
             anchors.topMargin: 10
             anchors.leftMargin: 8
@@ -147,14 +136,46 @@ Item {
             anchors.leftMargin: 8
         }
 
+        CheckBox {
+            id: checkBoxViewName
+            text: qsTr("Visualizza<br>Nomi")
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: infoAreaDaily.bottom
+            anchors.topMargin: 10
+            checked: true
+            font.bold: true
+            display: AbstractButton.TextBesideIcon
+            anchors.leftMargin: 8
+            anchors.rightMargin: 8
+        }
+        TextField {
+            id: searchField
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: checkBoxViewName.bottom
+            anchors.topMargin: 10
+            anchors.leftMargin: 8
+            anchors.rightMargin: 8
+                Popup {
+                    id: popupSearchField
+                    y: parent.height
+                    visible: !internal.finished && searchField.length > 0
+                    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+                    contentItem: Loader{
+                            sourceComponent: internal.busy ? busy_component: lv_component
+                        }
+                }
+            }
+
         Button {
             id: buttonUpdateDB
             visible: false
             text: qsTr("Update DB")
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.top: infoAreaDaily.bottom
-            anchors.topMargin: 10
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 10
             anchors.leftMargin: 5
             anchors.rightMargin: 5
         }
@@ -178,6 +199,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:1.66}D{i:8}
+    D{i:0;formeditorZoom:1.66}
 }
 ##^##*/

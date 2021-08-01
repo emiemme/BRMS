@@ -246,7 +246,7 @@ QList <ombStatus>  DB_api::selectAllOmbStatus (int total_omb, QDateTime currentD
 {
     QList <ombStatus> _selectList;
     QSqlQuery _query(sqlDB);
-    freeOmb    = total_omb +1;
+    freeOmb    = total_omb;
     bookingOmb = 0;
     leavingOmb = 0;
     incomingOmb = 0;
@@ -305,6 +305,41 @@ QList <ombStatus>  DB_api::selectAllOmbStatus (int total_omb, QDateTime currentD
     }
  return _selectList ;
 }
+
+QList<searchStruct> DB_api::selectSearchValues (int total_omb,QString searchVal)
+{
+    QList<searchStruct> _searchList;
+    searchStruct _tmpSearchStruct;
+    QString _tmpName;
+    QSqlQuery _query(sqlDB);
+    if( total_omb != 0 ) {
+
+        for (int _omb_num = 0; _omb_num < total_omb; _omb_num++ ) {
+            QString _currentQuery = "SELECT Client_Name, Client_Surname FROM Omb_" + QString::number(_omb_num+1) + " WHERE Client_Name LIKE (\"%"+searchVal+"%\") OR Client_Surname LIKE (\"%"+searchVal+"%\")";
+            //qDebug()<<currentQuery;
+            if (_query.exec(_currentQuery) && _query.lastError().type() == QSqlError::NoError) {
+                _tmpSearchStruct.omb_num = _omb_num + 1;
+                while (_query.next()) {
+                    _tmpName = _query.value(0).toString();
+                    if(_tmpName != "-") {
+                        _tmpSearchStruct.searchName = _query.value(0).toString();
+
+                    } else {
+                         _tmpSearchStruct.searchName = _query.value(1).toString();
+                    }
+                    _searchList.append(_tmpSearchStruct);
+                }
+            }else {
+                qDebug("query='%s'\n[%s] ... ERROR %s", _currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
+                       _query.lastError().text().toLatin1().data());
+            }
+        }
+    } else {
+        qCritical()<<"Wrong total_omb Number or datetime";
+    }
+ return _searchList ;
+}
+
 
 bool DB_api::updateAllStatusBooking(int total_omb,QDateTime currentDate)
 {

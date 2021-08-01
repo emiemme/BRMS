@@ -39,6 +39,18 @@ bool Application::updateStatusGrid(int total_omb, QDateTime dateTime)
     return fRes;
 }
 
+QList<searchStruct> Application::getSearchValues(int total_omb, QString searchValue)
+{
+    QList<searchStruct> _tmpSearchList;
+    _tmpSearchList = db->selectSearchValues(total_omb,searchValue);
+
+    emit searchCompleted(_tmpSearchList);
+
+    return _tmpSearchList;
+}
+
+
+
 
 bool Application::insertNewBooking(int ticketNumber, int omb_num, QString clientName, QString clientSurname,
                                    int lettini, int sdraio, int cabina, QString arriveDate,

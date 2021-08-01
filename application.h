@@ -17,6 +17,9 @@ class Application: public QObject
     Q_PROPERTY(QList<ombStatus> m_ombStatus_list READ getOmbStatusList)
     Q_PROPERTY(int m_ombStatus_list_length READ getOmbStatusLength)
 
+    Q_PROPERTY(QList<searchStruct> m_searchStruct_list READ getSearchStructList)
+    Q_PROPERTY(int m_searchStruct_list_length READ getSearchStructLength)
+
 
 
 public:
@@ -48,6 +51,11 @@ public:
     QList<ombStatus> getOmbStatusList() const { return qml_ombStatus_list; }
     int getOmbStatusLength() const {return qml_ombStatus_list.count();}
 
+    // Expose QList<searchStruct> to qml
+    QList<searchStruct> qml_searchStruct_list;
+    QList<searchStruct> getSearchStructList() const { return qml_searchStruct_list; }
+    int getSearchStructLength() const {return qml_searchStruct_list.count();}
+
 
     //Expose freeOmb,bookingOmb & leavingOmb to qml
     Q_INVOKABLE int     getFreeOmbCount();
@@ -55,6 +63,9 @@ public:
     Q_INVOKABLE int     getBookingOmbCount();
     Q_INVOKABLE int     getLeavingOmbCount();
     Q_INVOKABLE int     getDailyOmbCount();
+
+    Q_INVOKABLE QList<searchStruct> getSearchValues(int total_omb,QString searchValue);
+
 
 
 private slots:
@@ -72,6 +83,7 @@ signals:
     void bookingChanged();
     void gridUpdateCompleted();
     void viewName(bool viewState);
+    void searchCompleted(QList<searchStruct>);
 
 
 };

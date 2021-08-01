@@ -15,6 +15,7 @@ CellButtonForm {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: {
+                 cellGlow.visible = true
                 if (separatorRect.color == "#00ff00") {
                     console.log("cell "+ labelNumber.text  +" Clicked but Empty")
                     homeTicketForm.visible = true
@@ -49,6 +50,16 @@ CellButtonForm {
         target: Backend
         function onViewName(viewState){
             labelClientName.visible = viewState
+        }
+
+        function onSearchCompleted(omb_search_vals){
+
+            for(var i=0; i < omb_search_vals.length; i++) {
+                if (omb_search_vals[i].b_omb_num === labelNumber.text ) {
+                    cellGlow.visible =  true
+                    console.log("---------------------------------")
+                }
+            }
         }
      }
 }
