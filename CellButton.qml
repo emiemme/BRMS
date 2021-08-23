@@ -48,6 +48,7 @@ CellButtonForm {
     }
     Connections {
         target: Backend
+
         function onViewName(viewState){
             labelClientName.visible = viewState
         }
@@ -58,12 +59,23 @@ CellButtonForm {
                 var cell_number = omb_search_vals[i].b_omb_num
                 if (labelNumber.text == cell_number ) {
                     cellGlow.visible =  true
-                    console.log("---------------------------------")
+                    glow_timer.running = true
+                    //console.log("---------------------------------")
                 } else {
                    cellGlow.visible =  false
                 }
             }
         }
      }
+
+
+    Timer {
+        id: glow_timer
+        interval: 2000; running: false; repeat: false
+        onTriggered: { cellGlow.visible =  false
+
+        }
+
+    }
 }
 

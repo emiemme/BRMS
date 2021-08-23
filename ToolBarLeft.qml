@@ -98,10 +98,10 @@ ToolBarLeftForm {
             resultSearchList.clear()
 
             var arraySearchElementsStruct =  Backend.getSearchValues(totalOmb,searchField.text) //["ciao", "saluti", "salati", "cipresso","cia"]
-            console.log(arraySearchElementsStruct)
+            //console.log(arraySearchElementsStruct)
             for(var i =0; i< arraySearchElementsStruct.length; i++) {
                 if(arraySearchElementsStruct[i].b_searchName.search(searchText) > -1 ) {
-                    resultSearchList.append({name:arraySearchElementsStruct[i].b_searchName})
+                    resultSearchList.append({name:arraySearchElementsStruct[i].b_searchName,number:arraySearchElementsStruct[i].b_omb_num})
                 }
             }
             if(resultSearchList.count > 0 )
@@ -122,7 +122,8 @@ ToolBarLeftForm {
                     model: resultSearchList
                     delegate: Text {
                         id:searchText
-                        text: model.name
+                        font.bold: true
+                        text: model.number +" "+ model.name
                         MouseArea{
                             id: mousearea
                             anchors.fill: parent
@@ -217,7 +218,6 @@ ToolBarLeftForm {
     Timer {
         interval: 500; running: true; repeat: true
         onTriggered: { dateTimeLabel.text = Qt.formatDateTime(new Date(),"yyyy-MM-dd \n hh:mm:ss").toString()
-
         }
 
     }

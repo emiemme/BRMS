@@ -21,6 +21,16 @@ Item {
         anchors.fill: parent
         z: 0
 
+        Glow {
+                   id: cellGlow
+                   anchors.fill: backgroundRect
+                   visible: false
+                   radius: 3
+                   samples: 17
+                   color: "red"
+                   source: backgroundRect
+               }
+
 
         Image {
             id: image
@@ -33,16 +43,6 @@ Item {
             anchors.rightMargin: 5
             anchors.topMargin: 0
             fillMode: Image.PreserveAspectFit
-
-            Glow {
-                       id: cellGlow
-                       anchors.fill: image
-                       visible: false
-                       radius: 3
-                       samples: 17
-                       color: "red"
-                       source: image
-                   }
 
             Label {
                 id: labelNumber
