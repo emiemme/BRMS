@@ -61,6 +61,10 @@ ToolBarLeftForm {
                     Qt.quit()
                 }
             }
+            ItemDelegate {
+                text: qsTr("Version 0.1.4 alfa")
+                width: parent.width
+            }
        }
     }
 

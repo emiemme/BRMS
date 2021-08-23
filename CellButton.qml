@@ -40,6 +40,7 @@ CellButtonForm {
                     infoCell.visible = true
                     infoCell.displayInfo(labelNumber.text)
                 }
+                cellGlow.visible =  false
             }
         }
 
