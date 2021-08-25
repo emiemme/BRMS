@@ -155,7 +155,7 @@ HomeForm {
                     cellColor = "#00ff00"
             }
         }
-        var acconto = "0.0"
+        var acconto = homeTicketForm.textFieldAcconto.text
         var cell_number = homeTicketForm.textFieldCellNum.text
         if(cell_number === "" || cell_number  === null || cell_number === undefined) {
             cell_number = "000 0000000"
@@ -190,6 +190,9 @@ HomeForm {
         homeTicketForm.labelUmbrella.text = infoCell.labelUmbrella.text
         homeTicketForm.textFieldName.text = ""
         homeTicketForm.textFieldSurname.text = ""
+        homeTicketForm.textFieldCellNum.text = ""
+        homeTicketForm.textFieldAcconto.text = ""
+        homeTicketForm.checkBoxDaily.checked = false
         homeTicketForm.textDateArrive.text = ""
         homeTicketForm.textDateDepart.text = ""
     }

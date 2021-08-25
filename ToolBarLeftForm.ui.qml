@@ -80,7 +80,7 @@ Item {
             height: 50
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.top: toolBar.bottom
+            anchors.top: searchField.bottom
             backgroundRect.color: "#07bc1d"
             anchors.topMargin: 10
             anchors.leftMargin: 8
@@ -153,8 +153,11 @@ Item {
             id: searchField
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.top: checkBoxViewName.bottom
+            anchors.top: toolBar.bottom
             anchors.topMargin: 10
+            font.bold: true
+            placeholderTextColor: "#dd000000"
+            placeholderText: ""
             anchors.leftMargin: 8
             anchors.rightMargin: 8
                 Popup {

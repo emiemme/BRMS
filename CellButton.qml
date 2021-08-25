@@ -15,7 +15,6 @@ CellButtonForm {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             onClicked: {
-                 cellGlow.visible = true
                 if (separatorRect.color == "#00ff00") {
                     console.log("cell "+ labelNumber.text  +" Clicked but Empty")
                     homeTicketForm.visible = true

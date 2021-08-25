@@ -5,7 +5,24 @@ import QtQuick.Controls 2.12
 InfoCellForm {
 
 
+    checkBoxGroup.onClicked: {
+        console.log("clicked " +  button.text)
 
+    }
+
+function selectNewInfo(){
+
+      console.log(button.text)
+//    labelNameSurname.text = Backend.m_booking_list[i].b_client_name +" "+ Backend.m_booking_list[i].b_client_surname
+//    labelNLettini.text = Backend.m_booking_list[i].b_lettini
+//    labelNSdraio.text = Backend.m_booking_list[i].b_sdraio
+//    labelNCabina.text = Backend.m_booking_list[i].b_cabina
+//    labelNAcconto.text = Backend.m_booking_list[i].b_acconto
+//    labelTicketNumber.text = Backend.m_booking_list[i].b_ticketNumber
+//    labelArriveDate.text = arriveDate
+//    labelDepartureDate.text = departureDate
+//    check = true
+}
 
 function displayInfo(omb_num) {
         Backend.selectOmbBookings(omb_num)
@@ -16,6 +33,7 @@ function displayInfo(omb_num) {
         labelNLettini.text = ""
         labelNSdraio.text = ""
         labelNCabina.text = ""
+        labelNAcconto.text = ""
         labelTicketNumber.text = ""
         labelArriveDate.text = ""
         labelDepartureDate.text = ""
@@ -33,12 +51,12 @@ function displayInfo(omb_num) {
                     labelNLettini.text = Backend.m_booking_list[i].b_lettini
                     labelNSdraio.text = Backend.m_booking_list[i].b_sdraio
                     labelNCabina.text = Backend.m_booking_list[i].b_cabina
+                    labelNAcconto.text = Backend.m_booking_list[i].b_acconto
                     labelTicketNumber.text = Backend.m_booking_list[i].b_ticketNumber
                     labelArriveDate.text = arriveDate
                     labelDepartureDate.text = departureDate
-                    check = true
-                    tvRectColor = "#00FF00"
-
+                    check =  Backend.m_booking_list[i].b_ticketNumber
+                    //tvRectColor = "#00FF00"
                 }
                 var row = { checked: check ,
                             name: Backend.m_booking_list[i].b_client_name,
@@ -58,6 +76,7 @@ function displayInfo(omb_num) {
             labelNCabina.text = ""
             labelArriveDate.text = ""
             labelDepartureDate.text = ""
+            labelNAcconto.text = ""
 
         }
 }

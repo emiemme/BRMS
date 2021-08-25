@@ -20,7 +20,7 @@ ToolBarLeftForm {
     }
 
 
-
+    searchField.placeholderText: "\u2315"
     toolButtonMenu.text: stackView.depth > 1 ? "\u25C0" : "\u2630"
     toolButtonMenu.onClicked: {
         if (stackView.depth > 1) {
@@ -62,7 +62,7 @@ ToolBarLeftForm {
                 }
             }
             ItemDelegate {
-                text: qsTr("Version 0.1.4 alfa")
+                text: qsTr("Version 0.1.5 beta")
                 width: parent.width
             }
        }

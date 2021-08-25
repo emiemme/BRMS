@@ -5,6 +5,8 @@ import Qt.labs.qmlmodels 1.0
 Item {
     width: 600
     height: 600
+    property alias labelNAcconto: labelNAcconto
+    property alias labelAcconto: labelAcconto
     property var tvRectColor: "#FF0000"
     property alias labelTicketNumber: labelTicketNumber
     property alias checkBoxGroup: checkBoxGroup
@@ -53,7 +55,9 @@ Item {
 
                             CheckBox {
                                 anchors.fill: parent
+                                display: AbstractButton.IconOnly
                                 checked: model.display
+                                text: model.display
                                 onToggled: model.display = checked
                                 ButtonGroup.group: checkBoxGroup
                             }
@@ -226,8 +230,8 @@ Item {
                 radius: 2.5
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.top: labelCabina.bottom
-                anchors.topMargin: 24
+                anchors.top: labelAcconto.bottom
+                anchors.topMargin: 2
                 anchors.leftMargin: 10
                 anchors.rightMargin: 10
             }
@@ -311,6 +315,7 @@ Item {
                 anchors.top: parent.top
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignVCenter
+                font.bold: true
                 anchors.leftMargin: 6
                 anchors.rightMargin: 205
                 anchors.topMargin: 10
@@ -325,6 +330,7 @@ Item {
                 anchors.top: parent.top
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignVCenter
+                font.bold: true
                 anchors.leftMargin: 205
                 anchors.topMargin: 10
             }
@@ -332,13 +338,14 @@ Item {
             Label {
                 id: labelClientName
                 x: 14
-                width: 85
+                width: 100
                 height: 30
                 text: qsTr("Nome Cliente:")
                 anchors.left: parent.left
                 anchors.top: parent.top
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignVCenter
+                font.bold: true
                 anchors.topMargin: 50
                 anchors.leftMargin: 15
             }
@@ -347,11 +354,12 @@ Item {
                 id: labelLettini
                 width: 85
                 height: 30
-                text: qsTr("Lettini")
+                text: qsTr("Lettini:")
                 anchors.left: labelNameSurname.right
                 anchors.top: parent.top
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignVCenter
+                font.bold: true
                 anchors.leftMargin: 141
                 anchors.topMargin: 50
             }
@@ -373,50 +381,54 @@ Item {
                 id: labelSdraio
                 width: 85
                 height: 30
-                text: qsTr("Sdraio")
+                text: qsTr("Sdraio:")
                 anchors.left: parent.left
                 anchors.top: labelLettini.bottom
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignVCenter
-                anchors.leftMargin: 341
-                anchors.topMargin: 5
+                font.bold: true
+                anchors.leftMargin: 356
+                anchors.topMargin: 6
             }
 
             Label {
                 id: labelCabina
                 width: 85
                 height: 30
-                text: qsTr("Cabina")
+                text: qsTr("Cabina:")
                 anchors.left: parent.left
                 anchors.top: labelSdraio.bottom
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignVCenter
-                anchors.leftMargin: 341
-                anchors.topMargin: 4
+                font.bold: true
+                anchors.leftMargin: 356
+                anchors.topMargin: 5
             }
 
             Label {
                 id: labelArrive
-                width: 85
+                width: 100
                 height: 30
                 text: qsTr("Data Arrivo:")
                 anchors.left: parent.left
                 anchors.top: labelClientName.bottom
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignVCenter
+                font.bold: true
                 anchors.leftMargin: 15
                 anchors.topMargin: 5
             }
 
             Label {
                 id: labelDeparture
-                width: 85
+                width: 100
                 height: 30
-                text: qsTr("Data Partenza")
+                text: qsTr("Data Partenza:")
                 anchors.left: parent.left
                 anchors.top: labelArrive.bottom
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignVCenter
+                font.bold: true
                 anchors.leftMargin: 15
                 anchors.topMargin: 3
             }
@@ -496,6 +508,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.top: rectDivider.bottom
+                font.bold: true
                 anchors.topMargin: 5
                 anchors.rightMargin: 449
                 anchors.leftMargin: 15
@@ -617,13 +630,14 @@ Item {
 
             Label {
                 id: labelTicket
-                width: 85
+                width: 107
                 height: 17
                 text: qsTr("Numero Ticket:")
                 anchors.left: parent.left
                 anchors.top: labelDepartureDate.bottom
+                font.bold: true
                 anchors.topMargin: 5
-                anchors.leftMargin: 15
+                anchors.leftMargin: 8
             }
 
             Label {
@@ -635,6 +649,38 @@ Item {
                 anchors.top: labelDepartureDate.bottom
                 anchors.topMargin: 5
                 anchors.leftMargin: 15
+            }
+
+            Label {
+                id: labelAcconto
+                y: 147
+                width: 85
+                height: 14
+                text: qsTr("Acconto:")
+                anchors.left: parent.left
+                anchors.top: labelCabina.bottom
+                horizontalAlignment: Text.AlignRight
+                verticalAlignment: Text.AlignVCenter
+                font.bold: true
+                anchors.leftMargin: 356
+                anchors.topMargin: 5
+            }
+
+            Label {
+                id: labelNAcconto
+                x: 456
+                y: 147
+                width: 59
+                height: 18
+                text: qsTr("")
+                anchors.left: labelAcconto.right
+                anchors.right: parent.right
+                anchors.top: labelNCabina.bottom
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignVCenter
+                anchors.leftMargin: 30
+                anchors.topMargin: 2
+                anchors.rightMargin: 59
             }
 
 
