@@ -222,6 +222,7 @@ HomeForm {
                 homeTicketForm.textFieldSurname.text =   infoCell.tableModelInfo.rows[i].surname
                 homeTicketForm.textDateArrive.text =     infoCell.tableModelInfo.rows[i].arrive_date
                 homeTicketForm.textDateDepart.text =     infoCell.tableModelInfo.rows[i].departure_date
+                homeTicketForm.textFieldAcconto.text =   infoCell.tableModelInfo.rows[i].acconto
                 homeTicketForm.ticketNumber         =    infoCell.tableModelInfo.rows[i].numeroT
                 var row
                 if(infoCell.tableModelInfo.rows[i].lettini > 0) {

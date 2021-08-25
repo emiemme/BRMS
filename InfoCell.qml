@@ -66,6 +66,7 @@ function displayInfo(omb_num) {
                             lettini: Backend.m_booking_list[i].b_lettini ,
                             sdraio:  Backend.m_booking_list[i].b_sdraio,
                             cabina: Backend.m_booking_list[i].b_cabina,
+                            acconto: Backend.m_booking_list[i].b_acconto,
                             numeroT: Backend.m_booking_list[i].b_ticketNumber}
                 tableModelInfo.appendRow(row)
             }

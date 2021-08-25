@@ -3,7 +3,7 @@ import QtQuick.Controls 2.12
 import Qt.labs.qmlmodels 1.0
 
 Item {
-    width: 600
+    width: 700
     height: 600
     property alias labelNAcconto: labelNAcconto
     property alias labelAcconto: labelAcconto
@@ -180,6 +180,20 @@ Item {
                         }
                         column: 8
                     }
+                    DelegateChoice {
+                        Rectangle {
+                            color: tvRectColor
+                            implicitWidth: 50
+                            implicitHeight: 40
+                            Label {
+                                text: model.display
+                                anchors.fill: parent
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                        }
+                        column: 9
+                    }
                 }
                 anchors.leftMargin: 15
 
@@ -209,6 +223,9 @@ Item {
                     }
                     TableModelColumn {
                         display: "cabina"
+                    }
+                    TableModelColumn {
+                        display: "acconto"
                     }
                     TableModelColumn {
                         display: "numeroT"
@@ -522,7 +539,7 @@ Item {
                 anchors.right: parent.right
                 anchors.top: labelBookingList.bottom
                 anchors.leftMargin: 15
-                anchors.rightMargin: 15
+                anchors.rightMargin: 10
                 anchors.topMargin: 5
 
                 Label {
@@ -620,10 +637,44 @@ Item {
                     anchors.bottom: parent.bottom
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    anchors.rightMargin: 0
+                    anchors.rightMargin: 90
                     anchors.leftMargin: 2
                     anchors.topMargin: 0
                     anchors.bottomMargin: 0
+                }
+
+                Label {
+                    id: labelHeaderAcoonto
+                    x: 592
+                    width: 78
+                    text: qsTr("Acconto")
+                    anchors.left: labelHeaderCabina.right
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.bottomMargin: 0
+                    anchors.topMargin: 0
+                    anchors.leftMargin: 0
+                    anchors.rightMargin: 38
+                }
+
+                Label {
+                    id: labelHeaderNT
+                    x: 592
+                    width: 78
+                    text: qsTr("Ticket")
+                    anchors.left: labelHeaderAcoonto.right
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.bottomMargin: 0
+                    anchors.topMargin: 0
+                    anchors.leftMargin: 0
+                    anchors.rightMargin: 0
                 }
 
             }

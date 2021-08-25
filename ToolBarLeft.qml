@@ -62,7 +62,7 @@ ToolBarLeftForm {
                 }
             }
             ItemDelegate {
-                text: qsTr("Version 0.1.5 beta")
+                text: qsTr("Version 0.1.6 beta")
                 width: parent.width
             }
        }
