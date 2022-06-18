@@ -303,7 +303,7 @@ Item {
                 anchors.bottomMargin: 15
                 anchors.leftMargin: 15
                 anchors.topMargin: 11
-                labelButton.text: "Annulla"
+                labelButton.text: "Esci"
             }
 
             GeneralButton {

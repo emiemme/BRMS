@@ -23,7 +23,7 @@ HomeForm {
         addRows()
         homeTicketForm.closeTicketButton.labelButton.text = "Annulla"
         homeTicketForm.confirmTicketButton.labelButton.text = "Conferma"
-        homeTicketForm.bookingTicketButton.labelButton.text = "Prenotazioni"
+        homeTicketForm.bookingTicketButton.labelButton.text = "Lista <br> Prenotazioni"
         var currentDate = Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
         Backend.updateStatusGrid(totalOmb, currentDate)
         updateGrid(totalOmb, currentDate)
