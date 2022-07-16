@@ -1,17 +1,23 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import Qt.labs.qmlmodels 1.0
 
 Item {
     id: ticketForm
     width: 400
     height: 450
+    property alias labelDaysCounter: labelDaysCounter
+    property alias spinBoxCabina: spinBoxCabina
+    property alias spinBoxSdraio: spinBoxSdraio
+    property alias spinBoxLettini: spinBoxLettini
+    property alias checkBoxCabina: checkBoxCabina
+    property alias checkBoxSdraio: checkBoxSdraio
+    property alias checkBoxLettini: checkBoxLettini
+//    property alias tableItems: tableItems
     property alias textFieldCellNum: textFieldCellNum
     property alias dateDepartureMouseArea: dateDepartureMouseArea
-    property alias datePickerDeparture: datePickerDeparture
     property alias dateArriveMouseArea: dateArriveMouseArea
     property alias textFieldAcconto: textFieldAcconto
-    property var ticketNumber: -1
+    property int ticketNumber: -1
     property alias datePickerArrive: datePickerArrive
     property alias bookingTicketButton: bookingTicketButton
     property alias checkBoxDaily: checkBoxDaily
@@ -21,7 +27,7 @@ Item {
     property alias textFieldSurname: textFieldSurname
     property alias textDateDepart: textDateDepart
     property alias textDateArrive: textDateArrive
-    property alias tableModelTicket: tableModelTicket
+//    property alias tableModelTicket: tableModelTicket
     property alias labelUmbrella: labelUmbrella
     property alias confirmTicketButton: confirmTicketButton
     property alias arriveLabel: arriveLabel
@@ -47,83 +53,81 @@ Item {
             }
         }
 
-
         MouseArea {
             id: mouseArea
             anchors.fill: parent
 
-            TableView {
-                id: tableItems
-                x: 14
-                y: 90
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.top: checkBoxDaily.bottom
-                anchors.bottom: rectDivider.top
-                anchors.bottomMargin: 70
-                anchors.leftMargin: 15
-                anchors.rightMargin: 20
-                anchors.topMargin: -5
-                columnSpacing: 1
-                rowSpacing: 1
-                boundsBehavior: Flickable.StopAtBounds
+//            TableView {
+//                id: tableItems
+//                x: 14
+//                y: 90
+//                anchors.left: parent.left
+//                anchors.right: parent.right
+//                anchors.top: checkBoxDaily.bottom
+//                anchors.bottom: rectDivider.top
+//                anchors.bottomMargin: 70
+//                anchors.leftMargin: 15
+//                anchors.rightMargin: 20
+//                anchors.topMargin: -5
+//                columnSpacing: 1
+//                rowSpacing: 1
+//                boundsBehavior: Flickable.StopAtBounds
 
-                model: TableModel {
-                    id: tableModelTicket
-                    TableModelColumn { display: "checked" }
-                    TableModelColumn { display: "currentText" }
-                    TableModelColumn { display: "amount" }
+                //                model: TableModel {
+                //                    id: tableModelTicket
+                //                    TableModelColumn { display: "checked" }
+                //                    TableModelColumn { display: "currentText" }
+                //                    TableModelColumn { display: "amount" }
 
-
-                    // Each row is one type of fruit that can be ordered
-                    rows: [
-                        {
-                            checked: true,
-                            currentText: "Ombrellone",
-                            amount: 1
-                        },
-                        {
-                            checked: true,
-                            currentText: "Lettini",
-                            amount: 2
-                        },
-                        {
-                            checked: false,
-                            currentText: "Sdraio",
-                            amount: 0
-                        },
-                        {
-                            checked: false,
-                            currentText: "Cabina",
-                            amount: 0
-                        }
-                    ]
-                }
-                delegate: DelegateChooser {
-                    DelegateChoice {
-                        column: 0
-                        delegate: CheckBox {
-                            checked: model.display
-                            onToggled: model.display = checked
-                        }
-                    }
-                    DelegateChoice {
-                        column: 1
-                        delegate: Label {
-                            text: model.display
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                        }
-                    }
-                    DelegateChoice {
-                        column: 2
-                        delegate: SpinBox {
-                            value: model.display
-                            onValueModified: model.display = value
-                        }
-                    }
-                }
-            }
+                //                    // Each row is one type of fruit that can be ordered
+                //                    rows: [
+                //                        {
+                //                            checked: true,
+                //                            currentText: "Ombrellone",
+                //                            amount: 1
+                //                        },
+                //                        {
+                //                            checked: true,
+                //                            currentText: "Lettini",
+                //                            amount: 2
+                //                        },
+                //                        {
+                //                            checked: false,
+                //                            currentText: "Sdraio",
+                //                            amount: 0
+                //                        },
+                //                        {
+                //                            checked: false,
+                //                            currentText: "Cabina",
+                //                            amount: 0
+                //                        }
+                //                    ]
+                //                }
+//                delegate: DelegateChooser {
+//                    DelegateChoice {
+//                        column: 0
+//                        delegate: CheckBox {
+//                            checked: model.display
+//                            onToggled: model.display = checked
+//                        }
+//                    }
+//                    DelegateChoice {
+//                        column: 1
+//                        delegate: Label {
+//                            text: model.display
+//                            horizontalAlignment: Text.AlignHCenter
+//                            verticalAlignment: Text.AlignVCenter
+//                        }
+//                    }
+//                    DelegateChoice {
+//                        column: 2
+//                        delegate: SpinBox {
+//                            value: model.display
+//                            onValueModified: model.display = value
+//                        }
+//                    }
+//                }
+//            }
 
             GeneralButton {
                 id: closeTicketButton
@@ -164,26 +168,28 @@ Item {
 
             TextField {
                 id: textFieldName
-                x: 272
-                y: 30
+                x: 147
+                y: 72
                 width: 115
                 height: 43
                 visible: false
-                anchors.right: parent.right
-                anchors.rightMargin: 20
+                text: ""
+                anchors.right: textFieldCellNum.left
+                anchors.rightMargin: 16
                 hoverEnabled: false
+                placeholderText: qsTr("Cognome")
             }
 
             TextField {
                 id: textFieldSurname
-                x: 135
-                y: 30
-                width: 115
+                y: 72
                 height: 43
                 visible: true
                 text: ""
+                anchors.left: parent.left
                 anchors.right: textFieldName.left
-                anchors.rightMargin: 20
+                anchors.rightMargin: 16
+                anchors.leftMargin: 16
                 placeholderText: qsTr("Giornaliero")
                 hoverEnabled: false
             }
@@ -195,109 +201,98 @@ Item {
                 height: 37
                 text: qsTr("Label")
                 anchors.left: labelOmb.right
-                anchors.right: parent.right
+                anchors.right: checkBoxDaily.left
                 anchors.top: parent.top
-                horizontalAlignment: Text.AlignLeft
+                horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.bold: true
                 font.pointSize: 14
-                anchors.leftMargin: 21
-                anchors.rightMargin: 5
+                anchors.leftMargin: 16
+                anchors.rightMargin: 16
                 anchors.topMargin: 5
-            }
-
-            Label {
-                id: labelClientName
-                x: 14
-                y: 37
-                height: 30
-                text: qsTr("Nome Cliente:")
-                anchors.left: parent.left
-                anchors.right: textFieldSurname.left
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                anchors.rightMargin: 20
-                anchors.leftMargin: 20
             }
 
             Label {
                 id: arriveLabel
                 x: 20
-                y: 245
-                width: 116
-                height: 19
+                width: 120
+                height: 30
                 text: qsTr("Data Arrivo")
                 anchors.left: parent.left
-                anchors.top: tableItems.bottom
-                anchors.topMargin: 5
-                anchors.leftMargin: 20
-
+                anchors.top: checkBoxCabina.bottom
+                verticalAlignment: Text.AlignVCenter
+                //anchors.top: tableItems.bottom
+                anchors.topMargin: 8
+                anchors.leftMargin: 16
             }
 
             Label {
                 id: departLabel
-                x: 260
-                y: 245
-                width: 120
-                height: 19
+                height: 30
                 text: qsTr("Data Partenza")
-                anchors.right: parent.right
-                anchors.top: tableItems.bottom
-                anchors.topMargin: 5
-                anchors.rightMargin: 20
+                anchors.left: parent.left
+                anchors.right: textDateDepart.left
+                anchors.top: arriveLabel.bottom
+                verticalAlignment: Text.AlignVCenter
+                anchors.topMargin: 8
+                anchors.leftMargin: 16
+                //anchors.top: tableItems.bottom
+                anchors.rightMargin: 16
             }
 
             TextField {
                 id: textDateArrive
                 x: 10
-                y: 269
-                height: 50
+                height: 48
                 text: ""
-                anchors.left: parent.left
-                anchors.right: textDateDepart.left
-                anchors.top: arriveLabel.bottom
-                anchors.bottom: rectDivider.top
+                anchors.left: arriveLabel.right
+                anchors.right: parent.right
+                anchors.top: checkBoxCabina.bottom
                 horizontalAlignment: Text.AlignHCenter
-                anchors.rightMargin: 80
+                bottomPadding: 24
+                anchors.rightMargin: 128
+                anchors.topMargin: -1
                 property string property0: "none.none"
                 font.hintingPreference: Font.PreferFullHinting
-                anchors.bottomMargin: 6
-                anchors.topMargin: 0
-                anchors.leftMargin: 20
-                placeholderText: Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
+                anchors.leftMargin: 16
+                placeholderText: Qt.formatDateTime(new Date(),
+                                                   "yyyy-MM-dd").toString()
                 inputMethodHints: inputMethodHints
                 MouseArea {
-                    id:dateArriveMouseArea
+                    id: dateArriveMouseArea
                     anchors.fill: parent
+                    anchors.rightMargin: 0
+                    anchors.bottomMargin: 0
+                    anchors.leftMargin: 0
+                    anchors.topMargin: 0
                 }
-
             }
 
             TextField {
                 id: textDateDepart
-                x: 240
-                y: 269
-                width: 140
+                x: 152
+                width: 120
+                height: 49
                 text: ""
                 anchors.right: parent.right
-                anchors.top: departLabel.bottom
-                anchors.bottom: rectDivider.top
+                anchors.top: arriveLabel.bottom
                 horizontalAlignment: Text.AlignHCenter
-                anchors.topMargin: 0
-                anchors.bottomMargin: 6
-                anchors.rightMargin: 20
-                placeholderText: Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
+                bottomPadding: 24
+                z: 1
+                anchors.topMargin: -2
+                anchors.rightMargin: 128
+                placeholderText: Qt.formatDateTime(new Date(),
+                                                   "yyyy-MM-dd").toString()
                 inputMethodHints: inputMethodHints
                 MouseArea {
-                    id:dateDepartureMouseArea
+                    id: dateDepartureMouseArea
                     anchors.fill: parent
                 }
             }
 
-
             Label {
                 id: labelOmb
-                width: 225
+                width: 136
                 height: 35
                 text: qsTr("Ombrellone Numero:")
                 anchors.left: parent.left
@@ -305,19 +300,18 @@ Item {
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignVCenter
                 anchors.topMargin: 5
-                anchors.leftMargin: 5
+                anchors.leftMargin: 8
             }
 
             CheckBox {
                 id: checkBoxDaily
+                x: 268
                 height: 36
                 text: qsTr("Abbonamento")
-                anchors.left: parent.left
-                anchors.right: textFieldCellNum.left
-                anchors.top: textFieldName.bottom
-                anchors.topMargin: 6
-                anchors.rightMargin: 7
-                anchors.leftMargin: 20
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.topMargin: 5
+                anchors.rightMargin: 8
             }
 
             GeneralButton {
@@ -334,53 +328,163 @@ Item {
 
             TextField {
                 id: textFieldAcconto
-                x: 285
-                y: 72
-                width: 95
-                height: 43
-                visible: false
+                x: 180
+                y: 121
+                width: 82
+                height: 30
+                visible: true
                 anchors.right: parent.right
-                anchors.rightMargin: 20
+                anchors.rightMargin: 138
                 placeholderText: qsTr("Acconto")
             }
 
             TextField {
                 id: textFieldCellNum
-                x: 180
+                x: 278
                 y: 72
-                width: 95
+                width: 102
                 height: 43
                 visible: false
-                anchors.right: textFieldAcconto.left
-                anchors.rightMargin: 5
+                anchors.right: parent.right
+                anchors.rightMargin: 20
                 placeholderText: qsTr("Numero Cell.")
+            }
+
+            Label {
+                id: labelTextDati
+                x: 13
+                y: 46
+                height: 30
+                text: qsTr("Dati Cliente:")
+                anchors.left: parent.left
+                anchors.right: parent.right
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.bold: true
+                anchors.rightMargin: 299
+                anchors.leftMargin: 15
+            }
+
+            CheckBox {
+                id: checkBoxLettini
+                height: 32
+                text: qsTr("Lettini")
+                anchors.left: parent.left
+                anchors.right: spinBoxLettini.left
+                anchors.top: labelTextBooking.bottom
+                checkState: Qt.Checked
+                anchors.topMargin: 8
+                anchors.rightMargin: 12
+                anchors.leftMargin: 16
+            }
+
+            CheckBox {
+                id: checkBoxSdraio
+                height: 32
+                text: qsTr("Sdraio")
+                anchors.left: parent.left
+                anchors.right: spinBoxSdraio.left
+                anchors.top: checkBoxLettini.bottom
+                anchors.topMargin: 4
+                anchors.rightMargin: 12
+                anchors.leftMargin: 16
+            }
+
+            CheckBox {
+                id: checkBoxCabina
+                height: 32
+                text: qsTr("Cabina")
+                anchors.left: parent.left
+                anchors.right: spinBoxCabina.left
+                anchors.top: checkBoxSdraio.bottom
+                anchors.topMargin: 6
+                anchors.rightMargin: 12
+                anchors.leftMargin: 16
+            }
+
+            Label {
+                id: labelTextBooking
+                x: 15
+                height: 30
+                text: qsTr("Dati Prenotazione:")
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                anchors.topMargin: 121
+                anchors.rightMargin: 256
+                font.bold: true
+                anchors.leftMargin: 15
+            }
+
+            SpinBox {
+                id: spinBoxLettini
+                x: 147
+                width: 100
+                height: 32
+                anchors.right: parent.right
+                anchors.top: labelTextBooking.bottom
+                value: 2
+                anchors.rightMargin: 153
+                anchors.topMargin: 8
+            }
+
+            SpinBox {
+                id: spinBoxSdraio
+                x: 133
+                width: 100
+                height: 32
+                anchors.right: parent.right
+                anchors.top: spinBoxLettini.bottom
+                anchors.rightMargin: 153
+                anchors.topMargin: 4
+            }
+
+            SpinBox {
+                id: spinBoxCabina
+                x: 133
+                width: 100
+                height: 32
+                anchors.right: parent.right
+                anchors.top: spinBoxSdraio.bottom
+                anchors.topMargin: 4
+                anchors.rightMargin: 153
+            }
+
+            Label {
+                id: labelDaysCounter
+                y: 345
+                width: 86
+                height: 18
+                text: qsTr("Durata soggiorno: 1 Giorno")
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: departLabel.bottom
+                verticalAlignment: Text.AlignVCenter
+                anchors.rightMargin: 212
+                anchors.leftMargin: 15
+                anchors.topMargin: 6
             }
         }
     }
 
     DatePicker {
         id: datePickerArrive
-        x: -61
-        y: 330
+        x: 99
+        y: 38
         width: 221
         height: 295
         visible: false
-        mm: 9
-        fontSizePx: 12
-        cellSize: 27
-    }
-
-    DatePicker {
-        id: datePickerDeparture
-        x: 239
-        y: 330
-        width: 221
-        height: 295
-        visible: false
-        cellSize: 27
-        fontSizePx: 12
-        mm: 9
+        //        mm: 9
+        //        fontSizePx: 12
+        //        cellSize: 27
     }
 }
 
-
+/*##^##
+Designer {
+    D{i:0;formeditorZoom:1.33}D{i:10}D{i:12}D{i:13}D{i:15;invisible:true}D{i:14}D{i:17;invisible:true}
+D{i:16}D{i:19}D{i:23}D{i:24}D{i:25}D{i:26}D{i:27}D{i:28}D{i:29}D{i:30}D{i:31}
+}
+##^##*/

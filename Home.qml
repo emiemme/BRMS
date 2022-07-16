@@ -12,10 +12,19 @@ HomeForm {
 
     signal updateMapCompleted()
 
-    buttonUpdateGrid.onClicked: {
-        updateGrid(155,"2021-06-10")
-    }
+//    buttonUpdateGrid.onClicked: {
+//        updateGrid(155,"2021-06-10")
+//    }
 
+
+//    Timer {
+//        interval: 5000; running: true; repeat: true
+//        onTriggered: {
+//            var currentDate = Qt.formatDateTime(new Date(),"yyyy-MM-dd").toString()
+//            Backend.updateStatusGrid(totalOmb, currentDate)
+//            updateGrid(totalOmb, currentDate)
+//        }
+//    }
 
 
 
@@ -34,7 +43,10 @@ HomeForm {
     }
     homeTicketForm.datePickerArrive.onOk: {
         homeTicketForm.datePickerArrive.visible = false
-        homeTicketForm.textDateArrive.text = selectDate
+        homeTicketForm.textDateArrive.text = startDate
+        homeTicketForm.textDateDepart.text = stopDate
+        var counterDays =  (Math.abs(new Date(stopDate) - new Date(startDate))/(1000*60*60*24)) +1
+        homeTicketForm.labelDaysCounter.text = "Durata soggiorno: "+ counterDays +" Giorno"
     }
     homeTicketForm.datePickerArrive.onCancel: {
         homeTicketForm.datePickerArrive.visible = false
@@ -42,14 +54,7 @@ HomeForm {
 
 
     homeTicketForm.dateDepartureMouseArea.onClicked: {
-        homeTicketForm.datePickerDeparture.visible = true
-    }
-    homeTicketForm.datePickerDeparture.onOk: {
-        homeTicketForm.datePickerDeparture.visible = false
-        homeTicketForm.textDateDepart.text = selectDate
-    }
-    homeTicketForm.datePickerDeparture.onCancel: {
-        homeTicketForm.datePickerDeparture.visible = false
+        homeTicketForm.datePickerArrive.visible = true
     }
 
     homeTicketForm.closeTicketButton.mouseAreaButton.onClicked: {
@@ -107,21 +112,21 @@ HomeForm {
         }
 
         var lettini
-        if(homeTicketForm.tableModelTicket.rows[1].checked) {
-           lettini = homeTicketForm.tableModelTicket.rows[1].amount
+        if(homeTicketForm.checkBoxLettini.checked) {
+           lettini = homeTicketForm.spinBoxLettini.value
         } else {
            lettini = 0
         }
         var sdraio
-        if(homeTicketForm.tableModelTicket.rows[2].checked) {
-            sdraio = homeTicketForm.tableModelTicket.rows[2].amount
+        if(homeTicketForm.checkBoxSdraio.checked) {
+            sdraio = homeTicketForm.spinBoxSdraio.value
         } else {
             sdraio = 0
         }
 
         var cabina = 0
-        if(homeTicketForm.tableModelTicket.rows[3].checked) {
-            cabina = homeTicketForm.tableModelTicket.rows[3].amount
+        if(homeTicketForm.checkBoxCabina.checked) {
+            cabina = homeTicketForm.spinBoxCabina.value
         } else {
             cabina = 0
         }
@@ -224,26 +229,30 @@ HomeForm {
                 homeTicketForm.textDateDepart.text =     infoCell.tableModelInfo.rows[i].departure_date
                 homeTicketForm.textFieldAcconto.text =   infoCell.tableModelInfo.rows[i].acconto
                 homeTicketForm.ticketNumber         =    infoCell.tableModelInfo.rows[i].numeroT
-                var row
+
                 if(infoCell.tableModelInfo.rows[i].lettini > 0) {
-                    row = {checked: true, currentText: "Lettini", amount: infoCell.tableModelInfo.rows[i].lettini}
-                    homeTicketForm.tableModelTicket.setRow(1,row)
+                    homeTicketForm.checkBoxLettini.checked = true
+                    homeTicketForm.spinBoxLettini.value =  infoCell.tableModelInfo.rows[i].lettini
                 } else {
-                    row = {checked: false, currentText: "Lettini", amount: 0}
-                    homeTicketForm.tableModelTicket.setRow(1,row)
+                    homeTicketForm.checkBoxLettini.checked = false
+                    homeTicketForm.spinBoxLettini.value =  0
                 }
                 if(infoCell.tableModelInfo.rows[i].sdraio > 0) {
-                    row = {checked: true, currentText: "Sdraio", amount: infoCell.tableModelInfo.rows[i].sdraio}
-                    homeTicketForm.tableModelTicket.setRow(2,row)
+                    homeTicketForm.checkBoxSdraio.checked = false
+                    homeTicketForm.spinBoxSdraio.value = infoCell.tableModelInfo.rows[i].sdraio
                 } else {
-                    row = {checked: false, currentText: "Sdraio", amount: 0}
-                    homeTicketForm.tableModelTicket.setRow(2,row)
+                    homeTicketForm.checkBoxSdraio.checked = false
+                    homeTicketForm.spinBoxSdraio.value = 0
                 }
+
+                var counterDays =  (Math.abs(new Date(homeTicketForm.textDateDepart.text) - new Date(homeTicketForm.textDateArrive.text))/(1000*60*60*24)) +1
+                homeTicketForm.labelDaysCounter.text = "Durata soggiorno: "+ counterDays +" Giorno"
                 break
             }
         }
 
-
+//        homeTicketForm.checkBoxCabina.checked = false
+//        homeTicketForm.spinBoxCabina.value = 0
 
 
     }

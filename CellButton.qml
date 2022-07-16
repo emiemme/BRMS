@@ -26,14 +26,26 @@ CellButtonForm {
                     homeTicketForm.checkBoxDaily.checked = false
                     homeTicketForm.textFieldAcconto.text = ""
                     homeTicketForm.textFieldCellNum.text = ""
-                    var row = {checked: true, currentText: "Ombrellone", amount: 1}
-                    homeTicketForm.tableModelTicket.setRow(0,row)
-                    row = {checked: true, currentText: "Lettini", amount: 2}
-                    homeTicketForm.tableModelTicket.setRow(1,row)
-                    row = {checked: false, currentText: "Sdraio", amount: 0}
-                    homeTicketForm.tableModelTicket.setRow(2,row)
-                    row = {checked: false, currentText: "Cabina", amount: 0}
-                    homeTicketForm.tableModelTicket.setRow(3,row)
+
+                    homeTicketForm.checkBoxLettini.checked = true
+                    homeTicketForm.checkBoxSdraio.checked = false
+                    homeTicketForm.checkBoxCabina.checked = false
+
+                    homeTicketForm.spinBoxLettini.value = 2
+                    homeTicketForm.spinBoxSdraio.value = 0
+                    homeTicketForm.spinBoxCabina.value = 0
+
+                    homeTicketForm.datePickerArrive.calendar.startDate = new Date(homeTicketForm.textDateArrive)
+                    homeTicketForm.datePickerArrive.calendar.stopDate = new Date(homeTicketForm.textDateDepart)
+
+                    var counterDays =  (Math.abs(new Date(homeTicketForm.datePickerArrive.calendar.stopDate)
+                                                 - new Date(homeTicketForm.datePickerArrive.calendar.startDate))/(1000*60*60*24)) +1
+                    if(Number.isNaN(counterDays)) {
+                        counterDays = 0
+                    }
+                    homeTicketForm.labelDaysCounter.text = "Durata soggiorno: "+ counterDays +" Giorno"
+
+
                 } else {
                     console.log("cell "+ labelNumber.text  +" Clicked but not Empty")
                     infoCell.visible = true

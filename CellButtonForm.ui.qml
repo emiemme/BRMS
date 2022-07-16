@@ -1,6 +1,6 @@
 import QtQuick 2.4
 import QtQuick.Controls 2.15
-import QtGraphicalEffects 1.0
+import QtGraphicalEffects 1.15
 
 Item {
     width: 122

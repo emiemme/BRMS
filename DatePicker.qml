@@ -1,355 +1,207 @@
-import QtQuick 2.7
-import QtQuick.Window 2.2
-import QtQuick.Controls 2.0
-import Qt.labs.calendar 1.0
-MouseArea {
-        id: mainForm
-        height: cellSize * 12
-        width: cellSize * 8
-        property double mm: Screen.pixelDensity
-        property double cellSize: mm * 7
-        property int fontSizePx: cellSize * 0.32
-        property var date: new Date(calendar.currentYear, calendar.currentMonth, calendar.currentDay);
-        clip: true
-        signal ok(string selectDate)
-        signal cancel
+import QtQuick 2.12
+import QtQuick.Window 2.12
+import QtQuick.Controls 2.12
+import QtGraphicalEffects 1.0
+import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.1
 
-        QtObject {
-            id: palette
-            property color primary: "#0c3483"//"#00BCD4"
-            property color primary_dark: "#0c3483"
-            property color primary_light: "#B2EBF2"
-            property color accent: "#FF5722"
-            property color primary_text: "#212121"
-            property color secondary_text: "#757575"
-            property color button_text: "#000000"
-            property color icons: "#FFFFFF"
-            property color divider: "#BDBDBD"
-        }
-        Rectangle {
-            color: "#ffffff"
-            anchors.fill: parent
-        }
-        Rectangle {
-            id: titleOfDate
-            anchors {
-                top: parent.top
-                horizontalCenter: parent.horizontalCenter
-            }
-            height: 1.5 * mainForm.cellSize
-            width: parent.width
-            color: palette.primary_dark
-            z: 2
-            Rectangle {
-                id: selectedYear
-                anchors {
-                    top: parent.top
-                    left: parent.left
-                    right: parent.right
-                }
-                height: mainForm.cellSize * 1
-                color: parent.color
-                Text {
-                    id: yearTitle
-                    anchors.fill: parent
-                    leftPadding: mainForm.cellSize * 0.5
-                    topPadding: mainForm.cellSize * 0.5
-                    horizontalAlignment: Text.AlignLeft
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: mainForm.fontSizePx * 1.7
-                    opacity: yearsList.visible ? 1 : 0.7
-                    color: "white"
-                    text: calendar.currentYear
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        yearsList.show();
-                    }
-                }
-            }
-        }
 
-        ListView {
-            id: calendar
-            anchors {
-                top: titleOfDate.bottom
-                left: parent.left
-                right: parent.right
-                leftMargin: mainForm.cellSize * 0.5
-                rightMargin: mainForm.cellSize * 0.5
-            }
-            height: mainForm.cellSize * 8
-            visible: true
-            z: 1
+Rectangle {
+    id: backgroundRect
+    height: 140
+    color: "white"
 
-            snapMode: ListView.SnapToItem
-            orientation: ListView.Horizontal
-            spacing: mainForm.cellSize
-            model: CalendarModel {
-                id: calendarModel
-                from: new Date(new Date().getFullYear(), 0, 1);
-                to: new Date(new Date().getFullYear(), 11, 31);
-                function  setYear(newYear) {
-                    if (calendarModel.from.getFullYear() > newYear) {
-                        calendarModel.from = new Date(newYear, 0, 1);
-                        calendarModel.to = new Date(newYear, 11, 31);
-                    } else {
-                        calendarModel.to = new Date(newYear, 11, 31);
-                        calendarModel.from = new Date(newYear, 0, 1);
-                    }
-                    calendar.currentYear = newYear;
-                    calendar.goToLastPickedDate();
-                    mainForm.setCurrentDate();
-                }
-            }
+    signal ok(string startDate, string stopDate)
+    signal cancel
+    property alias calendar: calendar
 
-            property int currentDay: new Date().getDate()
-            property int currentMonth: new Date().getMonth()
-            property int currentYear: new Date().getFullYear()
-            property int week: new Date().getDay()
-            property var months: ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Septtembre", "Ottobre", "Novembre", "Dicembre"]
-            property var weekNames: ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"]
 
-            delegate: Rectangle {
-                height: mainForm.cellSize * 8.5 //6 - на строки, 1 на дни недели и 1.5 на подпись
-                width: mainForm.cellSize * 7
+
+    Calendar {
+        id: calendar
+        width: parent.width
+        height: parent.height - 40
+        frameVisible: true
+        weekNumbersVisible: false
+        focus: true
+        property var startDate:  new Date()
+        property var stopDate: new Date();
+
+
+
+        style: CalendarStyle {
+            dayDelegate: Item {
+                readonly property color sameMonthDateTextColor: "#444"
+                readonly property color selectedDateColor: "#3778d0"
+                readonly property color selectedDateTextColor: "white"
+                readonly property color differentMonthDateTextColor: "#bbb"
+                readonly property color invalidDatecolor: "#dddddd"
+                property var dateOnFocus: styleData.date
+
+
+
                 Rectangle {
-                    id: monthYearTitle
-                    anchors {
-                        top: parent.top
-                    }
-                    height: mainForm.cellSize * 1.3
-                    width: parent.width
+                    anchors.fill: parent
+                    border.color: "transparent"
+                    color: styleData.date !== undefined && styleData.selected ? selectedDateColor : "transparent"
 
-                    Text {
-                        anchors.centerIn: parent
-                        font.pixelSize: mainForm.fontSizePx * 1.2
-                        text: calendar.months[model.month] + " " + model.year;
-                    }
                 }
 
-                DayOfWeekRow {
-                    id: weekTitles
-                    locale: monthGrid.locale
-                    anchors {
-                        top: monthYearTitle.bottom
-                    }
-                    height: mainForm.cellSize
-                    width: parent.width
-                    delegate: Text {
-                        text: model.shortName
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                        font.pixelSize: mainForm.fontSizePx
-                    }
+                Rectangle{
+                    id:fl
+                    anchors.fill: parent
+                    property bool flag: false
+                    color: ((dateOnFocus>calendar.startDate) && (dateOnFocus< calendar.stopDate))?"#55555555":
+                           (calendar.startDate !==undefined && dateOnFocus.getTime()===calendar.startDate.getTime())?"#3778d0":"transparent"
                 }
 
-                MonthGrid {
-                    id: monthGrid
-                    month: model.month
-                    year: model.year
-                    spacing: 0
-                    anchors {
-                        top: weekTitles.bottom
-                    }
-                    width: mainForm.cellSize * 7
-                    height: mainForm.cellSize * 6
 
-                    locale: Qt.locale("it_IT")
-                    delegate: Rectangle {
-                        height: mainForm.cellSize
-                        width: mainForm.cellSize
-                        radius: height * 0.5
-                        property bool highlighted: enabled && model.day == calendar.currentDay && model.month == calendar.currentMonth
+                MouseArea{
+                    anchors.fill: parent
+                    propagateComposedEvents: true
+                    onPressed: {
 
-                        enabled: model.month === monthGrid.month
-                        color: enabled && highlighted ? palette.primary_dark : "white"
-
-                        Text {
-                            anchors.centerIn: parent
-                            text: model.day
-                            font.pixelSize: mainForm.fontSizePx
-                            scale: highlighted ? 1.25 : 1
-                            Behavior on scale { NumberAnimation { duration: 150 } }
-                            visible: parent.enabled
-                            color: parent.highlighted ? "white" : "black"
+                        if(calendar.startDate===undefined){
+                            calendar.startDate=styleData.date
                         }
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                calendar.currentDay = model.date.getDate();
-                                calendar.currentMonth = model.date.getMonth();
-                                calendar.week = model.date.getDay();
-                                calendar.currentYear = model.date.getFullYear();
-                                mainForm.setCurrentDate();
+                        else if(calendar.stopDate=== undefined){
+                            calendar.stopDate=styleData.date
+                        }
+                        else{
+                            calendar.startDate=styleData.date
+                            calendar.stopDate= undefined
+                        }
+
+                        if(calendar.stopDate<=calendar.startDate){
+                            calendar.startDate=styleData.date
+                            calendar.stopDate= undefined
+                        }
+
+                        mouse.accepted = false
+                    }
+                }
+
+
+                Label {
+                    id: dayDelegateText
+                    text: styleData.date.getDate()
+                    anchors.centerIn: parent
+                    color: {
+                        var color = invalidDatecolor;
+                        if (styleData.valid) {
+                            // Date is within the valid range.
+                            color = styleData.visibleMonth ? sameMonthDateTextColor : differentMonthDateTextColor;
+                            if (styleData.selected) {
+                                color = selectedDateTextColor;
+                            }
+                            else if (dateOnFocus.getTime()===calendar.startDate.getTime()) {
+                                color = selectedDateTextColor;
                             }
                         }
+                        color;
                     }
                 }
             }
-
-
-            Component.onCompleted: goToLastPickedDate()
-            function goToLastPickedDate() {
-                positionViewAtIndex(calendar.currentMonth, ListView.SnapToItem)
-            }
         }
+    }
 
-        ListView {
-            id: yearsList
-            anchors.fill: calendar
-            orientation: ListView.Vertical
-            visible: false
-            z: calendar.z
-
-            property int currentYear
-            property int startYear: 1940
-            property int endYear : new Date().getFullYear();
-            model: ListModel {
-                id: yearsModel
+        Row {
+            layoutDirection: "RightToLeft"
+            spacing: 5
+            anchors {
+                right: parent.right
+                bottom: parent.bottom
             }
 
-            delegate: Rectangle {
-                width: parent.width
-                height: mainForm.cellSize * 1.5
+            height: 40
+            width:  parent.width
+
+            Rectangle {
+                id: okBtn
+                height: parent.height
+                width: 60
+                color: "#0c3483"
+                radius: 5
+                gradient: Gradient {
+                    GradientStop {
+                        position: 0
+                        color: "#0acffe"
+                    }
+
+                    GradientStop {
+                        position: 1
+                        color: "#495aff"
+                    }
+                }
+                states: State {
+                    name: "pressed"; when: mouseAreaOk.pressed
+                    PropertyChanges { target: okBtn; scale: 0.92 }
+                }
+
+                transitions: Transition {
+                    NumberAnimation { properties: "scale"; duration: 200; easing.type: Easing.InOutQuad }
+                }
+
                 Text {
+                    id: okBtnText
                     anchors.centerIn: parent
-                    font.pixelSize: mainForm.fontSizePx * 1.5
-                    text: name
-                    scale: index == yearsList.currentYear - yearsList.startYear ? 1.5 : 1
-                    color: palette.primary_dark
+                    font.pixelSize: calendar.fontSizePx * 1.8
+                    color: "black"
+                    text: "OK"
                 }
                 MouseArea {
+                    id: mouseAreaOk
                     anchors.fill: parent
                     onClicked: {
-                        calendarModel.setYear(yearsList.startYear + index);
-                        yearsList.hide();
+                        if(calendar.stopDate === undefined ) {
+                           calendar.stopDate =  calendar.startDate
+                        }
+
+                        backgroundRect.ok(calendar.startDate.toISOString().split('T')[0],calendar.stopDate.toISOString().split('T')[0]);
+                        console.log(calendar.startDate.toISOString().split('T')[0])
                     }
                 }
             }
-
-            Component.onCompleted: {
-                for (var year = startYear; year <= endYear; year ++)
-                    yearsModel.append({name: year});
-            }
-            function show() {
-                visible = true;
-                calendar.visible = false
-                currentYear = calendar.currentYear
-                yearsList.positionViewAtIndex(currentYear - startYear, ListView.SnapToItem);
-            }
-            function hide() {
-                visible = false;
-                calendar.visible = true;
-            }
-        }
-
-        Rectangle {
-            height: mainForm.cellSize * 1.5
-            anchors {
-                top: calendar.bottom
-                topMargin: 5
-                right: parent.right
-                rightMargin: mainForm.cellSize * 0.5
-                bottom: parent.bottom
-                bottomMargin: 5
-            }
-            z: titleOfDate.z
-            color: "black"
-            Row {
-                layoutDirection: "RightToLeft"
-                spacing: 5
-                anchors {
-                    right: parent.right
-                }
+            Rectangle {
+                id: cancelBtn
                 height: parent.height
-
-                Rectangle {
-                    id: okBtn
-                    height: parent.height
-                    width: okBtnText.contentWidth + mainForm.cellSize
-                    color: "#0c3483"
-                    radius: 5
-                    gradient: Gradient {
-                        GradientStop {
-                            position: 0
-                            color: "#0acffe"
-                        }
-
-                        GradientStop {
-                            position: 1
-                            color: "#495aff"
-                        }
-                    }
-                    states: State {
-                        name: "pressed"; when: mouseAreaOk.pressed
-                        PropertyChanges { target: okBtn; scale: 0.92 }
+                width: 60
+                color: "#0c3483"
+                radius: 5
+                gradient: Gradient {
+                    GradientStop {
+                        position: 0
+                        color: "#0acffe"
                     }
 
-                    transitions: Transition {
-                        NumberAnimation { properties: "scale"; duration: 200; easing.type: Easing.InOutQuad }
-                    }
-
-                    Text {
-                        id: okBtnText
-                        anchors.centerIn: parent
-                        font.pixelSize: mainForm.fontSizePx * 1.8
-                        color: palette.button_text
-                        text: "OK"
-                    }
-                    MouseArea {
-                        id: mouseAreaOk
-                        anchors.fill: parent
-                        onClicked: {
-                            mainForm.ok(date.toISOString().split('T')[0]);
-                        }
+                    GradientStop {
+                        position: 1
+                        color: "#495aff"
                     }
                 }
-                Rectangle {
-                    id: cancelBtn
-                    height: parent.height
-                    width: cancelBtnText.contentWidth + mainForm.cellSize
-                    color: "#0c3483"
-                    radius: 5
-                    gradient: Gradient {
-                        GradientStop {
-                            position: 0
-                            color: "#0acffe"
-                        }
+                states: State {
+                    name: "pressed"; when: mouseAreaCancel.pressed
+                    PropertyChanges { target: cancelBtn; scale: 0.92 }
+                }
 
-                        GradientStop {
-                            position: 1
-                            color: "#495aff"
-                        }
-                    }
-                    states: State {
-                        name: "pressed"; when: mouseAreaCancel.pressed
-                        PropertyChanges { target: cancelBtn; scale: 0.92 }
-                    }
-
-                    transitions: Transition {
-                        NumberAnimation { properties: "scale"; duration: 200; easing.type: Easing.InOutQuad }
-                    }
-                    Text {
-                        id: cancelBtnText
-                        anchors.centerIn: parent
-                        font.pixelSize: mainForm.fontSizePx * 1.8
-                        color: palette.button_text
-                        text: "CANCEL"
-                    }
-                    MouseArea {
-                        id: mouseAreaCancel
-                        anchors.fill: parent
-                        onClicked: {
-                            mainForm.cancel();
-                        }
+                transitions: Transition {
+                    NumberAnimation { properties: "scale"; duration: 200; easing.type: Easing.InOutQuad }
+                }
+                Text {
+                    id: cancelBtnText
+                    anchors.centerIn: parent
+                    font.pixelSize: calendar.fontSizePx * 1.8
+                    color: palette.buttonText
+                    text: "CANCEL"
+                }
+                MouseArea {
+                    id: mouseAreaCancel
+                    anchors.fill: parent
+                    onClicked: {
+                        backgroundRect.cancel();
                     }
                 }
             }
         }
 
-        function setCurrentDate() {
-            mainForm.date = new Date(calendar.currentYear, calendar.currentMonth, calendar.currentDay + 1);
-        }
 }
