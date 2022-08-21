@@ -100,6 +100,8 @@ public slots:
     QList <booking> selectOmbBooking(int omb_num);
     QList <ombStatus> selectAllOmbStatus (int total_omb,QDateTime currentDate);
     QList <searchStruct> selectSearchValues(int total_omb, QString searchVal);
+    QList<int> selectFreeOmbInInterval(int startOmb, int endOmb, QDateTime inDate, QDateTime outDate);
+
 
     int getTicketCount();
 

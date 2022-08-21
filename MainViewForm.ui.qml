@@ -6,6 +6,7 @@ Page {
     id: mainView
     width: 1366
     height: 768
+    property alias toolBarLeft: toolBarLeft
     property alias mainView: mainView
     property alias stackView: stackView
 

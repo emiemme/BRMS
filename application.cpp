@@ -50,6 +50,16 @@ QList<searchStruct> Application::getSearchValues(int total_omb, QString searchVa
 }
 
 
+QList <int> Application::getfreeOmbInInterval(int startOmb,int endOmb, QDateTime inDate, QDateTime outDate)
+{
+    QList <int> _tmpFreeOmbInIntervalList;
+    _tmpFreeOmbInIntervalList = db->selectFreeOmbInInterval( startOmb, endOmb,inDate,outDate);
+
+    emit searchIntervalCompleted(_tmpFreeOmbInIntervalList);
+
+    return _tmpFreeOmbInIntervalList;
+}
+
 
 
 bool Application::insertNewBooking(int ticketNumber, int omb_num, QString clientName, QString clientSurname,

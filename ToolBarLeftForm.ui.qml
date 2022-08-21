@@ -5,6 +5,7 @@ Item {
     id: toolbarleftform
     width: 100
     height: 700
+    property alias solutionButton: solutionButton
     property alias popupSearchField: popupSearchField
     property alias searchField: searchField
     property alias checkBoxViewName: checkBoxViewName
@@ -194,6 +195,17 @@ Item {
             anchors.leftMargin: 5
             anchors.rightMargin: 5
             placeholderText: qsTr("Text Area")
+        }
+
+        GeneralButton {
+            id: solutionButton
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: checkBoxViewName.bottom
+            anchors.topMargin: 6
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            labelButton.text: "Cerca Soluzioni"
         }
 
 

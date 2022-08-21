@@ -12,7 +12,7 @@ Rectangle {
     color: "white"
 
     signal ok(string startDate, string stopDate)
-    signal cancel
+    signal cancel()
     property alias calendar: calendar
 
 

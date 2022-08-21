@@ -4,6 +4,9 @@ import QtQuick.Controls 2.12
 ToolBarLeftForm {
     id: toolBarLeft
     property int totalOmb : 173
+    property var solutionFormVar
+    property var solutionFormSprite
+    signal addSearchSolutionBooking(var name, var dateArrive, var dateDeparture)
 
     Component.onCompleted: {
         infoAreaFreeOmb.labelInfo.text = "Liberi:"
@@ -62,7 +65,7 @@ ToolBarLeftForm {
                 }
             }
             ItemDelegate {
-                text: qsTr("Version 0.1.8 beta")
+                text: qsTr("Version 0.2.0 beta")
                 width: parent.width
             }
        }
@@ -74,8 +77,29 @@ ToolBarLeftForm {
     }
 
     checkBoxViewName.onCheckStateChanged: {
-            Backend.emitViewName(checkBoxViewName.checkState)
+        Backend.emitViewName(checkBoxViewName.checkState)
     }
+
+    solutionButton.mouseAreaButton.onClicked: {
+        solutionFormVar = Qt.createComponent("SearchSolution.qml");
+        solutionFormSprite = solutionFormVar.createObject(parent, {x: 397, y: 100});
+        if (solutionFormSprite == null) {
+            // Error Handling
+            console.log("Error creating object");
+
+        }
+    }
+
+    Connections {
+        target: solutionFormSprite
+        ignoreUnknownSignals: true
+        function onAddBooking(name,dateArrive, dateDeparture) {
+            console.log("aaaaa"+name)
+            toolBarLeft.addSearchSolutionBooking(name,dateArrive, dateDeparture)
+        }
+    }
+
+
 
 
     //SearchBar:

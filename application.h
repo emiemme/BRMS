@@ -20,6 +20,9 @@ class Application: public QObject
     Q_PROPERTY(QList<searchStruct> m_searchStruct_list READ getSearchStructList)
     Q_PROPERTY(int m_searchStruct_list_length READ getSearchStructLength)
 
+    Q_PROPERTY(QList<int> m_freeOmbInInterval_list READ getfreeOmbInIntervalList)
+    Q_PROPERTY(int m_freeOmbInInterval_list_length READ getfreeOmbInIntervalLength)
+
 
 
 public:
@@ -56,6 +59,11 @@ public:
     QList<searchStruct> getSearchStructList() const { return qml_searchStruct_list; }
     int getSearchStructLength() const {return qml_searchStruct_list.count();}
 
+    // Expose QList<int> to qml
+    QList<int> qml_freeOmbInInterval_list;
+    QList<int> getfreeOmbInIntervalList() const { return qml_freeOmbInInterval_list; }
+    int getfreeOmbInIntervalLength() const {return qml_freeOmbInInterval_list.count();}
+
 
     //Expose freeOmb,bookingOmb & leavingOmb to qml
     Q_INVOKABLE int     getFreeOmbCount();
@@ -65,6 +73,7 @@ public:
     Q_INVOKABLE int     getDailyOmbCount();
 
     Q_INVOKABLE QList<searchStruct> getSearchValues(int total_omb,QString searchValue);
+    Q_INVOKABLE QList <int> getfreeOmbInInterval(int startOmb, int endOmb, QDateTime inDate, QDateTime outDate);
 
 
 
@@ -84,6 +93,8 @@ signals:
     void gridUpdateCompleted();
     void viewName(bool viewState);
     void searchCompleted(QList<searchStruct>);
+    void searchIntervalCompleted(QList<int>);
+
 
 
 };

@@ -10,6 +10,9 @@ HomeForm {
     property var leftList :  [1,  11, 21, 31, 41, 51, 61, 71, 81, 91, 100, 110, 119, 129, 138, 145, 150, 157, 162, 169]
     property int totalOmb : 173
 
+    property var dateTimeForm
+    property var dateTimeSprite
+
     signal updateMapCompleted()
 
 //    buttonUpdateGrid.onClicked: {
@@ -25,8 +28,6 @@ HomeForm {
 //            updateGrid(totalOmb, currentDate)
 //        }
 //    }
-
-
 
     Component.onCompleted: {
         addRows()
@@ -51,7 +52,6 @@ HomeForm {
     homeTicketForm.datePickerArrive.onCancel: {
         homeTicketForm.datePickerArrive.visible = false
     }
-
 
     homeTicketForm.dateDepartureMouseArea.onClicked: {
         homeTicketForm.datePickerArrive.visible = true
@@ -255,6 +255,39 @@ HomeForm {
 //        homeTicketForm.spinBoxCabina.value = 0
 
 
+    }
+
+    function addSearchSolutionBooking(name,dateArrive,dateDeparture) {
+
+        homeTicketForm.visible = true
+        homeTicketForm.labelUmbrella.text = name
+        homeTicketForm.textFieldName.text = ""
+        homeTicketForm.textFieldSurname.text = ""
+        homeTicketForm.textDateArrive.text = dateArrive
+        homeTicketForm.textDateDepart.text = dateDeparture
+        homeTicketForm.checkBoxDaily.checked = false
+        homeTicketForm.textFieldAcconto.text = ""
+        homeTicketForm.textFieldCellNum.text = ""
+
+        homeTicketForm.checkBoxLettini.checked = true
+        homeTicketForm.checkBoxSdraio.checked = false
+        homeTicketForm.checkBoxCabina.checked = false
+
+        homeTicketForm.spinBoxLettini.value = 2
+        homeTicketForm.spinBoxSdraio.value = 0
+        homeTicketForm.spinBoxCabina.value = 0
+
+
+        homeTicketForm.datePickerArrive.calendar.startDate = new Date(dateArrive)
+        homeTicketForm.datePickerArrive.calendar.stopDate = new Date(dateDeparture)
+
+
+        var counterDays =  (Math.abs(new Date(homeTicketForm.datePickerArrive.calendar.stopDate)
+                                     - new Date(homeTicketForm.datePickerArrive.calendar.startDate))/(1000*60*60*24)) +1
+        if(Number.isNaN(counterDays)) {
+            counterDays = 0
+        }
+        homeTicketForm.labelDaysCounter.text = "Durata soggiorno: "+ counterDays +" Giorno"
     }
 
     function updateGrid(total_omb, currentDate) {

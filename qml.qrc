@@ -20,5 +20,7 @@
         <file>InfoCell.qml</file>
         <file>InfoCellForm.ui.qml</file>
         <file>DatePicker.qml</file>
+        <file>SearchSolution.qml</file>
+        <file>SearchSolutionForm.ui.qml</file>
     </qresource>
 </RCC>

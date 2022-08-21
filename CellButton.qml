@@ -38,6 +38,7 @@ CellButtonForm {
                     homeTicketForm.datePickerArrive.calendar.startDate = new Date(homeTicketForm.textDateArrive)
                     homeTicketForm.datePickerArrive.calendar.stopDate = new Date(homeTicketForm.textDateDepart)
 
+
                     var counterDays =  (Math.abs(new Date(homeTicketForm.datePickerArrive.calendar.stopDate)
                                                  - new Date(homeTicketForm.datePickerArrive.calendar.startDate))/(1000*60*60*24)) +1
                     if(Number.isNaN(counterDays)) {

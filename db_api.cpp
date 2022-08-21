@@ -340,6 +340,47 @@ QList<searchStruct> DB_api::selectSearchValues (int total_omb,QString searchVal)
  return _searchList ;
 }
 
+QList<int> DB_api::selectFreeOmbInInterval(int startOmb,int endOmb, QDateTime inDate, QDateTime outDate)
+{
+    QList <int> results;
+    QSqlQuery _query(sqlDB);
+    QString _currentQuery;
+    if( startOmb != 0 && endOmb != 0 && inDate.isValid() && outDate.isValid()) {
+        for (int _omb_num = startOmb; _omb_num < endOmb; _omb_num++ ) {
+            _currentQuery =  "SELECT Data_Arrivo, Data_Partenza  FROM Omb_" + QString::number(_omb_num) +" ORDER BY Data_Arrivo" ;
+            //qDebug()<<_currentQuery;
+            if (_query.exec(_currentQuery) && _query.lastError().type() == QSqlError::NoError) {
+                QDateTime _data_arrivo;
+                QDateTime _data_partenza;
+                QString _ticket_number;
+                QList<bool> ombValidityList;
+                while (_query.next()) {
+                    _data_arrivo      =    QDateTime::fromString( _query.value(0).toString(),"yyyy-MM-dd");
+                    _data_partenza    =    QDateTime::fromString(_query.value(1).toString(),"yyyy-MM-dd");
+
+
+                    if( inDate > _data_arrivo && inDate > _data_partenza) {
+                        ombValidityList.append(true);
+                    } else if (inDate < _data_arrivo && outDate <  _data_arrivo) {
+                        ombValidityList.append(true);
+                    } else {
+                        ombValidityList.append(false);
+                    }
+                }
+                //qDebug()<<"_omb_num:"<<_omb_num<<"-->"<<ombValidityList;
+                if(!ombValidityList.contains(false)) {
+                    results.append(_omb_num);
+                }
+            } else {
+                qDebug("query='%s'\n[%s] ... ERROR %s", _currentQuery.toLatin1().data(), __PRETTY_FUNCTION__,
+                       _query.lastError().text().toLatin1().data());
+            }
+        }
+    } else {
+        qCritical()<<"Wrong total_omb Number or datetime";
+    }
+    return results ;
+}
 
 bool DB_api::updateAllStatusBooking(int total_omb,QDateTime currentDate)
 {
