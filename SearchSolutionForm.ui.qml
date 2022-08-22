@@ -203,6 +203,7 @@ Item {
                 anchors.topMargin: 23
                 anchors.leftMargin: 107
                 anchors.rightMargin: 121
+                ScrollIndicator.vertical: ScrollIndicator { }
                 model: ListModel {
                     id: searchList
                 }

@@ -203,8 +203,8 @@ Item {
             anchors.right: parent.right
             anchors.top: checkBoxViewName.bottom
             anchors.topMargin: 6
-            anchors.leftMargin: 0
-            anchors.rightMargin: 0
+            anchors.leftMargin: 5
+            anchors.rightMargin: 5
             labelButton.text: "Cerca Soluzioni"
         }
 
@@ -214,6 +214,7 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:1.66}
+    D{i:0;formeditorZoom:1.66}D{i:6}D{i:7}D{i:5}D{i:8}D{i:9}D{i:10}D{i:11}D{i:12}D{i:13}
+D{i:15}D{i:14}D{i:17}D{i:18}D{i:19}D{i:1}
 }
 ##^##*/
