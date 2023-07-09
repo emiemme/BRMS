@@ -3,7 +3,7 @@
 Application::Application(QObject *parent) : QObject(parent)
 {
     db = new DB_api();
-    int totalOmb = 173;
+    int totalOmb = 173 + 4;
     db->openDB(totalOmb);
     ticketCount = db->getTicketCount();
     if(ticketCount == 0) {
@@ -19,9 +19,9 @@ bool Application::selectAllStatus(int total_omb, QString currentDate)
 {
      bool fRes = false;
      qml_ombStatus_list = db->selectAllOmbStatus(total_omb,QDateTime::fromString(currentDate, "yyyy-MM-dd"));
-     //qDebug()<<qml_ombStatus_list.count();
+//     qDebug()<<qml_ombStatus_list.count();
 //     for(int i=0;i < qml_ombStatus_list.count(); i++) {
-//        //qDebug()<<qml_ombStatus_list.at(i).omb_num<<"-->"<<qml_ombStatus_list.at(i).status<<"-->"<<qml_ombStatus_list.at(i).color<<"-->"<<qml_ombStatus_list.at(i).client_name;
+//        qDebug()<<qml_ombStatus_list.at(i).omb_num<<"-->"<<qml_ombStatus_list.at(i).status<<"-->"<<qml_ombStatus_list.at(i).color;
 //     }
      if (qml_ombStatus_list.first().omb_num < 1 || qml_ombStatus_list.first().omb_num > total_omb) {
          fRes = false;
@@ -35,7 +35,7 @@ bool Application::selectAllStatus(int total_omb, QString currentDate)
 bool Application::updateStatusGrid(int total_omb, QDateTime dateTime)
 {
     bool fRes = db->updateAllStatusBooking(total_omb,dateTime);
-    //qDebug()<<fRes;
+    qDebug()<<fRes;
     return fRes;
 }
 
@@ -62,7 +62,7 @@ QList <int> Application::getfreeOmbInInterval(int startOmb,int endOmb, QDateTime
 
 
 
-bool Application::insertNewBooking(int ticketNumber, int omb_num, QString clientName, QString clientSurname,
+bool Application::insertNewBooking(int ticketNumber, QString omb_num, QString clientName, QString clientSurname,
                                    int lettini, int sdraio, int cabina, QString arriveDate,
                                    QString departureDate,QString status, QString acconto, QString cell_number, QString operatore)
 {
@@ -85,7 +85,7 @@ bool Application::insertNewBooking(int ticketNumber, int omb_num, QString client
     return db->insertBooking(newBooking);
 }
 
-bool Application::deleteBooking(int ticketNumber, int omb_num)
+bool Application::deleteBooking(int ticketNumber, QString omb_num)
 {
     booking deleteBooking;
     deleteBooking.ticketNumber = ticketNumber;
@@ -97,7 +97,7 @@ bool Application::deleteBooking(int ticketNumber, int omb_num)
 bool Application::selectOmbBookings(QString ombNumb)
 {
     bool fRes = false;
-    qml_booking_list =  db->selectOmbBooking(ombNumb.toInt());
+    qml_booking_list =  db->selectOmbBooking(ombNumb);
     return fRes;
 }
 

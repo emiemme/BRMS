@@ -3,7 +3,7 @@ import QtQuick.Controls 2.12
 
 ToolBarLeftForm {
     id: toolBarLeft
-    property int totalOmb : 173
+    property int totalOmb : 173 + 4
     property var solutionFormVar
     property var solutionFormSprite
     signal addSearchSolutionBooking(var name, var dateArrive, var dateDeparture)
@@ -65,7 +65,7 @@ ToolBarLeftForm {
                 }
             }
             ItemDelegate {
-                text: qsTr("Version 0.2.0 beta")
+                text: qsTr("Version 0.2.1 beta")
                 width: parent.width
             }
        }

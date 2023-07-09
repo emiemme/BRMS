@@ -7,6 +7,17 @@ CellButtonForm {
 
     Component.onCompleted: {
         //console.log(separatorRect.color)
+
+        if(labelNumber.text === "174") {
+            labelNumber.text = "A"
+        } else if(labelNumber.text === "175") {
+            labelNumber.text = "B"
+        } else if(labelNumber.text === "176") {
+            labelNumber.text = "C"
+        } else if(labelNumber.text === "177") {
+            labelNumber.text = "D"
+        }
+
     }
 
 

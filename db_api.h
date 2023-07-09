@@ -14,7 +14,7 @@ struct booking
 public:
         Q_PROPERTY(int b_ticketNumber MEMBER ticketNumber)
         Q_PROPERTY(QDateTime b_timeStamp MEMBER timeStamp)
-        Q_PROPERTY(int b_omb_num MEMBER omb_num)
+        Q_PROPERTY(QString b_omb_num MEMBER omb_num)
         Q_PROPERTY(QString b_client_name MEMBER client_name)
         Q_PROPERTY(QString b_client_surname MEMBER client_surname)
         Q_PROPERTY(int b_lettini MEMBER lettini)
@@ -29,7 +29,7 @@ public:
 
         int         ticketNumber;
         QDateTime   timeStamp;
-        int         omb_num;
+        QString     omb_num;
         QString     client_name;
         QString     client_surname;
         int         lettini;
@@ -48,12 +48,12 @@ struct ombStatus
 {
     Q_GADGET
 public:
-        Q_PROPERTY(int b_omb_num MEMBER omb_num)
+        Q_PROPERTY(QString b_omb_num MEMBER omb_num)
         Q_PROPERTY(QString b_client_surname MEMBER client_surname)
         Q_PROPERTY(QString b_status MEMBER status)
         Q_PROPERTY(QString b_color MEMBER color)
 
-        int         omb_num;
+        QString     omb_num;
         QString     client_surname;
         QString     status;
         QString     color;
@@ -64,10 +64,10 @@ struct searchStruct
 {
     Q_GADGET
 public:
-        Q_PROPERTY(int b_omb_num MEMBER omb_num)
+        Q_PROPERTY(QString b_omb_num MEMBER omb_num)
         Q_PROPERTY(QString b_searchName MEMBER searchName)
 
-        int         omb_num;
+        QString     omb_num;
         QString     searchName;
 };
 Q_DECLARE_METATYPE(searchStruct)
@@ -89,6 +89,8 @@ public slots:
     bool openDB(int totalOmb);
     void closeDB();
     bool createDB(int total_omb);
+    bool createLettersTables();
+
     bool insertBooking(struct booking newBooking);
     bool replaceBooking(struct booking replaceBooking);
     bool deleteBooking(struct booking deleteBooking);
@@ -97,7 +99,7 @@ public slots:
 
 
 
-    QList <booking> selectOmbBooking(int omb_num);
+    QList <booking> selectOmbBooking(QString omb_num);
     QList <ombStatus> selectAllOmbStatus (int total_omb,QDateTime currentDate);
     QList <searchStruct> selectSearchValues(int total_omb, QString searchVal);
     QList<int> selectFreeOmbInInterval(int startOmb, int endOmb, QDateTime inDate, QDateTime outDate);
@@ -109,6 +111,7 @@ public slots:
 
 private slots:
     bool _queryTheDB(const QString text, QString msg);
+    QString getLitteralOmbNumber(int omb_numb);
 
 
 

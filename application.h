@@ -28,8 +28,8 @@ class Application: public QObject
 public:
     explicit Application(QObject *parent = nullptr);
     Q_INVOKABLE bool selectAllStatus(int total_omb, QString currentDate);
-    Q_INVOKABLE bool insertNewBooking(int ticketNumber, int omb_num, QString clientName, QString clientSurname, int lettini, int sdraio, int cabina, QString arriveDate, QString departureDate, QString status, QString acconto, QString cell_number, QString operatore);
-    Q_INVOKABLE bool deleteBooking(int ticketNumber, int omb_num);
+    Q_INVOKABLE bool insertNewBooking(int ticketNumber, QString omb_num, QString clientName, QString clientSurname, int lettini, int sdraio, int cabina, QString arriveDate, QString departureDate, QString status, QString acconto, QString cell_number, QString operatore);
+    Q_INVOKABLE bool deleteBooking(int ticketNumber, QString omb_num);
 
     Q_INVOKABLE void    setTicketCount();
     Q_INVOKABLE int     getTicketCount();
@@ -51,7 +51,7 @@ public:
 
     // Expose QList<ombStatus> to qml
     QList<ombStatus> qml_ombStatus_list;
-    QList<ombStatus> getOmbStatusList() const { return qml_ombStatus_list; }
+    QList<ombStatus> getOmbStatusList() const {return qml_ombStatus_list; }
     int getOmbStatusLength() const {return qml_ombStatus_list.count();}
 
     // Expose QList<searchStruct> to qml

@@ -26,6 +26,7 @@ bool DB_api::openDB(int totalOmb)
         fRes = false;
     } else {
             createDB(totalOmb);
+            createLettersTables();
             fRes = true;
     }
     return fRes;
@@ -41,7 +42,7 @@ bool DB_api::_queryTheDB(const QString text, QString msg)
     QSqlQuery query(sqlDB);
 
     if (query.exec(text)) {
-        // qDebug("query='%s'\n%s ... OK", text.toLatin1().data(), msg.toLatin1().data());
+         //qDebug("query='%s'\n%s ... OK", text.toLatin1().data(), msg.toLatin1().data());
         return true;
     } else {
         qWarning("query='%s'\n%s ... ERROR %s", text.toLatin1().data(), msg.toLatin1().data(), query.lastError().text().toLatin1().data());
@@ -122,12 +123,121 @@ exit_function:
     return fRes;
 }
 
+bool DB_api::createLettersTables()
+{
+    bool fRes = false;
+    qWarning("[%s] empty database file ...", __PRETTY_FUNCTION__);
+
+    bool ok;
+    ok = _queryTheDB("BEGIN TRANSACTION;",QString("[%1] begin").arg(__PRETTY_FUNCTION__));
+
+    ok = _queryTheDB("CREATE TABLE IF NOT EXISTS Omb_A ( "
+                    "Ticket_Number INTEGER PRIMARY KEY,"
+                    "DateTime varchar(20),"
+                    "Client_Name varchar(100),"
+                    "Client_Surname varchar(100),"
+                    "Lettini INTEGER,"
+                    "Sdraio INTEGER,"
+                    "Cabina INTEGER,"
+                    "Data_Arrivo varchar(10),"
+                    "Data_Partenza varchar(10),"
+                    "Status varchar(10),"
+                    "Acconto varchar(10),"
+                    "Cell_number varchar(10),"
+                    "Operatore varchar(10)"
+                    ")",
+                    QString("[%1] create A").arg(__PRETTY_FUNCTION__));
+    if (!ok) {
+        _queryTheDB("ROLLBACK;",QString("[%1] end").arg(__PRETTY_FUNCTION__));
+        fRes = false;
+        goto exit_function;
+    }
+
+    ok = _queryTheDB("CREATE TABLE IF NOT EXISTS Omb_B ( "
+                    "Ticket_Number INTEGER PRIMARY KEY,"
+                    "DateTime varchar(20),"
+                    "Client_Name varchar(100),"
+                    "Client_Surname varchar(100),"
+                    "Lettini INTEGER,"
+                    "Sdraio INTEGER,"
+                    "Cabina INTEGER,"
+                    "Data_Arrivo varchar(10),"
+                    "Data_Partenza varchar(10),"
+                    "Status varchar(10),"
+                    "Acconto varchar(10),"
+                    "Cell_number varchar(10),"
+                    "Operatore varchar(10)"
+                    ")",
+                    QString("[%1] create B").arg(__PRETTY_FUNCTION__));
+    if (!ok) {
+        _queryTheDB("ROLLBACK;",QString("[%1] end").arg(__PRETTY_FUNCTION__));
+        fRes = false;
+        goto exit_function;
+    }
+
+    ok = _queryTheDB("CREATE TABLE IF NOT EXISTS Omb_C ( "
+                    "Ticket_Number INTEGER PRIMARY KEY,"
+                    "DateTime varchar(20),"
+                    "Client_Name varchar(100),"
+                    "Client_Surname varchar(100),"
+                    "Lettini INTEGER,"
+                    "Sdraio INTEGER,"
+                    "Cabina INTEGER,"
+                    "Data_Arrivo varchar(10),"
+                    "Data_Partenza varchar(10),"
+                    "Status varchar(10),"
+                    "Acconto varchar(10),"
+                    "Cell_number varchar(10),"
+                    "Operatore varchar(10)"
+                    ")",
+                    QString("[%1] create C").arg(__PRETTY_FUNCTION__));
+    if (!ok) {
+        _queryTheDB("ROLLBACK;",QString("[%1] end").arg(__PRETTY_FUNCTION__));
+        fRes = false;
+        goto exit_function;
+    }
+
+    ok = _queryTheDB("CREATE TABLE IF NOT EXISTS Omb_D ( "
+                    "Ticket_Number INTEGER PRIMARY KEY,"
+                    "DateTime varchar(20),"
+                    "Client_Name varchar(100),"
+                    "Client_Surname varchar(100),"
+                    "Lettini INTEGER,"
+                    "Sdraio INTEGER,"
+                    "Cabina INTEGER,"
+                    "Data_Arrivo varchar(10),"
+                    "Data_Partenza varchar(10),"
+                    "Status varchar(10),"
+                    "Acconto varchar(10),"
+                    "Cell_number varchar(10),"
+                    "Operatore varchar(10)"
+                    ")",
+                    QString("[%1] create D").arg(__PRETTY_FUNCTION__));
+    if (!ok) {
+        _queryTheDB("ROLLBACK;",QString("[%1] end").arg(__PRETTY_FUNCTION__));
+        fRes = false;
+        goto exit_function;
+    }
+
+    ok = _queryTheDB("END TRANSACTION;",QString("[%1] end").arg(__PRETTY_FUNCTION__));
+    if (!ok) {
+        fRes = false;
+        goto exit_function;
+
+    } else {
+        fRes = true;
+    }
+
+exit_function:
+    return fRes;
+}
+
 bool DB_api::insertBooking(struct booking newBooking)
 {
     bool fRes = false;
-    if( newBooking.omb_num != 0 ) {
+    if( !newBooking.omb_num.isEmpty() ) {
 
-        QString currentQuery = "INSERT OR REPLACE INTO Omb_"+QString::number(newBooking.omb_num)+" (Ticket_Number, DateTime, Client_Name, Client_Surname, Lettini, Sdraio, Cabina ,Data_Arrivo, Data_Partenza, Status, Acconto, Cell_number, Operatore) "
+        QString currentQuery = "INSERT OR REPLACE INTO Omb_"+newBooking.omb_num+" (Ticket_Number, DateTime, Client_Name, Client_Surname, Lettini, Sdraio, Cabina ,Data_Arrivo, Data_Partenza, Status, Acconto, Cell_number, Operatore) "
                 "VALUES ('" +
                 QString::number(newBooking.ticketNumber) +
                 "', '" + newBooking.timeStamp.toString("yyyy-MM-dd") +
@@ -160,9 +270,9 @@ bool DB_api::insertBooking(struct booking newBooking)
 bool DB_api::replaceBooking(struct booking replaceBooking)
 {
     bool fRes = false;
-    if( replaceBooking.omb_num != 0 ) {
+    if( !replaceBooking.omb_num.isEmpty()) {
 
-        QString currentQuery = "REPLACE INTO Omb_"+QString::number(replaceBooking.omb_num)+" (Ticket_Number, DateTime, Client_Name, Client_Surname, Lettini, Sdraio, Cabina ,Data_Arrivo, Data_Partenza, Status, Acconto, Cell_number, Operatore) "
+        QString currentQuery = "REPLACE INTO Omb_"+replaceBooking.omb_num+" (Ticket_Number, DateTime, Client_Name, Client_Surname, Lettini, Sdraio, Cabina ,Data_Arrivo, Data_Partenza, Status, Acconto, Cell_number, Operatore) "
                 "VALUES ('" +
                 QString::number(replaceBooking.ticketNumber) +
                 "', '" + replaceBooking.timeStamp.toString("yyyy-MM-dd") +
@@ -191,9 +301,9 @@ bool DB_api::replaceBooking(struct booking replaceBooking)
 bool DB_api::deleteBooking(struct booking deleteBooking)
 {
     bool fRes = false;
-    if( deleteBooking.omb_num != 0 ) {
+    if( !deleteBooking.omb_num.isEmpty()) {
 
-        QString currentQuery = "DELETE FROM Omb_"+QString::number(deleteBooking.omb_num)+" WHERE Ticket_Number = " + QString::number(deleteBooking.ticketNumber);
+        QString currentQuery = "DELETE FROM Omb_"+deleteBooking.omb_num+" WHERE Ticket_Number = " + QString::number(deleteBooking.ticketNumber);
         qDebug()<<currentQuery;
         _queryTheDB(currentQuery,QString("[%1] end").arg(__PRETTY_FUNCTION__));
         fRes = true;
@@ -205,14 +315,14 @@ bool DB_api::deleteBooking(struct booking deleteBooking)
 
 }
 
-QList <booking> DB_api::selectOmbBooking(int omb_num)
+QList <booking> DB_api::selectOmbBooking(QString omb_num)
 {
     QList <booking> _selectList;
     struct booking _booking;
     QSqlQuery query(sqlDB);
-    if( omb_num != 0 ) {
+    if( !omb_num.isEmpty() ) {
 
-        QString currentQuery = "SELECT Ticket_Number, DateTime, Client_Name, Client_Surname, Lettini, Sdraio, Cabina ,Data_Arrivo, Data_Partenza, Status, Acconto, Cell_number, Operatore FROM Omb_"+QString::number(omb_num);
+        QString currentQuery = "SELECT Ticket_Number, DateTime, Client_Name, Client_Surname, Lettini, Sdraio, Cabina ,Data_Arrivo, Data_Partenza, Status, Acconto, Cell_number, Operatore FROM Omb_"+omb_num;
         if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
               while (query.next()) {
                   _booking.ticketNumber = query.value(0).toInt();
@@ -253,17 +363,18 @@ QList <ombStatus>  DB_api::selectAllOmbStatus (int total_omb, QDateTime currentD
     dailyOmb = 0;
     if( total_omb != 0 && currentDate.isValid() ) {
 
-        for (int _omb_num = 0; _omb_num < total_omb; _omb_num++ ) {
-            QString _currentQuery = "SELECT Status, Client_Surname FROM Omb_" + QString::number(_omb_num+1) + "  WHERE Data_Partenza >= '" + currentDate.toString("yyyy-MM-dd") + "' ORDER BY Data_Arrivo" ;
+        for (int _omb_num = 1; _omb_num < total_omb +1; _omb_num++ ) {
+            QString _currentOmbNumber = getLitteralOmbNumber(_omb_num);
+            QString _currentQuery = "SELECT Status, Client_Surname FROM Omb_" + _currentOmbNumber + "  WHERE Data_Partenza >= '" + currentDate.toString("yyyy-MM-dd") + "' ORDER BY Data_Arrivo" ;
             //qDebug()<<currentQuery;
             if (_query.exec(_currentQuery) && _query.lastError().type() == QSqlError::NoError) {
                 struct ombStatus _ombStatus;
-                _ombStatus.omb_num =_omb_num + 1;
+                _ombStatus.omb_num = _currentOmbNumber;
                 _ombStatus.color = "#00FF00";
                 while (_query.next()) {
                     _ombStatus.status      =    _query.value(0).toString();
                     _ombStatus.client_surname =    _query.value(1).toString();
-                    qDebug()<<"Omb_num = "<<_omb_num + 1;
+                    qDebug()<<"Omb_num = "<< _currentOmbNumber;
                     qDebug()<<"Client_Surname = "<< _ombStatus.client_surname;
                     qDebug()<<"Status = "<< _ombStatus.status;
 
@@ -314,11 +425,13 @@ QList<searchStruct> DB_api::selectSearchValues (int total_omb,QString searchVal)
     QSqlQuery _query(sqlDB);
     if( total_omb != 0 ) {
 
-        for (int _omb_num = 0; _omb_num < total_omb; _omb_num++ ) {
-            QString _currentQuery = "SELECT Client_Name, Client_Surname FROM Omb_" + QString::number(_omb_num+1) + " WHERE Client_Name LIKE (\"%"+searchVal+"%\") OR Client_Surname LIKE (\"%"+searchVal+"%\")";
+        for (int _omb_num = 1; _omb_num < total_omb+1; _omb_num++ ) {
+            QString _currentOmbNumber = getLitteralOmbNumber(_omb_num);
+
+            QString _currentQuery = "SELECT Client_Name, Client_Surname FROM Omb_" + _currentOmbNumber + " WHERE Client_Name LIKE (\"%"+searchVal+"%\") OR Client_Surname LIKE (\"%"+searchVal+"%\")";
             //qDebug()<<currentQuery;
             if (_query.exec(_currentQuery) && _query.lastError().type() == QSqlError::NoError) {
-                _tmpSearchStruct.omb_num = _omb_num + 1;
+                _tmpSearchStruct.omb_num = _currentOmbNumber;
                 while (_query.next()) {
                     _tmpName = _query.value(0).toString();
                     if(_tmpName != "-") {
@@ -347,7 +460,8 @@ QList<int> DB_api::selectFreeOmbInInterval(int startOmb,int endOmb, QDateTime in
     QString _currentQuery;
     if( startOmb != 0 && endOmb != 0 && inDate.isValid() && outDate.isValid()) {
         for (int _omb_num = startOmb; _omb_num < endOmb; _omb_num++ ) {
-            _currentQuery =  "SELECT Data_Arrivo, Data_Partenza  FROM Omb_" + QString::number(_omb_num) +" ORDER BY Data_Arrivo" ;
+            QString _currentOmbNumber = getLitteralOmbNumber(_omb_num);
+            _currentQuery =  "SELECT Data_Arrivo, Data_Partenza  FROM Omb_" + _currentOmbNumber +" ORDER BY Data_Arrivo" ;
             //qDebug()<<_currentQuery;
             if (_query.exec(_currentQuery) && _query.lastError().type() == QSqlError::NoError) {
                 QDateTime _data_arrivo;
@@ -388,11 +502,13 @@ bool DB_api::updateAllStatusBooking(int total_omb,QDateTime currentDate)
     QSqlQuery query(sqlDB);
     QString _currentQuery;
     QStringList _update_query_list;
-    for (int _omb_num = 1; _omb_num < total_omb; _omb_num++ ) {
-        _currentQuery =  "SELECT Data_Arrivo, Data_Partenza, Ticket_Number, Status  FROM Omb_" + QString::number(_omb_num+1) +" ORDER BY Data_Arrivo" ;
+    for (int _omb_num = 1; _omb_num < total_omb+1; _omb_num++ ) {
+        QString _currentOmbNumber = getLitteralOmbNumber(_omb_num);
+        //qDebug()<<"------updateAllStatusBooking omb number:"<<_currentOmbNumber;
+        _currentQuery =  "SELECT Data_Arrivo, Data_Partenza, Ticket_Number, Status  FROM Omb_" + _currentOmbNumber +" ORDER BY Data_Arrivo" ;
 
         if (query.exec(_currentQuery) && query.lastError().type() == QSqlError::NoError) {
-            //qDebug()<<currentQuery;
+
             QDateTime _data_arrivo;
             QDateTime _data_partenza;
             QString _ticket_number;
@@ -402,32 +518,31 @@ bool DB_api::updateAllStatusBooking(int total_omb,QDateTime currentDate)
                 _data_partenza    =    QDateTime::fromString(query.value(1).toString(),"yyyy-MM-dd");
                 _ticket_number    =    query.value(2).toString();
                 _status           =    query.value(3).toString();
-
                 if(currentDate > _data_arrivo && currentDate < _data_partenza) {
-                    _update_query_list.append("UPDATE Omb_"+ QString::number(_omb_num+1)+" SET Status = \"Arrived\" WHERE Ticket_Number = "+_ticket_number);
+                    _update_query_list.append("UPDATE Omb_"+ _currentOmbNumber +" SET Status = \"Arrived\" WHERE Ticket_Number = "+_ticket_number);
                 }
                 else if (currentDate == _data_arrivo) {
                     if(_status != "Daily")
-                    _update_query_list.append("UPDATE Omb_"+ QString::number(_omb_num+1)+" SET Status = \"Incoming\" WHERE Ticket_Number = "+_ticket_number);
+                    _update_query_list.append("UPDATE Omb_"+ _currentOmbNumber +" SET Status = \"Incoming\" WHERE Ticket_Number = "+_ticket_number);
 
                 }
                 else if (currentDate < _data_arrivo) {
-                    _update_query_list.append("UPDATE Omb_"+ QString::number(_omb_num+1)+" SET Status = \"Not Arrived\" WHERE Ticket_Number = "+_ticket_number);
+                    _update_query_list.append("UPDATE Omb_"+ _currentOmbNumber +" SET Status = \"Not Arrived\" WHERE Ticket_Number = "+_ticket_number);
 
                 }
                 else if ( currentDate == _data_partenza) {
                     if(_status != "Daily")
-                    _update_query_list.append("UPDATE Omb_"+ QString::number(_omb_num+1)+" SET Status = \"Leaving\" WHERE Ticket_Number = "+_ticket_number);
+                    _update_query_list.append("UPDATE Omb_"+ _currentOmbNumber +" SET Status = \"Leaving\" WHERE Ticket_Number = "+_ticket_number);
 
                 }
                 else if (currentDate > _data_partenza){
-                    _update_query_list.append("UPDATE Omb_"+ QString::number(_omb_num+1)+" SET Status = \"Out\" WHERE Ticket_Number = "+_ticket_number);
+                    _update_query_list.append("UPDATE Omb_"+ _currentOmbNumber +" SET Status = \"Out\" WHERE Ticket_Number = "+_ticket_number);
                 }
             }
             if (_update_query_list.count() != 0) {
                 foreach(QString _listQuery,_update_query_list) {
                     if (query.exec(_listQuery) && query.lastError().type() == QSqlError::NoError) {
-                        qDebug()<<"query executed:"<<_listQuery;
+                        //qDebug()<<"query executed:"<<_listQuery;
                     } else {
                         qWarning("query='%s'\n[%s] ... ERROR %s", _listQuery.toLatin1().data(), __PRETTY_FUNCTION__,
                                query.lastError().text().toLatin1().data());
@@ -442,6 +557,24 @@ bool DB_api::updateAllStatusBooking(int total_omb,QDateTime currentDate)
         }
     }
     return fRes;
+}
+
+QString DB_api::getLitteralOmbNumber(int omb_numb)
+{
+    QString _currentOmbNumber = QString::number(omb_numb+1);
+    if(omb_numb == 174 ) {
+        _currentOmbNumber = "A";
+    } else if (omb_numb == 175) {
+        _currentOmbNumber = "B";
+    } else if (omb_numb == 176) {
+        _currentOmbNumber = "C";
+    } else if(omb_numb == 177){
+        _currentOmbNumber = "D";
+    } else {
+        _currentOmbNumber = QString::number(omb_numb);
+    }
+
+    return _currentOmbNumber;
 }
 
 bool DB_api::setTicketCount(int ticket_number)

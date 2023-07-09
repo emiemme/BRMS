@@ -8,7 +8,8 @@ HomeForm {
 
     property var rightList : [12, 20, 32, 40, 52, 60, 72, 80, 92, 99, 111, 118, 130, 137, 146, 149, 158, 161, 170, 173]
     property var leftList :  [1,  11, 21, 31, 41, 51, 61, 71, 81, 91, 100, 110, 119, 129, 138, 145, 150, 157, 162, 169]
-    property int totalOmb : 173
+    property var litteralList : ['A','B','C','D']
+    property int totalOmb : 173 + 4
 
     property var dateTimeForm
     property var dateTimeSprite
@@ -320,6 +321,7 @@ HomeForm {
                 indexListModel = 0
                 for(var colLIndex = leftList[leftRow+1]; colLIndex > leftList[leftRow]-1; colLIndex--){
                     if(stackView.children[leftListIndex].model.get(indexListModel).cellNumber == Backend.m_ombStatus_list[colLIndex-1].b_omb_num) {
+//                        console.log("updateGrid : " + stackView.children[leftListIndex].model.get(indexListModel).cellNumber)
                        if( Backend.m_ombStatus_list[colLIndex-1].b_status != "Not Arrived") {
                             stackView.children[leftListIndex].model.get(indexListModel).clientSurname = Backend.m_ombStatus_list[colLIndex-1].b_client_surname
                             stackView.children[leftListIndex].model.get(indexListModel).statusColor = Backend.m_ombStatus_list[colLIndex-1].b_color
@@ -330,8 +332,34 @@ HomeForm {
                     }
                     indexListModel++
                 }
+                if(leftListIndex == 10 || leftListIndex == 11 || leftListIndex == 12 || leftListIndex == 13) {
+                    var _ombNum
+                    if(stackView.children[leftListIndex].model.get(11).cellNumber == "174") {
+                        _ombNum = "A"
+                    } else if(stackView.children[leftListIndex].model.get(11).cellNumber == "175") {
+                        _ombNum = "B"
+                    } else if(stackView.children[leftListIndex].model.get(11).cellNumber == "176") {
+                        _ombNum = "C"
+                    } else if(stackView.children[leftListIndex].model.get(11).cellNumber == "177") {
+                        _ombNum = "D"
+                    }
+                    var _colLIndex = stackView.children[leftListIndex].model.get(11).cellNumber -1
+
+                    if( _ombNum == Backend.m_ombStatus_list[_colLIndex].b_omb_num) {
+                       if( Backend.m_ombStatus_list[_colLIndex].b_status != "Not Arrived") {
+                            stackView.children[leftListIndex].model.get(11).clientSurname = Backend.m_ombStatus_list[_colLIndex].b_client_surname
+                            stackView.children[leftListIndex].model.get(11).statusColor = Backend.m_ombStatus_list[_colLIndex].b_color
+                       } else {
+                           stackView.children[leftListIndex].model.get(11).clientSurname = ""
+                           stackView.children[leftListIndex].model.get(11).statusColor = Backend.m_ombStatus_list[_colLIndex].b_color
+                       }
+                    }
+
+                }
+
                 leftListIndex++
             }
+
         }
 
 
@@ -365,6 +393,16 @@ HomeForm {
                 }
                 indexListModel++
             }
+
+            if(leftListIndex == 10 || leftListIndex == 11 || leftListIndex == 12 || leftListIndex == 13) {
+               colLIndex++
+               if( stackView.children[leftListIndex].model.get(11).cellNumber == currentCell) {
+                    stackView.children[leftListIndex].model.get(11).clientSurname = clientSurname
+                    stackView.children[leftListIndex].model.get(11).statusColor = statusColor
+                   console.log("----------------- updateCell : " + stackView.children[leftListIndex].model.get(11).cellNumber)
+
+               }
+            }
             leftListIndex++
         }
     }
@@ -373,6 +411,7 @@ HomeForm {
     function addRows() {
         var rightListIndex = 0;
         var indexListModel = 0
+        var litteralIndex = 0;
         for(var rightRow = 0; rightRow < rightList.length; rightRow+=2) {
             indexListModel = 0
             for(var colRIndex = rightList[rightRow+1]; colRIndex > rightList[rightRow]-1; colRIndex--){
@@ -384,12 +423,21 @@ HomeForm {
         }
 
         var leftListIndex = rightListIndex;
+
         for(var leftRow = 0; leftRow < leftList.length; leftRow+=2) {
+
             for(var colLIndex = leftList[leftRow+1]; colLIndex > leftList[leftRow]-1; colLIndex--){
                 stackView.children[leftListIndex].model.append({cellNumber: colLIndex, clientSurname: "Nomelungo", statusColor: "#d85409"} )
                 //stackView.children[leftListIndex].model.labelClientName.text = "ciao"
             }
+            if(litteralIndex < 4) {
+                stackView.children[leftListIndex].model.append({cellNumber: 173+litteralIndex+1 , clientSurname: "Nomelungo", statusColor: "#d85409"} )
+                //console.log("---------- "+stackView.children[leftListIndex].model.get(11).cellNumber +" indexListModel:"+ indexListModel)
+
+                litteralIndex++;
+            }
             leftListIndex++
         }
+
     }
 }

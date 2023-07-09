@@ -4,7 +4,7 @@ import QtGraphicalEffects 1.15
 
 Item {
     width: 122
-    height: 37
+    height: 34
     property alias cellGlow: cellGlow
     property alias separatorRect: separatorRect
     property alias cellStatusRectColor: separatorRect.color
@@ -97,6 +97,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:1.5}
+    D{i:0;formeditorZoom:1.5}D{i:2}D{i:4}D{i:3}D{i:5}D{i:6}D{i:1}
 }
 ##^##*/

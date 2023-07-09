@@ -665,8 +665,6 @@ Page {
                 visible: false
                 text: qsTr("UpdateGrid")
             }
-
-
         }
     }
 
@@ -674,6 +672,9 @@ Page {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.5}
+    D{i:0;formeditorZoom:0.75}D{i:3}D{i:6}D{i:9}D{i:12}D{i:15}D{i:18}D{i:21}D{i:24}D{i:27}
+D{i:30}D{i:33}D{i:36}D{i:39}D{i:42}D{i:45}D{i:48}D{i:51}D{i:54}D{i:57}D{i:60}D{i:64}
+D{i:65}D{i:66}D{i:67}D{i:68}D{i:69}D{i:70}D{i:71}D{i:72}D{i:73}D{i:63}D{i:74}D{i:75}
+D{i:76}D{i:77}D{i:2}D{i:1}
 }
 ##^##*/
