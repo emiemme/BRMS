@@ -49,6 +49,8 @@ HomeForm {
         homeTicketForm.textDateDepart.text = stopDate
         var counterDays =  (Math.abs(new Date(stopDate) - new Date(startDate))/(1000*60*60*24)) +1
         homeTicketForm.labelDaysCounter.text = "Durata soggiorno: "+ counterDays +" Giorno"
+        var price = Backend.calculatePrice(homeTicketForm.labelUmbrella.text,homeTicketForm.textDateArrive.text,homeTicketForm.textDateDepart.text,counterDays)
+        homeTicketForm.labelPrice.text = "Prezzo stimato: " + Math.round(price) + " Euro"
     }
     homeTicketForm.datePickerArrive.onCancel: {
         homeTicketForm.datePickerArrive.visible = false
@@ -248,6 +250,8 @@ HomeForm {
 
                 var counterDays =  (Math.abs(new Date(homeTicketForm.textDateDepart.text) - new Date(homeTicketForm.textDateArrive.text))/(1000*60*60*24)) +1
                 homeTicketForm.labelDaysCounter.text = "Durata soggiorno: "+ counterDays +" Giorno"
+                var price = Backend.calculatePrice(homeTicketForm.labelUmbrella.text,homeTicketForm.textDateArrive.text,homeTicketForm.textDateDepart.text,counterDays)
+                homeTicketForm.labelPrice.text = "Prezzo stimato: " + Math.round(price) + " Euro"
                 break
             }
         }
@@ -289,6 +293,8 @@ HomeForm {
             counterDays = 0
         }
         homeTicketForm.labelDaysCounter.text = "Durata soggiorno: "+ counterDays +" Giorno"
+        var price = Backend.calculatePrice(homeTicketForm.labelUmbrella.text,homeTicketForm.textDateArrive.text,homeTicketForm.textDateDepart.text,counterDays)
+        homeTicketForm.labelPrice.text = "Prezzo stimato: " + Math.round(price) + " Euro"
     }
 
     function updateGrid(total_omb, currentDate) {

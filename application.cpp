@@ -1,4 +1,5 @@
 #include "application.h"
+#include <QDateTime>
 
 Application::Application(QObject *parent) : QObject(parent)
 {
@@ -9,9 +10,6 @@ Application::Application(QObject *parent) : QObject(parent)
     if(ticketCount == 0) {
         db->setTicketCount(0);
     }
-
-//    qDebug()<<db->selectOmbBooking(1).at(0).ticketNumber;
-//    qDebug()<<db->selectOmbBooking(1).at(1).ticketNumber;
 }
 
 
@@ -59,7 +57,6 @@ QList <int> Application::getfreeOmbInInterval(int startOmb,int endOmb, QDateTime
 
     return _tmpFreeOmbInIntervalList;
 }
-
 
 
 bool Application::insertNewBooking(int ticketNumber, QString omb_num, QString clientName, QString clientSurname,
@@ -137,6 +134,254 @@ void Application::emitViewName(bool state)
 {
     emit viewName(state);
 }
+
+void Application::setNewPrices()
+{
+    db->setPrices(tempPrices);
+}
+
+bool Application::getNewPrices()
+{
+   bool fRes = false;
+   currentPrices = db->getPrices();
+
+   if(!currentPrices.junePricesMap.isEmpty() && !currentPrices.julyPricesMap.isEmpty() &&
+      !currentPrices.augustPricesMap.isEmpty() && !currentPrices.septemberPricesMap.isEmpty()) {
+       fRes =  true;
+   }
+
+   return fRes;
+}
+
+QList<int> Application::getJunePrice(int rowIndex)
+{
+    return currentPrices.junePricesMap.value(rowIndex);
+}
+
+QList<int> Application::getJulyPrice(int rowIndex)
+{
+    return currentPrices.julyPricesMap.value(rowIndex);
+}
+
+QList<int> Application::getAugustPrice(int rowIndex)
+{
+    return currentPrices.augustPricesMap.value(rowIndex);
+}
+
+QList<int> Application::getSeptemberPrice(int rowIndex)
+{
+    return currentPrices.septemberPricesMap.value(rowIndex);
+}
+
+void Application::setJunePrice(QList<int> price, int rowIndex)
+{
+    qDebug()<<price;
+
+    tempPrices.junePricesMap.insert(rowIndex,price);
+}
+
+void Application::setJulyPrice(QList<int> price, int rowIndex)
+{
+    tempPrices.julyPricesMap.insert(rowIndex,price);
+}
+
+void Application::setAugustPrice(QList<int> price, int rowIndex)
+{
+    tempPrices.augustPricesMap.insert(rowIndex,price);
+}
+
+void Application::setSeptemberPrice(QList<int> price, int rowIndex)
+{
+    tempPrices.septemberPricesMap.insert(rowIndex,price);
+}
+
+float Application::calculatePrice(QString omb_num, QString arriveDate_s, QString departureDate_s, int days)
+{
+    float fRes = -1;
+    if(getNewPrices()) {
+        QDate arriveDate = QDateTime::fromString(arriveDate_s,Qt::ISODate).date();
+        QDate departureDate = QDateTime::fromString(departureDate_s,Qt::ISODate).date();
+
+        int row = rowFinder(omb_num);
+        float startPrice;
+        float departurePrice;
+
+        if(days > 0 && days < 6) {
+
+            switch (arriveDate.month()) {
+            case 6:   //"June"
+                startPrice = (float)currentPrices.junePricesMap.value(row).at(priceT::Daily);
+                break;
+            case 7:   //"July"
+                startPrice = (float)currentPrices.julyPricesMap.value(row).at(priceT::Daily);
+                break;
+            case 8:   //"August"
+                startPrice = (float)currentPrices.augustPricesMap.value(row).at(priceT::Daily);
+                break;
+            case 9:   //"September"
+                startPrice = (float)currentPrices.septemberPricesMap.value(row).at(priceT::Daily);
+                break;
+            default:
+                startPrice = -1;
+            }
+
+            switch (departureDate.month()) {
+            case 6:   //"June"
+                departurePrice = (float)currentPrices.junePricesMap.value(row).at(priceT::Daily);
+                break;
+            case 7:   //"July"
+                departurePrice = (float)currentPrices.julyPricesMap.value(row).at(priceT::Daily);
+                break;
+            case 8:   //"August"
+                departurePrice = (float)currentPrices.augustPricesMap.value(row).at(priceT::Daily);
+                break;
+            case 9:   //"September"
+                departurePrice = (float)currentPrices.septemberPricesMap.value(row).at(priceT::Daily);
+                break;
+            default:
+                departurePrice = -1;
+            }
+
+        } else if (days >= 6 && days < 15) {
+            switch (arriveDate.month()) {
+            case 6:   //"June"
+                startPrice = (float)currentPrices.junePricesMap.value(row).at(priceT::Week)/7;
+                break;
+            case 7:   //"July"
+                startPrice = (float)currentPrices.julyPricesMap.value(row).at(priceT::Week)/7;
+                break;
+            case 8:   //"August"
+                startPrice = (float)currentPrices.augustPricesMap.value(row).at(priceT::Week)/7;
+                break;
+            case 9:   //"September"
+                startPrice = (float)currentPrices.septemberPricesMap.value(row).at(priceT::Week)/7;
+                break;
+            default:
+                startPrice = -1;
+            }
+
+            switch (departureDate.month()) {
+            case 6:   //"June"
+                departurePrice = (float)currentPrices.junePricesMap.value(row).at(priceT::Week)/7;
+                break;
+            case 7:   //"July"
+                departurePrice = (float)currentPrices.julyPricesMap.value(row).at(priceT::Week)/7;
+                break;
+            case 8:   //"August"
+                departurePrice = (float)currentPrices.augustPricesMap.value(row).at(priceT::Week)/7;
+                break;
+            case 9:   //"September"
+                departurePrice = (float)currentPrices.septemberPricesMap.value(row).at(priceT::Week)/7;
+                break;
+            default:
+                departurePrice = -1;
+            }
+        } else if (days >= 15 && days < 27) {
+            switch (arriveDate.month()) {
+            case 6:   //"June"
+                startPrice = (float)currentPrices.junePricesMap.value(row).at(priceT::Fifteen)/15;
+                break;
+            case 7:   //"July"
+                startPrice = (float)currentPrices.julyPricesMap.value(row).at(priceT::Fifteen)/15;
+                break;
+            case 8:   //"August"
+                startPrice = (float)currentPrices.augustPricesMap.value(row).at(priceT::Fifteen)/15;
+                break;
+            case 9:   //"September"
+                startPrice = (float)currentPrices.septemberPricesMap.value(row).at(priceT::Fifteen)/15;
+                break;
+            default:
+                startPrice = -1;
+            }
+
+            switch (departureDate.month()) {
+            case 6:   //"June"
+                departurePrice = (float)currentPrices.junePricesMap.value(row).at(priceT::Fifteen)/15;
+                break;
+            case 7:   //"July"
+                departurePrice = (float)currentPrices.julyPricesMap.value(row).at(priceT::Fifteen)/15;
+                break;
+            case 8:   //"August"
+                departurePrice = (float)currentPrices.augustPricesMap.value(row).at(priceT::Fifteen)/15;
+                break;
+            case 9:   //"September"
+                departurePrice = (float)currentPrices.septemberPricesMap.value(row).at(priceT::Fifteen)/15;
+                break;
+            default:
+                departurePrice = -1;
+            }
+        } else if (days >= 27) {
+            switch (arriveDate.month()) {
+            case 6:   //"June"
+                startPrice = (float)currentPrices.junePricesMap.value(row).at(priceT::Month)/30;
+                break;
+            case 7:   //"July"
+                startPrice = (float)currentPrices.julyPricesMap.value(row).at(priceT::Month)/30;
+                break;
+            case 8:   //"August"
+                startPrice = (float)currentPrices.augustPricesMap.value(row).at(priceT::Month)/30;
+                break;
+            case 9:   //"September"
+                startPrice = (float)currentPrices.septemberPricesMap.value(row).at(priceT::Month)/30;
+                break;
+            default:
+                startPrice = -1;
+            }
+
+            switch (departureDate.month()) {
+            case 6:   //"June"
+                departurePrice = (float)currentPrices.junePricesMap.value(row).at(priceT::Month)/30;
+                break;
+            case 7:   //"July"
+                departurePrice = (float)currentPrices.julyPricesMap.value(row).at(priceT::Month)/30;
+                break;
+            case 8:   //"August"
+                departurePrice = (float)currentPrices.augustPricesMap.value(row).at(priceT::Month)/30;
+                break;
+            case 9:   //"September"
+                departurePrice = (float)currentPrices.septemberPricesMap.value(row).at(priceT::Month)/30;
+                break;
+            default:
+                departurePrice = -1;
+            }
+        }
+
+
+        //qDebug()<<"Row finder:"<<row<< " startPrice:"<<startPrice<< " departurePrice:"<<departurePrice<< " days:"<<days;
+        if(departureDate.month() - arriveDate.month() == 0) {
+            fRes = startPrice * days;
+        } else if (departureDate.month() - arriveDate.month() == 1)  {
+            int startDays = arriveDate.daysInMonth() - arriveDate.day() + 1;
+            //qDebug()<<"arriveDate.daysInMonth():"<<arriveDate.daysInMonth()<< "  arriveDate.day():"<< arriveDate.day();
+
+            int endDays = departureDate.day();
+            //qDebug()<<"  departureDate.day():"<< departureDate.day();
+            //qDebug()<<"startDays:"<<startDays<< " endDays:"<<endDays<< " days:"<<days;
+
+            fRes = (startPrice*startDays) + (departurePrice*endDays);
+        }
+    } else {
+        qDebug()<<"Cannot get Prices";
+    }
+
+    return fRes;
+}
+
+int Application::rowFinder(QString omb_numb)
+{
+    int fRes = 0;
+
+    if(omb_numb == "A" || (omb_numb.toInt() > 0 && omb_numb.toInt() < 21)) {
+        fRes = 1;
+    } else if(omb_numb == "B" || (omb_numb.toInt() > 20 && omb_numb.toInt() < 41)) {
+        fRes = 2;
+    } else if(omb_numb == "C" || omb_numb == "D" || omb_numb.toInt() > 40 ) {
+        fRes = 3;
+    }
+    return fRes;
+
+}
+
 
 
 void Application::debugStruct(booking newBooking)

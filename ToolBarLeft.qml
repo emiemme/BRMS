@@ -42,6 +42,15 @@ ToolBarLeftForm {
             anchors.fill: parent
 
             ItemDelegate {
+                text: qsTr("Prezzi")
+                width: parent.width
+                onClicked: {
+                    stackView.push("PriceForm.qml")
+                    drawer.close()
+                }
+            }
+
+            ItemDelegate {
                 text: qsTr("Database Settings")
                 width: parent.width
                 onClicked: {
@@ -65,7 +74,7 @@ ToolBarLeftForm {
                 }
             }
             ItemDelegate {
-                text: qsTr("Version 0.2.1 beta")
+                text: qsTr("Version 0.3.0 beta")
                 width: parent.width
             }
        }

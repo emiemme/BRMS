@@ -27,11 +27,13 @@ Item {
 
         Label {
             id: labelButton
+            color: "#ddffffff"
             text: qsTr("Label")
             anchors.fill: parent
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             wrapMode: Text.WordWrap
+            font.bold: true
         }
     }
 

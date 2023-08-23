@@ -24,7 +24,6 @@ class Application: public QObject
     Q_PROPERTY(int m_freeOmbInInterval_list_length READ getfreeOmbInIntervalLength)
 
 
-
 public:
     explicit Application(QObject *parent = nullptr);
     Q_INVOKABLE bool selectAllStatus(int total_omb, QString currentDate);
@@ -64,7 +63,6 @@ public:
     QList<int> getfreeOmbInIntervalList() const { return qml_freeOmbInInterval_list; }
     int getfreeOmbInIntervalLength() const {return qml_freeOmbInInterval_list.count();}
 
-
     //Expose freeOmb,bookingOmb & leavingOmb to qml
     Q_INVOKABLE int     getFreeOmbCount();
     Q_INVOKABLE int     getIncomingOmbCount();
@@ -75,10 +73,28 @@ public:
     Q_INVOKABLE QList<searchStruct> getSearchValues(int total_omb,QString searchValue);
     Q_INVOKABLE QList <int> getfreeOmbInInterval(int startOmb, int endOmb, QDateTime inDate, QDateTime outDate);
 
+    Q_INVOKABLE QList<int> getJunePrice(int rowIndex);
+    Q_INVOKABLE QList<int> getJulyPrice(int rowIndex);
+    Q_INVOKABLE QList<int> getAugustPrice(int rowIndex);
+    Q_INVOKABLE QList<int> getSeptemberPrice(int rowIndex);
+
+    Q_INVOKABLE void setJunePrice(QList<int> price,int rowIndex);
+    Q_INVOKABLE void setJulyPrice(QList<int> price,int rowIndex);
+    Q_INVOKABLE void setAugustPrice(QList<int> price,int rowIndex);
+    Q_INVOKABLE void setSeptemberPrice(QList<int> price,int rowIndex);
+
+    Q_INVOKABLE void setNewPrices();
+    Q_INVOKABLE bool getNewPrices();
+
+    Q_INVOKABLE float calculatePrice(QString omb_num, QString arriveDate, QString departureDate, int days);
 
 
 private slots:
     void debugStruct(booking newBooking);
+
+private:
+    int rowFinder(QString omb_numb);
+
 
 private:
     DB_api  *db;
@@ -88,12 +104,21 @@ private:
     int     leavingOmb;
     int     incomingOmb;
 
+    pricesStruct currentPrices;
+    pricesStruct tempPrices;
+
 signals:
     void bookingChanged();
     void gridUpdateCompleted();
     void viewName(bool viewState);
     void searchCompleted(QList<searchStruct>);
     void searchIntervalCompleted(QList<int>);
+                                               //           0     1    2      3      4
+    void setPrice(QList<int> price,int index); //price --> Row, Daily,Week,Fifteen,Month
+                                               //           0     1      2        3
+                                               //index --> June, July, August, September
+
+
 
 
 

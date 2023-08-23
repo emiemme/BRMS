@@ -27,6 +27,7 @@ bool DB_api::openDB(int totalOmb)
     } else {
             createDB(totalOmb);
             createLettersTables();
+            createPriceTables();
             fRes = true;
     }
     return fRes;
@@ -49,7 +50,6 @@ bool DB_api::_queryTheDB(const QString text, QString msg)
         return false;
     }
 }
-
 
 bool DB_api::createDB(int total_omb)
 {
@@ -226,6 +226,90 @@ bool DB_api::createLettersTables()
 
     } else {
         fRes = true;
+    }
+
+exit_function:
+    return fRes;
+}
+
+bool DB_api::createPriceTables()
+{
+    bool fRes = false;
+    qWarning("[%s] empty database file ...", __PRETTY_FUNCTION__);
+
+    bool ok;
+    ok = _queryTheDB("BEGIN TRANSACTION;",QString("[%1] begin").arg(__PRETTY_FUNCTION__));
+    if (!ok) {
+
+        _queryTheDB("ROLLBACK;",QString("[%1] end").arg(__PRETTY_FUNCTION__));
+        fRes = false;
+
+    } else {
+
+        ok = _queryTheDB("CREATE TABLE IF NOT EXISTS June_Prices ( "
+                        "Rows       integer(11) PRIMARY KEY,"
+                         "Daily     integer(11),"
+                         "Week      integer(11),"
+                         "Fifteen   integer(11),"
+                         "Month     integer(11)"
+                        ")",
+                        QString("[%1] create table Statistic").arg(__PRETTY_FUNCTION__));
+        if (!ok) {
+            _queryTheDB("ROLLBACK;",QString("[%1] end").arg(__PRETTY_FUNCTION__));
+            fRes = false;
+            goto exit_function;
+        }
+
+        ok = _queryTheDB("CREATE TABLE IF NOT EXISTS July_Prices ( "
+                        "Rows       integer(11) PRIMARY KEY,"
+                         "Daily     integer(11),"
+                         "Week      integer(11),"
+                         "Fifteen   integer(11),"
+                         "Month     integer(11)"
+                        ")",
+                        QString("[%1] create table Statistic").arg(__PRETTY_FUNCTION__));
+        if (!ok) {
+            _queryTheDB("ROLLBACK;",QString("[%1] end").arg(__PRETTY_FUNCTION__));
+            fRes = false;
+            goto exit_function;
+        }
+
+        ok = _queryTheDB("CREATE TABLE IF NOT EXISTS August_Prices ( "
+                        "Rows       integer(11) PRIMARY KEY,"
+                         "Daily     integer(11),"
+                         "Week      integer(11),"
+                         "Fifteen   integer(11),"
+                         "Month     integer(11)"
+                        ")",
+                        QString("[%1] create table Statistic").arg(__PRETTY_FUNCTION__));
+        if (!ok) {
+            _queryTheDB("ROLLBACK;",QString("[%1] end").arg(__PRETTY_FUNCTION__));
+            fRes = false;
+            goto exit_function;
+        }
+
+        ok = _queryTheDB("CREATE TABLE IF NOT EXISTS September_Prices ( "
+                        "Rows       integer(11) PRIMARY KEY,"
+                         "Daily     integer(11),"
+                         "Week      integer(11),"
+                         "Fifteen   integer(11),"
+                         "Month     integer(11)"
+                        ")",
+                        QString("[%1] create table Statistic").arg(__PRETTY_FUNCTION__));
+        if (!ok) {
+            _queryTheDB("ROLLBACK;",QString("[%1] end").arg(__PRETTY_FUNCTION__));
+            fRes = false;
+            goto exit_function;
+        }
+
+        ok = _queryTheDB("END TRANSACTION;",QString("[%1] end").arg(__PRETTY_FUNCTION__));
+        if (!ok) {
+            fRes = false;
+            goto exit_function;
+
+        } else {
+            fRes = true;
+        }
     }
 
 exit_function:
@@ -606,5 +690,145 @@ int DB_api::getTicketCount()
         }
     }
     return ticket_number;
+}
+
+bool DB_api::setPrices(pricesStruct newPrices)
+{
+    bool fRes = false;
+
+    foreach(int row,newPrices.junePricesMap.keys()) {
+        QList<int> prices = newPrices.junePricesMap.value(row);
+            if(!prices.isEmpty() && prices.count() == 4) {
+                QString currentQuery = "INSERT OR REPLACE INTO June_Prices (Rows,Daily,Week,Fifteen,Month) "
+                                       "VALUES ('" +
+                                       QString::number(row) +
+                                       "', '" + QString::number(prices.at(0)) +
+                                       "', '" + QString::number(prices.at(1)) +
+                                       "', '" + QString::number(prices.at(2)) +
+                                       "', '" + QString::number(prices.at(3)) +
+                                       + "')";
+                fRes = _queryTheDB(currentQuery,QString("[%1] end").arg(__PRETTY_FUNCTION__));
+
+            }
+
+    }
+
+    foreach(int row,newPrices.julyPricesMap.keys()){
+        QList<int> prices = newPrices.julyPricesMap.value(row);
+        if(!prices.isEmpty() && prices.count() == 4) {
+            QString currentQuery = "INSERT OR REPLACE INTO July_Prices (Rows,Daily,Week,Fifteen,Month) "
+                                  "VALUES ('" +
+                                   QString::number(row) +
+                                   "', '" +QString::number(prices.at(0)) +
+                                   "', '" +QString::number(prices.at(1)) +
+                                   "', '" +QString::number(prices.at(2)) +
+                                   "', '" +QString::number(prices.at(3)) +
+                                  + "')";
+            fRes = _queryTheDB(currentQuery,QString("[%1] end").arg(__PRETTY_FUNCTION__));
+
+        }
+    }
+
+    foreach(int row,newPrices.augustPricesMap.keys()){
+        QList<int> prices = newPrices.augustPricesMap.value(row);
+        if(!prices.isEmpty() && prices.count() == 4) {
+            QString currentQuery = "INSERT OR REPLACE INTO August_Prices (Rows,Daily,Week,Fifteen,Month) "
+                                  "VALUES ('" +
+                                   QString::number(row) +
+                                   "', '" +QString::number(prices.at(0)) +
+                                   "', '" +QString::number(prices.at(1)) +
+                                   "', '" +QString::number(prices.at(2)) +
+                                   "', '" +QString::number(prices.at(3)) +
+                                  + "')";
+            fRes = _queryTheDB(currentQuery,QString("[%1] end").arg(__PRETTY_FUNCTION__));
+
+        }
+    }
+
+    foreach(int row,newPrices.septemberPricesMap.keys()){
+        QList<int> prices = newPrices.septemberPricesMap.value(row);
+        if(!prices.isEmpty() && prices.count() == 4) {
+            QString currentQuery = "INSERT OR REPLACE INTO September_Prices (Rows,Daily,Week,Fifteen,Month) "
+                                  "VALUES ('" +
+                                   QString::number(row) +
+                                   "', '" +QString::number(prices.at(0)) +
+                                   "', '" +QString::number(prices.at(1)) +
+                                   "', '" +QString::number(prices.at(2)) +
+                                   "', '" +QString::number(prices.at(3)) +
+                                  + "')";
+            fRes = _queryTheDB(currentQuery,QString("[%1] end").arg(__PRETTY_FUNCTION__));
+
+        }
+    }
+    return fRes;
+}
+
+pricesStruct DB_api::getPrices()
+{
+    QSqlQuery query(sqlDB);
+    pricesStruct currentPrices;
+    QMap<int,QList<int>> junePricesMap;        //row --> Daily,Week,Fifteen,Month
+    QMap<int,QList<int>> julyPricesMap;        //row --> Daily,Week,Fifteen,Month
+    QMap<int,QList<int>> augustPricesMap;      //row --> Daily,Week,Fifteen,Month
+    QMap<int,QList<int>> septemberPricesMap;   //row --> Daily,Week,Fifteen,Month
+    QString currentQuery = "SELECT Rows,Daily,Week,Fifteen,Month FROM June_Prices";
+    if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
+        while (query.next()) {
+            int row = query.value(0).toInt();
+            QList<int> prices;
+            prices.append(query.value(1).toInt());
+            prices.append(query.value(2).toInt());
+            prices.append(query.value(3).toInt());
+            prices.append(query.value(4).toInt());
+            junePricesMap.insert(row,prices);
+
+        }
+    }
+
+    currentQuery = "SELECT Rows,Daily,Week,Fifteen,Month FROM July_Prices";
+    if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
+        while (query.next()) {
+            int row = query.value(0).toInt();
+            QList<int> prices;
+            prices.append(query.value(1).toInt());
+            prices.append(query.value(2).toInt());
+            prices.append(query.value(3).toInt());
+            prices.append(query.value(4).toInt());
+            julyPricesMap.insert(row,prices);
+        }
+    }
+
+    currentQuery = "SELECT Rows,Daily,Week,Fifteen,Month FROM August_Prices";
+    if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
+        while (query.next()) {
+            int row = query.value(0).toInt();
+            QList<int> prices;
+            prices.append(query.value(1).toInt());
+            prices.append(query.value(2).toInt());
+            prices.append(query.value(3).toInt());
+            prices.append(query.value(4).toInt());
+            augustPricesMap.insert(row,prices);
+        }
+    }
+
+    currentQuery = "SELECT Rows,Daily,Week,Fifteen,Month FROM September_Prices";
+    if (query.exec(currentQuery) && query.lastError().type() == QSqlError::NoError) {
+        while (query.next()) {
+            int row = query.value(0).toInt();
+            QList<int> prices;
+            prices.append(query.value(1).toInt());
+            prices.append(query.value(2).toInt());
+            prices.append(query.value(3).toInt());
+            prices.append(query.value(4).toInt());
+            septemberPricesMap.insert(row,prices);
+        }
+    }
+
+    currentPrices.junePricesMap = junePricesMap;
+    currentPrices.julyPricesMap = julyPricesMap;
+    currentPrices.augustPricesMap = augustPricesMap;
+    currentPrices.septemberPricesMap = septemberPricesMap;
+
+    return currentPrices;
 }
 

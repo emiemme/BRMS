@@ -52,10 +52,22 @@ CellButtonForm {
 
                     var counterDays =  (Math.abs(new Date(homeTicketForm.datePickerArrive.calendar.stopDate)
                                                  - new Date(homeTicketForm.datePickerArrive.calendar.startDate))/(1000*60*60*24)) +1
+                    var price
                     if(Number.isNaN(counterDays)) {
-                        counterDays = 0
+                        //counterDays = 0
+
+                        counterDays =  (Math.abs(new Date(homeTicketForm.textDateDepart.placeholderText)
+                                                                        - new Date(homeTicketForm.textDateArrive.placeholderText))/(1000*60*60*24)) +1
+                        if(Number.isNaN(counterDays)) {
+                            counterDays = 0
+                        } else {
+                            price = Backend.calculatePrice(homeTicketForm.labelUmbrella.text,homeTicketForm.textDateArrive.placeholderText,homeTicketForm.textDateDepart.placeholderText,counterDays)
+                        }
+                    } else {
+                        price = Backend.calculatePrice(homeTicketForm.labelUmbrella.text,homeTicketForm.textDateArrive.text,homeTicketForm.textDateDepart.text,counterDays)
                     }
                     homeTicketForm.labelDaysCounter.text = "Durata soggiorno: "+ counterDays +" Giorno"
+                    homeTicketForm.labelPrice.text = "Prezzo stimato: " + Math.round(price) + " Euro"
 
 
                 } else {

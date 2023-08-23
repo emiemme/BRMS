@@ -20,6 +20,7 @@ Item {
         Label {
             id: labelInfo
             height: 32
+            color: "#ddfdfdfd"
             text: qsTr("Label")
             anchors.left: parent.left
             anchors.right: parent.right
@@ -35,6 +36,7 @@ Item {
 
         Label {
             id: labelValue
+            color: "#ddffffff"
             text: qsTr("Label")
             anchors.left: parent.left
             anchors.right: parent.right

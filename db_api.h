@@ -2,6 +2,7 @@
 #define DB_API_H
 
 #include <QObject>
+#include <QMap>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlDriver>
 #include <QtSql/QSqlError>
@@ -72,6 +73,18 @@ public:
 };
 Q_DECLARE_METATYPE(searchStruct)
 
+enum priceT {Daily = 0,Week,Fifteen,Month};
+
+struct pricesStruct
+{
+public:
+                                               //        0      1       2     3
+    QMap<int,QList<int>> junePricesMap;        //row -->
+    QMap<int,QList<int>> julyPricesMap;        //row --> Daily,Week,Fifteen,Month
+    QMap<int,QList<int>> augustPricesMap;      //row --> Daily,Week,Fifteen,Month
+    QMap<int,QList<int>> septemberPricesMap;   //row --> Daily,Week,Fifteen,Month
+};
+
 class DB_api : public QObject
 {
     Q_OBJECT
@@ -90,6 +103,8 @@ public slots:
     void closeDB();
     bool createDB(int total_omb);
     bool createLettersTables();
+    bool createPriceTables();
+
 
     bool insertBooking(struct booking newBooking);
     bool replaceBooking(struct booking replaceBooking);
@@ -106,6 +121,9 @@ public slots:
 
 
     int getTicketCount();
+
+    bool setPrices(pricesStruct newPrices);
+    pricesStruct getPrices();
 
 
 
