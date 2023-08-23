@@ -349,7 +349,13 @@ float Application::calculatePrice(QString omb_num, QString arriveDate_s, QString
 
         //qDebug()<<"Row finder:"<<row<< " startPrice:"<<startPrice<< " departurePrice:"<<departurePrice<< " days:"<<days;
         if(departureDate.month() - arriveDate.month() == 0) {
-            fRes = startPrice * days;
+            if(days == 6 || days == 7) {
+                fRes =  startPrice * 7;
+            } else if (days == 29 || days == 30 || days == 31) {
+                fRes =  startPrice * 30;
+            }else {
+                fRes = startPrice * days;
+            }
         } else if (departureDate.month() - arriveDate.month() == 1)  {
             int startDays = arriveDate.daysInMonth() - arriveDate.day() + 1;
             //qDebug()<<"arriveDate.daysInMonth():"<<arriveDate.daysInMonth()<< "  arriveDate.day():"<< arriveDate.day();
