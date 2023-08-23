@@ -3,11 +3,10 @@ import QtQuick.Controls 2.12
 //import Booking 1.0
 
 InfoCellForm {
-
+    property var rowCount
 
     checkBoxGroup.onClicked: {
-        console.log("clicked " +  button.text)
-
+        //console.log("clicked " +  button.text)
     }
 
 function selectNewInfo(){
@@ -40,11 +39,12 @@ function displayInfo(omb_num) {
 
 
         if( Backend.m_booking_list_length > 0) {
+            rowCount = Backend.m_booking_list_length
             for(var i=0; i< Backend.m_booking_list_length; i++ ) {
                 var arriveDate =  new Date(Backend.m_booking_list[i].b_arriveDate).toISOString().split('T')[0]
                 var departureDate = new Date(Backend.m_booking_list[i].b_departureDate).toISOString().split('T')[0]
                 var check =  false
-                console.log("Status = " +Backend.m_booking_list[i].b_status)
+                //console.log("Status = " +Backend.m_booking_list[i].b_status)
                 tvRectColor = "#FFFFFF"
                 if ( Backend.m_booking_list[i].b_status === "Arrived" || Backend.m_booking_list[i].b_status === "Daily"){
                     labelNameSurname.text = Backend.m_booking_list[i].b_client_name +" "+ Backend.m_booking_list[i].b_client_surname
@@ -55,10 +55,10 @@ function displayInfo(omb_num) {
                     labelTicketNumber.text = Backend.m_booking_list[i].b_ticketNumber
                     labelArriveDate.text = arriveDate
                     labelDepartureDate.text = departureDate
-                    check =  Backend.m_booking_list[i].b_ticketNumber
+                    //check =  true//Backend.m_booking_list[i].b_ticketNumber
                     //tvRectColor = "#00FF00"
                 }
-                var row = { checked: check ,
+                var row = { checked: check,
                             name: Backend.m_booking_list[i].b_client_name,
                             surname: Backend.m_booking_list[i].b_client_surname,
                             arrive_date:  arriveDate ,

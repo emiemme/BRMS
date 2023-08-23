@@ -222,9 +222,8 @@ HomeForm {
 
 
         homeTicketForm.labelUmbrella.text = infoCell.labelUmbrella.text
-        for(var i = 0; i< infoCell.checkBoxGroup.buttons.length; i++) {
-
-            if (infoCell.checkBoxGroup.buttons[i].checked) {
+        for(var i = 0; i<infoCell.rowCount; i++) {
+            if(infoCell.tableModelInfo.rows[i].checked === true) {
                 homeTicketForm.checkBoxDaily.checked = true
                 homeTicketForm.textFieldName.text =      infoCell.tableModelInfo.rows[i].name
                 homeTicketForm.textFieldSurname.text =   infoCell.tableModelInfo.rows[i].surname

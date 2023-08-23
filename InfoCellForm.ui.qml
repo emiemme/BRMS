@@ -57,7 +57,7 @@ Item {
                                 anchors.fill: parent
                                 display: AbstractButton.IconOnly
                                 checked: model.display
-                                text: model.display
+                                //text: model.display
                                 onToggled: model.display = checked
                                 ButtonGroup.group: checkBoxGroup
                             }
@@ -95,7 +95,6 @@ Item {
                         }
                         column: 2
                     }
-
                     DelegateChoice {
                         Rectangle {
                             color: tvRectColor
