@@ -3,11 +3,15 @@
 #include <QQmlContext>
 #include <QtDebug>
 #include <QFile>
+#include <QDir>
 #include <QTextStream>
 #include "application.h"
 
+QString currentDateTime = QDateTime::currentDateTime().toString("yyyy_MM_ddThh_mm_ss");
+
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
+
     QString txt;
     switch (type) {
     case QtDebugMsg:
@@ -27,7 +31,11 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
         fprintf(stderr, "Fatal: %s \n", msg.toLatin1().data());
     break;
     }
-    QFile outFile("Gestionale_Lido.log");
+    QDir dir("log");
+    if (!dir.exists())
+        dir.mkpath(".");
+
+    QFile outFile("./log/Gestionale_Lido_" + currentDateTime + ".log");
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream ts(&outFile);
     ts << txt << Qt::endl;
@@ -41,7 +49,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
-     //qInstallMessageHandler(myMessageOutput);
+     qInstallMessageHandler(myMessageOutput);
      QGuiApplication app(argc, argv);
 
 
