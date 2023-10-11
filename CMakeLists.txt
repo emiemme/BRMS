@@ -30,12 +30,12 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick Sql LinguistTools REQUI
 set(TS_FILES Gestionale_lido_it_IT.ts)
 
 set(PROJECT_SOURCES
-        main.cpp
-        application.cpp
-        application.h
-        db_api.cpp
-        db_api.h
-        qml.qrc
+        src/main.cpp
+        src/application.cpp
+        src/application.h
+        src/db_api.cpp
+        src/db_api.h
+        qml/qml.qrc
 
 )
 #        ${TS_FILES}
