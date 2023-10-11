@@ -27,3 +27,6 @@ git clone https://github.com/emiemme/GestionaleLido.git
 2. Open the CMake project with Qt Creator
 3. Build and Run the project
 4. Enjoy
+
+## Preview
+![BRMS](https://github.com/emiemme/BRMS/tree/master/images/brms.png)
